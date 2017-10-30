@@ -1,0 +1,21 @@
+%html
+  %head
+    %title Flare Suite
+    %meta{:charset => "utf-8"}
+    %meta{"http-equiv" => "X-UA-Compatible", :content => "IE=edge"}
+    %meta{:name => "viewport", :content => "width=700"}
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+%body
+  .main
+    = render 'layouts/partials/upper_nav'
+    = render 'layouts/partials/navbar'
+    -flash.each do |name, msg|
+      .alert-container
+        = content_tag :div, content_tag(:div, content_tag(:p, msg),  class: [:alert, alert_for(name)]), class:'alert-outer-container'
+    .body-container
+      = yield
+%footer
+  %a#back-to-top{:href => "#"}
+    %i.fa.fa-angle-up

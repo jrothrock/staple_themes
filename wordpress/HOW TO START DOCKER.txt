@@ -1,0 +1,15 @@
+1.To Start docker you have to first start an environment
+   - docker-machine start docker-vm
+1.1 If no enviornments exists, create a new one
+    docker-machine create --driver virtualbox wordpress-vm
+
+2. Run the eval for the enviornment
+    - for fish: eval (docker-machine env wordpress-vm)
+
+3. Go into the root folder (ie where this file is) and run: docker-compose up -d
+
+4. Go to the address of the docker enviornment
+    - ip can be found by running docker-machine env wordpress-vm
+        - it's the ip (minus port) for the DOCKER_HOST
+
+5. to stop docker run: docker stop (docker ps -aq)

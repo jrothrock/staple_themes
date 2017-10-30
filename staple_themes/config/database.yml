@@ -1,0 +1,19 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 100
+  host: localhost
+  #username: username
+  #password: password
+
+development:
+  <<: *default
+  database: staple_themes_development
+
+test:
+  <<: *default
+  database: staple_themes_test
+
+production:
+  <<: *default
+  database: staple_themes_production

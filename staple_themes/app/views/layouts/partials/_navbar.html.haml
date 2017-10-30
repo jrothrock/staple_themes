@@ -1,0 +1,36 @@
+- if user_signed_in?
+    %ul#dropdown1.dropdown-content
+        %li
+            = link_to "Profile", profile_path(current_user.username)
+        %li
+            = link_to "Settings", edit_user_registration_path
+        %li
+            = link_to "Purchases", purchases_path(current_user.username)
+        %li.divider
+        %li
+            = link_to "Logout", destroy_user_session_path, method: :delete
+%nav
+    .nav-wrapper
+        %ul.left.hide-on-med-and-down
+            %li
+                = link_to "Home", root_path
+            %li
+                = link_to "Themes", themes_path
+        %ul.right.hide-on-med-and-down
+            - if user_signed_in?
+                - if current_user.try(:admin?)
+                    %li
+                        = link_to "Create Theme", new_theme_path
+                %li.dropdown-button{"data-activates":"dropdown1", id:"profile-hover"}
+                    %a.profile-dropdown{href:"", style:"border-left: 1px solid rgba(255,255,255,0.5)"}
+                        %i.fa.fa-user-circle
+                        = current_user.username
+            - else
+                %li
+                    = link_to "Register", new_user_registration_path
+                %li
+                    = link_to "Login", new_user_session_path
+
+:javascript
+    $("#profile-hover").dropdown({ hover: true, inDuration: 300, outDuration: 225, alignment: 'left', constrain_width: false, belowOrigin: true });
+    themeApp.userProfileHover();

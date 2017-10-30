@@ -1,0 +1,43 @@
+.posts-wrapper
+  .post
+    .post-body
+      .image-wrap.row
+        = simple_form_for @theme, html: { multipart: true } do |f|
+          .row
+            .col-10.text-center
+              = f.error_notification
+          .container-fluid.col.m10.offset-m1
+            .form-group.text-center
+              %h3 Theme:
+            .form-group.text-center.input-field
+              = f.input :title, label: 'Theme Title'
+            .form-group.text-center.input-field
+              = f.input :url, label: 'Theme URL'
+            .form-group.text-center
+              %p{style:"color:#aaa;"} Description
+              = f.text_area :description, label: false, rows:20, cols:50, style:"height:10rem"
+            .form-group.text-center.row.picture-upload-area
+              %label Pictures
+              = f.file_field :photos, multiple: true, id:"upload-theme-input", style:"display:none", accept:".png,.jpg"
+              %a#upload-theme-button.btn.upload-theme-button{:href => "#"}
+                %i.fa.fa-upload
+            .form-group.text-center.row.picture-upload-area
+              %label Theme Zip
+              %input{type:'file', name: 'file', id:"upload-theme-input-zip", style:"display:none", accept:".zip"}
+              %a#upload-theme-button-zip.btn.upload-theme-button{:href => "#"}
+                %i.fa.fa-upload
+            .col.m12.row
+              .col.m6
+                .form-group.text-center
+                  %label Price ($)
+                  = f.number_field :price, :step => "any"
+              .col.m6
+                .form-group.text-center
+                  %label Sale Price ($)
+                  = f.number_field :sale_price, :step => "any"
+            .form-group.text-center
+              = f.button :submit, class: 'btn-success btn-block', style: "margin:auto"
+
+:javascript
+  themeApp.watchFormButtons()
+  themeApp.uploadZip();

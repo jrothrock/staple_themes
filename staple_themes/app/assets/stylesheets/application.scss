@@ -1,0 +1,152 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+@import "materialize/components/color";
+$primary-color: color("purple", "darken-2") !default;
+$secondary-color: color("blue", "darken-1") !default;
+@import "materialize";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+.text-center{
+    text-align: center;
+}
+
+.new-green{
+	background-color: #25c91a !important;
+}
+.alert-outer-container{
+    position: absolute;
+    width: 100%;
+    margin: auto;
+    max-height: 50px !important;
+}
+.alert-container{
+    position: relative;
+    width: 100%;
+    float: left;
+    height: 50px;
+    padding-top: 5px;
+    -webkit-transition: opacity 0.4s ease-in-out;
+    transition: opacity 0.4s ease-in-out;
+    opacity:1;
+}
+
+.alert-info, .alert-danger, .alert-success{
+    background-color: #1e88e5 !important;
+    margin: auto;
+    width: 50%;
+    border-radius: 5px;
+    height: 50px;
+    position: relative;
+    color: white;
+    top: -20px;
+    p {
+        font-size: 1.3rem;
+        position: relative;
+        padding-top: 10px;
+    }
+}
+
+.alert-danger{
+    background-color: #e53935 !important;
+}
+.alert-info{
+    background-color: #1e88e5 !important;
+}
+.alert-success{
+    background-color: #25c91a !important;
+}
+
+.body-container{
+    width: 98%;
+    margin: 50px auto;
+}
+.fadeout{
+    opacity: 0 !important;
+}
+.picture-upload-area{
+    margin:50px 0px;
+    height:200px;
+    border: 1px solid rgba(0,0,0,0.3);
+    > label{
+        font-size:1.3em;
+        display:block;
+    }
+}
+#back-to-top{
+    position: fixed;
+    right: 15px;
+    bottom: 10px;
+    background: rgba(0,145,234,.6);
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    z-index: 1;
+    display: none;
+    > i {
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        color: #fff;
+        text-align: center;
+    }
+}
+.dropdown-content{
+    background-color:#303030;
+    min-width:150px;
+    > li {
+        transition:none !important;
+        &:hover, &:active{
+            background-color:white !important;
+            > a {
+                color:black !important;
+                &:hover{
+                    background-color:inherit !important;
+                }
+            }
+        }
+        > a{
+            transition: none !important;
+            color:white !important;
+        }
+    }
+}
+
+.upper-nav-bar{
+    background-color:#303030;
+    height:32px;
+    > .nav-wrapper > ul{
+        height:inherit !important;
+        > li {
+            height:inherit !important;
+            line-height:inherit !important;
+            > a {
+                height:inherit !important;
+                line-height:inherit !important;
+                font-size:1.15em !important;
+                &:hover{
+                    > i {
+                        color: #1e88e5 !important;
+                    }
+                }
+                > i {
+                    height:inherit !important;
+                    line-height:32px !important;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,5 @@
+/wordpress/wp-content/themes/*
+!/wordpress/wp-content/themes/template/
+!/wordpress/wp-content/themes/twentyfifteen/
+!/wordpress/wp-content/themes/twentysixteen/
+!/wordpress/wp-content/themes/twentyseventeen/
