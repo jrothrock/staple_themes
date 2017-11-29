@@ -1,14 +1,15 @@
 # config valid for current version and patch releases of Capistrano
-lock "3.9.1"
+lock "3.10.0"
 
 set :application, "my_app_name"
-set :repo_url, "git@github.com:jrothrock/stock-analysis-v2.git"
-
+set :repo_url, "git@github.com:jrothrock/staple_themes.git"
+set :repo_tree, 'staple_themes'
 set :branch, :master
-set :deploy_to, '/home/deploy/stock-analysis-v2'
+set :deploy_to, '/home/deploy/staple_themes'
+
 set :pty, true
-set :linked_files, %w{config/database.yml config/application.yml}
-set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
+set :linked_files, %w{config/database.yml config/secrets.yml}
+set :linked_dirs, %w{node_modules log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
 set :keep_releases, 5
 set :rvm_type, :user
 set :rvm_ruby_version, 'ruby-2.4.1'

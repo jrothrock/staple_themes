@@ -16,6 +16,7 @@
 //= require turbolinks
 //= require materialize-sprockets
 //= require_tree .
+
 var themeApp = {
     userProfileHover:function(){
         $("#profile-hover").on('hover,click', function(e){
@@ -24,19 +25,19 @@ var themeApp = {
         })
     },
     uploadZip:function(){
-        let credential,policy,signature,store_dir,upload_date,upload_time,name,files,sent;
-        let self = this;
-        $(`#upload-theme-input-zip`).on('change', function(){
-            self.files = $(`#upload-theme-input-zip`)[0].files
-            self.name = $(`#upload-theme-input-zip`)[0].files[0].name
+        var credential,policy,signature,store_dir,upload_date,upload_time,name,files,sent;
+        var self = this;
+        $('#upload-theme-input-zip').on('change', function(){
+            self.files = $('#upload-theme-input-zip')[0].files
+            self.name = $('#upload-theme-input-zip')[0].files[0].name
             console.log(self.name)
         })
 
 
-        $(`#upload-theme-input-zip`).fileupload({
-            url: `https://staplethemes.s3.amazonaws.com`,
+        $('#upload-theme-input-zip').fileupload({
+            url: 'https://staplethemes.s3.amazonaws.com',
             dataType: 'multipart/form-data',
-            fileInput: $(`#upload-theme-input-zip`),
+            fileInput: $('#upload-theme-input-zip'),
             autoUpload: false,
             replaceFileInput:false,
             add: function (e, data) { 
@@ -45,7 +46,7 @@ var themeApp = {
                     data:{'name': self.name},
                     dataType:'json',
                     type: 'POST',
-                    success: (amz_data) => {
+                    success: function(amz_data) {
                         self.credential = amz_data.credential;
                         self.policy = amz_data.policy;
                         self.signature = amz_data.signature;
@@ -53,20 +54,20 @@ var themeApp = {
                         self.upload_date, self.upload_time = amz_data.date_stamp;
                         data.submit();
                     },
-                    error: (error) => {
+                    error: function(error) {
                         console.log(error);
                     }
                 });
             },
-            submit: (e, data) => {
-                data.formData = {key:`${self.store_dir}`, "Policy":self.policy,"X-Amz-Signature":self.signature,"X-Amz-Credential":self.credential,"X-Amz-Algorithm":"AWS4-HMAC-SHA256", "X-Amz-Date":self.upload_time};
+            submit: function(e, data) {
+                data.formData = {key:self.store_dir, "Policy":self.policy,"X-Amz-Signature":self.signature,"X-Amz-Credential":self.credential,"X-Amz-Algorithm":"AWS4-HMAC-SHA256", "X-Amz-Date":self.upload_time};
                 console.log(data.formData)
             },
-            progress: (e, data) => {
-            let progress = Math.floor(((parseInt(data.loaded)*0.9)  / (parseInt(data.total))) * 100);
+            progress: function(e, data) {
+            var progress = Math.floor(((parseInt(data.loaded)*0.9)  / (parseInt(data.total))) * 100);
             console.log(progress);
             },
-            done: (e, data) => {
+            done: function(e, data) {
                 console.log('great success 100%!');
                 if(e) console.log(e);
             }
@@ -112,7 +113,7 @@ var themeApp = {
     },
     init: function(){
         // idk why this needs a set timeout
-        setTimeout(()=>{
+        setTimeout(function(){
             themeApp.watchAlert();
             themeApp.backToTop();
             // themeApp.watchFormButton();
