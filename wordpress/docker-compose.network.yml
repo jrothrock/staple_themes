@@ -1,0 +1,56 @@
+version: "2"
+
+services:
+  my-wpdb:
+    image: mariadb:latest
+    container_name: wordpress_db
+    ports:
+      - "8081:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ChangeMeIfYouWant
+    volumes:
+      - my-wpdata:/var/lib/mysql
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.4
+  my-wp:
+    image: wordpress:latest
+    container_name: wordpress
+    volumes:
+      - ./wordpress/:/var/www/html
+    ports:
+      - "80:80"
+    links:
+      - my-wpdb:mysql
+    environment:
+      WORDPRESS_DB_PASSWORD: ChangeMeIfYouWant
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.5
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    links:
+      - my-wpdb:mysql
+    environment:
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: ChangeMeIfYouWant
+      PMA_HOST: mysql
+    restart: always
+    ports:
+      - 8181:80
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.6
+    
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+     driver: default
+     config:
+       - subnet: 10.5.0.0/16
+         gateway: 10.5.0.1
+
+volumes:
+  my-wpdata:

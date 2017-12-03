@@ -1,0 +1,25 @@
+Clean up the menu functions in main.js
+    - there's a very small bug in the menu where in a very deep heriarchy, if there is a 'menu item'
+    as the first item in the current menu, it'll get 'anticipatory' and load that menu's menu. If you move from the farthest menu
+    to the first, clear it, then go through the menu again.
+    ex. 
+        -nav item 1
+        -nav item 2
+        -nav item 3
+            -inner nav item 1
+            -inner nav item 2
+                - inner inner nav item 1
+                - inner inner nav item 2
+                    -inner inner inner nav item 1
+                        -inner inner inner inner nav item 2
+                    -inner inner inner nav item 2
+    
+    If you go all the way out to the last item "inner inner inner inner nav item 2" then all the way to the nav item 3 (with out closing the menu by hovering away),
+    once on "inner inner nav item 2" is hovered, it will load not only "inner inner inner nav item 1" but it's child menu "inner inner inner inner nav item 2" as well.
+    
+        - This may be due to either:
+            - the selectors not fully being cleared (most likely)
+            - somewhere near the mouseenter check and css addition, and it getting anticipatory.
+
+Create a networked docker file, so phpmyadmin and the main app each have their own ip. This would enable writing to the hosts file for phpmyadmin,
+allowing it be accessed at phpmyadmin.dev, instead of wordpress.dev:8181

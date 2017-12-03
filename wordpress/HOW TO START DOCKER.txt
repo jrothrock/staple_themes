@@ -1,15 +1,28 @@
+0. Install Docker and Docker Compose
+
 1.To Start docker you have to first start an environment
-   - docker-machine start docker-vm
-1.1 If no enviornments exists, create a new one
+   - docker-machine start wordpress-vm
+1.1 If no environments exists, create a new one
     docker-machine create --driver virtualbox wordpress-vm
+1.2 If there is an enivornment, and it's already running:
+    - docker-machine restart wordpress-vm
+1.3 If TLS error: https://github.com/docker/toolbox/issues/346
+    - docker rm wordpress-vm; docker-machine create --driver virtualbox wordpress-vm
 
-2. Run the eval for the enviornment
+2. Run the eval for the environment
     - for fish: eval (docker-machine env wordpress-vm)
+    - for bash: eval "$(docker-machine env wordpress-vm)"
 
-3. Go into the root folder (ie where this file is) and run: docker-compose up -d
+3. Go into the root folder (where this file is) and run: docker-compose up -d
 
-4. Go to the address of the docker enviornment
-    - ip can be found by running docker-machine env wordpress-vm
-        - it's the ip (minus port) for the DOCKER_HOST
+4. Go to the address of the docker environment
+    - ip can be found by running: docker-machine env wordpress-vm
+        - FOR WORDPRESS SITE: it's the ip (minus port) for the DOCKER_HOST
+        - FOR PHPMYADMIN: it's the ip with port 8181 for the DOCKER_HOST
+        
+---
 
-5. to stop docker run: docker stop (docker ps -aq)
+5. to stop docker-compose run: docker-compose stop
+5.1 to stop docker-machine run: 
+    - fish: docker stop (docker ps -aq)
+    - bash: docker stop "$(docker ps -aq)"
