@@ -1,2 +1,1 @@
-Maybe create a new 5.1.4 webpack rails, and move everything into it, so ES6 can be used.
-    - can't seem to get babel to work with browserify/assets:precompile.
+Navbar links use current_user.email instead of current_user.username

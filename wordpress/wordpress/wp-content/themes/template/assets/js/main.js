@@ -75,7 +75,8 @@
             }
             watchMenu();
         }
-        if(clear_temp_selectors || all) tempSelectors = {};
+        if(all) tempSelectors = {};
+        if(clear_temp_selectors) tempSelectors = {};
         else selectors = {};
     }
 

@@ -2,6 +2,7 @@
 
 cd "$(dirname "$0")"
 
+HOST_WRITE=${1:-true}
 STATUS=$(docker-machine status wordpress-vm 2> /dev/null || echo "Off")
 if [[ $STATUS == 'Off' ]];
 then
@@ -32,7 +33,7 @@ hostSplit=(${host//:/ })
 ips=(${hostSplit[4]:2} ${hostSplit[4]:2}:8181)
 
 echo ""
-if [[ "$(uname -s)" == "Darwin" ]] || [["$(uname -s)" == "Linux"]]; then
+if ([[ "$(uname -s)" == "Darwin" ]] || [["$(uname -s)" == "Linux"]]) && $HOST_WRITE; then
   # need a way to either get a reverse proxy, or to get each container their own IP through docker's network
   #sites=(wordpress.dev phpmyadmin.dev)
   hosts_file=$([ "$(uname)" == "Darwin" ] && echo "/private/etc/hosts" || echo "/etc/hosts")

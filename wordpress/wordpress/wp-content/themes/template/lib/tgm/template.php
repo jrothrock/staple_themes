@@ -79,6 +79,15 @@ function template_register_required_plugins() {
 			'required'           => true, 
 			'version'            => '', 
 			'external_url'		 => ''
+		),
+		array(
+			'name'               => esc_html__( 'iThemes Security (formerly Better WP Security)', 'template' ),
+			'slug'               => 'better-wp-security', 
+			'force_activate'	 => false,
+			'force_deactivation' => false,
+			'required'           => true, 
+			'version'            => '', 
+			'external_url'		 => ''
 		)
 
 	);

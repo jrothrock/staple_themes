@@ -17,13 +17,10 @@
 !/log/.keep
 !/tmp/.keep
 
-node_modules
-# Ignore Byebug command history file.
+/node_modules
+/yarn-error.log
+
 .byebug_history
-
-/config/secrets.yml
-/public/uploads
-
-dump.rdb
-redis.conf
-redis-server.log
+/public/packs
+/public/packs-test
+/node_modules

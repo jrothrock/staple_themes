@@ -48,17 +48,30 @@ $description = $template_options['site-description'] ? $template_options['site-d
 							<?php endif; ?>
 						</a>
 						
-							<?php wp_nav_menu( array( 
-									'theme_location' => 'top_menu', 
-									'menu_class' => 'right hide-on-med-and-down', 
-									'walker'=> new Materialize_Walker_Desktop_Nav_Menu() 
-							) ); ?>
-							<?php wp_nav_menu( array( 
-									'theme_location' => 'top_menu', 
-									'menu_class' => 'side-nav', 
-									'menu_id' => 'mobile-demo',
-									'depth' => 1,
-							) ); ?>
+							<?php 
+								if(has_nav_menu('top_menu')) {
+									wp_nav_menu( array( 
+										'theme_location' => 'top_menu', 
+										'menu_class' => 'right hide-on-med-and-down', 
+										'walker'=> new Materialize_Walker_Desktop_Nav_Menu() 
+									) );
+								} else {
+									echo '<div class="no-menu-container"><ul class="right hide-on-med-and-down"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'trendy-pro' ) . '</a></li></ul></div>';
+								}
+							?>
+							
+							<?php 
+								if(has_nav_menu('top_menu')) {
+									wp_nav_menu( array( 
+										'theme_location' => 'top_menu', 
+										'menu_class' => 'side-nav', 
+										'menu_id' => 'mobile-demo',
+										'depth' => 1,
+									) );
+								} else {
+									echo '<div class="no-menu-container"><ul class="side-nav" id="mobile-demo"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'trendy-pro' ) . '</a></li></ul></div>';
+								} 
+							?>
 							
 
 					</div>

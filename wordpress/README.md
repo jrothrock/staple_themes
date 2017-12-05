@@ -1,28 +1,37 @@
-This folder contains everything need for rapid Wordpress theme and plugin development.
+# Wordpress
+
+This folder contains everything need for rapid theme and plugin development.
 
 This theme was built with the amazing open sourced projects: 
+
 [Components Theme by Automattic](https://themeshaper.com/2016/02/09/introducing-components)
+
 [Redux Framework by Redux Framework](https://reduxframework.com/)
-[TGM Plugin Activation by TGM] (http://tgmpluginactivation.com/)
+
+[TGM Plugin Activation by TGM](http://tgmpluginactivation.com/)
+
 [Materialize CSS framework by Materialize](http://materializecss.com/)
 
 ## The Theme
 
-This theme contains pretty much everything to get off the ground running. With tons of easy to use customizers and a built in nav menu, the only thing this theme is truly missing is a carousel slider, a minifying and caching plugin, and possibly visual studio code; mega menu may not be a bad choice either.
+This theme contains pretty much everything to get off the ground running. With tons of easy to use customizers and a built in mobile nav menu, the only thing this theme is truly missing is a carousel slider, a minifying and caching plugin, and possibly visual studio code; mega menu may not be a bad choice either.
 
-TGM will ask to install Contact Form 7, MailChimp for WordPress, ACF RGBA Color Picker, Favicon Generator, One Click Demo Import, and the theme's extensions plugin (Redux).
+TGM will ask to install Contact Form 7, MailChimp for WordPress, ACF RGBA Color Picker, Favicon Generator, One Click Demo Import, iThemes Security, and the theme's extensions plugin (Redux).
 
 ## How To Start
-* requires Docker, Docker Compose, and MySQL.
+*Requires Docker, Docker Compose, and MySQL.*
 
-For quick development, run the `./start.sh` script. It will download the latest wordpress version, and create a docker container for Wordpress, Mysql (MariahDB), and PHPMYADMIN.
-* it will ask for admin permissions, as it writes to the hosts file.
+For quick development, run the `./start.sh` script. It will download the latest wordpress version, and create a docker container for Wordpress, MySQL (MariahDB), and PHPMYADMIN.
+- it will ask for admin permissions, as it writes to the hosts file. This can be disabled by passing in a false parameter - `./start.sh false`
 
-If you're running on mac or linux, the site will be available at `wordpress.dev`, and phpmyadmin at `wordpress.dev:8181`.
+**Mac and Linux:** the site will be available at `wordpress.dev`, and phpmyadmin at `wordpress.dev:8181`. If the false parameter was passed in, read the Windows section below.
 
-If you're on windows, an IP address will be echoed out at the end, showing the address for the site and phpmyadmin.
+**Windows:** an IP address will be echoed out at the end, showing the address for the site and phpmyadmin.
 
-To log into PHPMYADMIN, use the username 'root', and the password specified in the docker-compose.yml -- default: "ChangeMeIfYouWant"
+**PHPMYADMIN:** To log into PHPMYADMIN, use the username `root`, and the password specified within the docker-compose.yml -- default: `ChangeMeIfYouWant`
+
+**PROBLEMS CONNECTING TO IP/DOCKER:**
+    If problems arise after running `./start.sh`, run the `./stop.sh` and then open the docker client/gui and hit the restart button. Then go to "How To Start Docker.txt" and follow from 1.3 down. (This won't write to the hosts file)
 
 ## License:
-    Everything within this folder (wordpress) is released under GPLv3.
+    Everything within this folder (wordpress) is released under GPLv3. See license for more details.

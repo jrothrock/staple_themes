@@ -1,16 +1,18 @@
 - if user_signed_in?
     %ul#dropdown1.dropdown-content
         %li
-            = link_to "Profile", profile_path(current_user.username)
+            = link_to "Profile", profile_path(current_user.email)
         %li
             = link_to "Settings", edit_user_registration_path
         %li
-            = link_to "Purchases", purchases_path(current_user.username)
+            = link_to "Purchases", purchases_path(current_user.email)
         %li.divider
         %li
             = link_to "Logout", destroy_user_session_path, method: :delete
 %nav
     .nav-wrapper
+        %a.button-collapse{"data-activates" => "mobile-demo", :href => "#"}
+            %i.fa.fa-navicon{style:"font-size:1.6em"}
         %ul.left.hide-on-med-and-down
             %li
                 = link_to "Home", root_path
@@ -24,13 +26,19 @@
                 %li.dropdown-button{"data-activates":"dropdown1", id:"profile-hover"}
                     %a.profile-dropdown{href:"", style:"border-left: 1px solid rgba(255,255,255,0.5)"}
                         %i.fa.fa-user-circle
+                        %i.fa.fa-angle-down{style:'margin-left:2px'}
                         = current_user.username
             - else
                 %li
                     = link_to "Register", new_user_registration_path
                 %li
                     = link_to "Login", new_user_session_path
+        %ul.side-nav#mobile-demo
+            %li
+                = link_to "test", "https://test.com"
+            %li
+                = link_to "test two", "https://test.com"
+            %li
+                = link_to "test three", "https://test.com"
 
-:javascript
-    $("#profile-hover").dropdown({ hover: true, inDuration: 300, outDuration: 225, alignment: 'left', constrain_width: false, belowOrigin: true });
-    themeApp.userProfileHover();
+

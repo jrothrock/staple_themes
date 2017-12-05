@@ -1,5 +1,4 @@
 class ThemesController < ApplicationController
-  before_action :authenticate_user!
   before_action :is_admin, only: [:edit, :update, :destroy]
   before_action :set_theme, only: [:read, :edit, :update, :destroy, :like]
 

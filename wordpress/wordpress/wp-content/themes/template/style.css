@@ -669,6 +669,12 @@ nav .brand-logo{
 .side-nav li>a{
   color:black !important;
 }
+.side-nav li:first-child{
+  margin-top:40px;
+}
+.side-nav{
+  width:250px;
+}
 /*--------------------------------------------------------------
 # Links
 --------------------------------------------------------------*/

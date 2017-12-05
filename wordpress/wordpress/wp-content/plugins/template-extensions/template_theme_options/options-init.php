@@ -182,7 +182,7 @@
 		)
      ));
      Redux::setSection( $opt_name, array(
-        'title'      => esc_html__( 'Miscellaneous Menu', 'template-extensions' ),
+        'title'      => esc_html__( 'Miscellaneous', 'template-extensions' ),
         'desc'       => esc_html__( 'Miscellaenous options', 'template-extensions' ),
         'id'         => 'page-miscellaneous',
         'subsection' => true,
