@@ -4,12 +4,12 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
- * @package Components
+ * @package Stencil
  */
 
-global $template_options;
+global $stencil_options;
 
-$home_layout = $template_options['homepage-layout'];
+$home_layout = $stencil_options['homepage-layout'];
 $class = '';
 if($home_layout == 'sidebar_left'){
 	$class = 'left';

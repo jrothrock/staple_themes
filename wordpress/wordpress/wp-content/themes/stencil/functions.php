@@ -1,16 +1,16 @@
 <?php
 /**
- * Components functions and definitions
+ * stencil functions and definitions
  *
  * @link https://developer.wordpress.org/themes/basics/theme-functions/
  *
- * @package Components
+ * @package stencil
  */
 
 require_once get_template_directory() .'/lib/tgm/template.php';
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-if ( ! function_exists( 'components_setup' ) ) :
+if ( ! function_exists( 'stencil_setup' ) ) :
 /**
  * Sets up theme defaults and registers support for various WordPress features.
  *
@@ -18,14 +18,14 @@ if ( ! function_exists( 'components_setup' ) ) :
  * runs before the init hook. The init hook is too late for some features, such
  * as indicating support for post thumbnails.
  */
-function components_setup() {
+function stencil_setup() {
 	/*
 	 * Make theme available for translation.
 	 * Translations can be filed in the /languages/ directory.
-	 * If you're building a theme based on components, use a find and replace
-	 * to change 'components' to the name of your theme in all the template files.
+	 * If you're building a theme based on stencil, use a find and replace
+	 * to change 'stencil' to the name of your theme in all the template files.
 	 */
-	load_theme_textdomain( 'components', get_template_directory() . '/languages' );
+	load_theme_textdomain( 'stencil', get_template_directory() . '/languages' );
 
 	// Add default posts and comments RSS feed links to head.
 	add_theme_support( 'automatic-feed-links' );
@@ -44,12 +44,12 @@ function components_setup() {
 	 */
 	add_theme_support( 'post-thumbnails' );
 
-	add_image_size( 'components-featured-image', 640, 9999 );
+	add_image_size( 'stencil-featured-image', 640, 9999 );
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus( array(
-		'top_menu' => esc_html__( 'Top', 'components' ),
-		'footer_menu' => esc_html__( 'Footer', 'components' )
+		'top_menu' => esc_html__( 'Top', 'stencil' ),
+		'footer_menu' => esc_html__( 'Footer', 'stencil' )
 		) );
 
 	/**
@@ -76,7 +76,7 @@ function components_setup() {
 
 }
 endif;
-add_action( 'after_setup_theme', 'components_setup' );
+add_action( 'after_setup_theme', 'stencil_setup' );
 
 
 /**
@@ -88,17 +88,17 @@ add_action( 'after_setup_theme', 'components_setup' );
  */
 
 
-function components_content_width() {
-	$GLOBALS['content_width'] = apply_filters( 'components_content_width', 640 );
+function stencil_content_width() {
+	$GLOBALS['content_width'] = apply_filters( 'stencil_content_width', 640 );
 }
-add_action( 'after_setup_theme', 'components_content_width', 0 );
+add_action( 'after_setup_theme', 'stencil_content_width', 0 );
 
 /**
  * Return early if Custom Logos are not available.
  *
  * @todo Remove after WP 4.7
  */
-function components_the_custom_logo() {
+function stencil_the_custom_logo() {
 	if ( ! function_exists( 'the_custom_logo' ) ) {
 		return;
 	} else {
@@ -119,9 +119,9 @@ add_action( 'admin_bar_menu', 'remove_some_nodes_from_admin_top_bar_menu', 999 )
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
-function components_widgets_init() {
+function stencil_widgets_init() {
 	register_sidebar( array(
-		'name'          => esc_html__( 'Sidebar', 'components' ),
+		'name'          => esc_html__( 'Sidebar', 'stencil' ),
 		'id'            => 'sidebar-1',
 		'description'   => '',
 		'before_widget' => '<section id="%1$s" class="widget %2$s">',
@@ -131,22 +131,22 @@ function components_widgets_init() {
 	) );
 	
 }
-add_action( 'widgets_init', 'components_widgets_init' );
+add_action( 'widgets_init', 'stencil_widgets_init' );
 
 /**
  * Enqueue scripts and styles.
  */
-function components_scripts() {
+function stencil_scripts() {
 	
 	wp_enqueue_style( 'materialize', get_template_directory_uri() . '/assets/stylesheets/materialize.min.css' );
 
 	wp_enqueue_style( 'load-fa', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
 	
-	wp_enqueue_style( 'components-style', get_stylesheet_uri() );
+	wp_enqueue_style( 'stencil-style', get_stylesheet_uri() );
 
-	wp_enqueue_script( 'components-navigation', get_template_directory_uri() . '/assets/js/navigation.js', array(), '20151215', true );
+	wp_enqueue_script( 'stencil-navigation', get_template_directory_uri() . '/assets/js/navigation.js', array(), '20151215', true );
 
-	wp_enqueue_script( 'components-skip-link-focus-fix', get_template_directory_uri() . '/assets/js/skip-link-focus-fix.js', array(), '20151215', true );
+	wp_enqueue_script( 'stencil-skip-link-focus-fix', get_template_directory_uri() . '/assets/js/skip-link-focus-fix.js', array(), '20151215', true );
 
 	wp_enqueue_script( 'materialize', get_template_directory_uri() . '/assets/js/materialize.min.js', array('jquery'), '20151215', true );
 
@@ -155,11 +155,11 @@ function components_scripts() {
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
-	if ( is_plugin_active( 'template-extensions/template_extensions.php' ) ) {
-		require_once get_template_directory() . '/inc/template_color_options.php';
+	if ( is_plugin_active( 'stencil-extensions/stencil_extensions.php' ) ) {
+		require_once get_template_directory() . '/inc/stencil_color_options.php';
 	}
 }
-add_action( 'wp_enqueue_scripts', 'components_scripts' );
+add_action( 'wp_enqueue_scripts', 'stencil_scripts' );
 
 /**
  * Custom template tags for this theme.

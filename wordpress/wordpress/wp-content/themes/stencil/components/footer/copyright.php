@@ -1,9 +1,9 @@
 <?php
-	global $template_options;
+	global $stencil_options;
 	$copyright = '';
 	$copyright .= esc_html__( 'Copyright &copy; ', 'trendy-pro' );
-	if( !empty( $template_options['template-copyright'] ) ){
-		$copyright_msg .= $template_options['template-copyright'];
+	if( !empty( $stencil_options['stencil-copyright'] ) ){
+		$copyright_msg .= $stencil_options['stencil-copyright'];
 	} else {
 		$copyright .= get_bloginfo('name');
 		$copyright .= ' ';

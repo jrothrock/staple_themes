@@ -41,7 +41,6 @@ gem 'aws-sdk'
 gem 'exception_notification'
 gem 'redis-namespace'
 gem 'redis-rails'
-gem 'redis-rack-cache'
 gem 'stripe'
 gem 'geokit'
 gem "pg_search"

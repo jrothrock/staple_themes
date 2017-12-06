@@ -7,9 +7,9 @@
  * @package Components
  */
 
-global $template_options;
+global $stencil_options;
 
-$home_layout = $template_options['homepage-layout'];
+$home_layout = $stencil_options['homepage-layout'];
 $class = '';
 if($home_layout == 'sidebar_left'){
 	$class = 'right';
@@ -26,7 +26,7 @@ get_header(); ?>
 		if ( have_posts() ) : ?>
 
 			<header class="page-header">
-				<h1 class="page-title"><?php printf( esc_html__( 'Search Results for: %s', 'components' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
+				<h1 class="page-title"><?php printf( esc_html__( 'Search Results for: %s', 'stencil' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
 			</header><!-- .page-header -->
 
 			<?php
