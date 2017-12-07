@@ -3,7 +3,7 @@
 /*
 Plugin Name: Stencil Extensions
 Plugin URI: https://staplethemes.com
-Description: This plugin is developed to enhance capabilities of the Stencil WordPress Themes.
+Description: This plugin is developed to enhance the capabilities of the Stencil WordPress Theme.
 Author: Staple Themes
 Version: 1.0.0
 Author URI: https://staplethemes.com
