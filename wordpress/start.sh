@@ -12,9 +12,10 @@ then
   docker-machine restart wordpress-vm
 else
     echo "Hmm something didn't work right... retrying."
-    docker stop "$(docker ps -aq)"
+    # sudo ifconfig vboxnet0 down; sudo ifconfig vboxnet0 up
     docker-machine rm wordpress-vm -y
     docker-machine create --driver virtualbox wordpress-vm
+    /bin/bash ./stop.sh
 fi
 
 eval "$(docker-machine env wordpress-vm)"
@@ -26,7 +27,9 @@ tar xzvf latest.tar.gz
 rm -rf {latest.tar.gz,./wordpress/wp-content}
 cp -r ./hold_temp/wp-content ./hold_temp/wp-config.php ./wordpress
 rm -rf ./hold_temp
+
 docker-compose up -d
+docker exec -it wordpress usermod -u 1000 www-data
 
 host=$(docker-machine env wordpress-vm | grep "DOCKER_HOST")
 hostSplit=(${host//:/ })

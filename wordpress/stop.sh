@@ -6,4 +6,5 @@ do
     docker stop $(docker ps -aq --filter name="${i}$")
 done
 
+echo ""
 echo "Containers: ['wordpress', 'wordpress_db', 'phpmyadmin'] have been stopped."

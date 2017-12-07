@@ -18,6 +18,7 @@ services:
     container_name: wordpress
     volumes:
       - ./wordpress/:/var/www/html
+      - ./utils/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     ports:
       - "80:80"
     links:
