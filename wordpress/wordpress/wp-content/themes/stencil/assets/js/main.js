@@ -1,11 +1,14 @@
 ( function( $ ) {
     var showing = false;
     var hovering = false;
-    var binds = [];
+    var binds = {};
+    // selectors are for menu items already created
     var selectors = {};
-    var tempSelectors={}
+    // temp selectors are the menu items created when hovering over a menu item with a sub menu;
+    var tempSelectors={};
     var menuHoveringDepth = 1;
     var totalDepth = 1;
+    var menu_right = $('#menu-top').get(0).className.split(' ')[0] === 'right' ? true : false;
     var watchScroll = function(){
         $(window).scroll(function(){
             var scroll = $(this).scrollTop();
@@ -41,63 +44,82 @@
     //     $("a.main-menu-link").dropdown({'hover':true});
     // });
 
-    // This code is honestly garbage. This should really be cleaned up. Probably moving the 
-    // while loop to it's own function, and possibly combining the selector objects.
+    // Bind patch for the clearBinds needs the be figured out.
+    //   - For some reason, the display none is not occuring, but the selector is being removed.
     //
-    // This is the definition of sphagetti shit code. 
+    // Code should probably be cleaned up a little.
     //
-    var clearSelectors = function(sections,clear_binds,clear_temp_selectors,all){
-        var to_remove = clear_temp_selectors ? tempSelectors : selectors;
-        var n = sections;
-        var all_counter = 0;
+    var clearBinds = function(n){
         while(n <= totalDepth){
-            if(to_remove[n.toString()]){
-                if(n === 0 && (!all || all_counter === 0)){
-                    $(to_remove[n.toString()]).css({'display':'none', 'opacity':0})
-                    to_remove[n.toString()] = null;
-                } else {
-                    var children = to_remove[n.toString()]
-                    for(var i = 0; i < children.length; i++){
-                        $(children[i]).parent().parent().css({'display':'none', 'opacity':0})
-                    }
+            nth_key = n.toString();
+            if(binds[nth_key]){
+                var children = binds[nth_key];
+                for(let i = 0; i < binds[nth_key].length; i++){
+                    $(children[i]).unbind();
                 }
-            } 
-            if(n === totalDepth && all_counter == 0){
-                all_counter = 1; 
-                n = -1; 
-                to_remove = tempSelectors;
+                binds[nth_key] = [];
             }
             n++;
         }
-        if(clear_binds){
-            for(var i = 0; i < binds.length; i++){
-                $(binds[i]).unbind();
-            }
+    }
+    
+    var clearSelectors = function(selector_type, n){
+        while(n <= totalDepth){
+            nth_key = n.toString()
+            if(selector_type[nth_key]){
+                if(n === 0){
+                    $(selector_type[nth_key]).css({'display':'none', 'opacity':0})
+                    selector_type[nth_key] = null;
+                } else {
+                    var children = selector_type[nth_key];
+                    for(var i = 0; i < children.length; i++){
+                        $(children[i]).parent().parent().css({'display':'none', 'opacity':0})
+                    }
+                    selector_type[nth_key] = [];
+                }
+            } 
+            n++;
+        }
+    }
+
+    var clearing = function(sections,bind_patch){
+        clearSelectors(selectors, sections);
+        clearSelectors(tempSelectors, sections);
+        if(!bind_patch) clearBinds(sections);
+        totalDepth = sections;
+        if(sections === 0){
+            tempSelectors = {};
+            selectors = {};
+            binds = {};
             watchMenu();
         }
-        if(all) tempSelectors = {};
-        if(clear_temp_selectors) tempSelectors = {};
-        else selectors = {};
     }
 
     var childMenu = function(selector,depth){
         $(selector).on('mouseenter mouseleave', function(e){
             selectors[depth.toString() + "_current"] = $(this);
-            if(!selectors[depth.toString()]) selectors[depth.toString()] = ['#'+$(this).attr('data-activates') + ' > li > a']
-            else selectors[depth.toString()].push('#' + $(this).attr('data-activates') + ' > li > a')
-            binds.push($(this));
+            if(!binds[depth.toString()]) binds[depth.toString()] = [$(this)]
+            else binds[depth.toString()].push($(this))
             if(e.type === 'mouseenter'){
                 if(selectors[depth.toString() + "_current"] != $(this) && depth == menuHoveringDepth){
-                    clearSelectors(depth+1,false,true,false);
+                    clearing(depth+1);
                 }
+                if(menuHoveringDepth > depth){
+                    // clearing(depth+1);
+                    clearing(depth,true);
+                }
+
                 tempSelectors = {};
                 hovering = true;
                 menuHoveringDepth = depth;
-                totalDepth = depth + 1;
+                totalDepth = totalDepth < depth + 1 ? depth + 1 : totalDepth;
 
                 if($(this).attr('data-activates')){
+                    if(!selectors[depth.toString()]) selectors[depth.toString()] = ['#'+$(this).attr('data-activates') + ' > li > a']
+                    else selectors[depth.toString()].push('#' + $(this).attr('data-activates') + ' > li > a')
                     var top = $(this).parent().position().top;
-                    $('#' + $(this).attr('data-activates')).css({'display':'initial','opacity':1, 'right':'150px', top: top})
+                    if(menu_right) $('#' + $(this).attr('data-activates')).css({'display':'initial','opacity':1, 'right':'150px', top: top})
+                    else $('#' + $(this).attr('data-activates')).css({'display':'initial','opacity':1, 'left':'150px', top: top})
                     var depth_string = String(depth + 1)
                     if(!tempSelectors[depth_string]) tempSelectors[depth_string] = ['#'+$(this).attr('data-activates') + ' > li > a']
                     else tempSelectors[depth_string].push('#' + $(this).attr('data-activates') + ' > li > a')
@@ -106,30 +128,34 @@
             } else {
                 hovering = false;
                 setTimeout(function(){
-                    if(!hovering)clearSelectors(0,true,false,true);
+                    if(!hovering)clearing(0);
                 },20);
             }
         });
     };
+
     var watchMenu = function(){
-        binds = ["a.main-menu-link"];
+        binds['0'] = ["a.main-menu-link"];
         $("a.main-menu-link").on('mouseenter mouseleave', function(e){
             var activator = "#" + $(this).attr('data-activates');
             if(selectors['0'] && selectors['0'] != activator){
-                clearSelectors(0,true);
+                clearing(0);
             }
             var position = $(this).position();
-            var right = window.innerWidth - position.left - $(this).parent().width();
+            if(menu_right) var right = window.innerWidth - position.left - $(this).parent().width();
+            else var left = position.left;
             if(e.type === 'mouseenter'){
                 hovering = true;
-                $(activator).css({'display':'initial', 'opacity':1, 'right': right})
+                if(menu_right) $(activator).css({'display':'initial', 'opacity':1, 'right': right})
+                else $(activator).css({'display':'initial', 'opacity':1, 'left': left})
+                if(!binds['1']) binds['1'] = [$(this)]
+                else binds['1'].push($(this));
                 selectors['0'] = activator
-                binds.push($(this));
                 if($(this).attr('data-activates')) childMenu(activator + ' > li > a',1)
             } else {
                 hovering = false;
                 setTimeout(function(){
-                    if(!hovering) clearSelectors(0,true,false,true);
+                    if(!hovering) clearing(0);
                 },20);
             }
         })

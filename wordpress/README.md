@@ -33,11 +33,13 @@ For quick development, run the `./start.sh` script. It will download the latest 
 **PROBLEMS CONNECTING TO IP/DOCKER:**
     If problems arise after running `./start.sh`, run the `./stop.sh` and then open the docker client/gui and hit the restart button. Then go to "How To Start Docker.txt" and follow from 1.3 down. (This won't write to the hosts file)
 
-## Changing The Theme Name
+## Creating A New Theme
 
-*Note This Will Affect Everything In The wp-content Folder*
+Run the `./new.sh` script, and an input will appear asking for a new theme name. After that, a description input will appear. This input is not mandatory and can be skipped. The site url, theme url, license, etc. will remain the same, so it's best to change those manually in the theme's style.css, and the theme extensions plugin style.css.
 
-Run the `./rename.sh` script, and a input will appear asking for a new theme name. The site url, theme url, etc. will remain the same, so it's best to change those manually in the theme's style.css, and the extensions plugin style.css.
+## Changing A Theme Name
+
+Run the `./rename.sh` script, and an input will appear asking for the old theme name, as well as the for the new theme name. The site url, theme url, license, etc. will remain the same, so it's best to change those manually in the theme's style.css, and the theme extensions plugin style.css.
 
 
 ## License:

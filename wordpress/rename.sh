@@ -23,6 +23,9 @@ while [ -z "$OLD_THEME_NAME" ] ; do
          if [ -z "$OLD_THEME_NAME" ] ; then
             echo "Name Can't Be Blank." 
             unset OLD_THEME_NAME
+         elif [ "$OLD_THEME_NAME" == "stencil"] || [ "$OLD_THEME_NAME" == "Stencil"] ; then
+            echo "This Theme Is Used For Generating New Themes. Name Can't Be Changed."
+            unset OLD_THEME_NAME
          fi
          for((i=0;i<${#OLD_THEME_NAME};i++))
          do

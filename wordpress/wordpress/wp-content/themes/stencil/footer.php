@@ -17,35 +17,37 @@
 
 		<!-- components/footer/site-info.php -->
 		<?php if( $stencil_options['stencil-footer'] ) : ?>
-			<footer class="page-footer">
-			<div class="container">
-				<div class="row">
-					<div class="col l6 s12">
-						<h5 class="white-text"><?php echo esc_html( $stencil_options['footer-text-title'] ) ?></h5>
-						<p class="grey-text text-lighten-4"><?php echo esc_html( $stencil_options['footer-text'] ) ?></p>
-					</div>
-					<div class="col l4 offset-l2 s12">
-						<h5 class="white-text"><?php echo esc_html( $stencil_options['footer-links-title'] ) ?></h5>
-						<?php
-							
-							if(has_nav_menu('footer_menu')) {
-								$args = array(
-									'theme_location'	=> 'footer_menu',
-									'menu_class'		=> 'footer-menu',
-									'container'			=> 'false',
-									'depth'				=> 1
-								);
-								wp_nav_menu( $args );
-							}
-							else {
-								echo '<ul class="footer-menu"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'stencil' ) . '</a></li></ul>';
-							}
-							// main menu END
-						?>
+			<footer class="page-footer <?php echo ( $stencil_options['stencil-footer-top'] ? 'top' : '') ?>">
+			<?php if( $stencil_options['stencil-footer-top'] ) : ?>
+				<div class="container">
+					<div class="row">
+						<div class="col l6 s12">
+							<h5 class="white-text"><?php echo esc_html( $stencil_options['footer-text-title'] ) ?></h5>
+							<p class="grey-text text-lighten-4"><?php echo esc_html( $stencil_options['footer-text'] ) ?></p>
+						</div>
+						<div class="col l4 offset-l2 s12">
+							<h5 class="white-text"><?php echo esc_html( $stencil_options['footer-links-title'] ) ?></h5>
+							<?php
+								
+								if(has_nav_menu('footer_menu')) {
+									$args = array(
+										'theme_location'	=> 'footer_menu',
+										'menu_class'		=> 'footer-menu',
+										'container'			=> 'false',
+										'depth'				=> 1
+									);
+									wp_nav_menu( $args );
+								}
+								else {
+									echo '<ul class="footer-menu"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'stencil' ) . '</a></li></ul>';
+								}
+								// main menu END
+							?>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="footer-copyright">
+			<?php endif; ?>
+			<div class="footer-copyright <?php echo ( $stencil_options['footer-social'] ? '' : 'center' ) ?>">
 				<div class="container">
 					<?php get_template_part('/components/footer/copyright','copyright'); ?>
 

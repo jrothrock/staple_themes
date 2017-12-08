@@ -156,7 +156,8 @@ function stencil_scripts() {
 		wp_enqueue_script( 'comment-reply' );
 	}
 	if ( is_plugin_active( 'stencil_extensions/stencil_extensions.php' ) ) {
-		require_once get_template_directory() . '/inc/stencil_color_options.php';
+		require_once get_template_directory() . '/inc/stencil_css_options.php';
+		require_once get_template_directory() . '/inc/stencil_javascript_options.php';
 	}
 }
 add_action( 'wp_enqueue_scripts', 'stencil_scripts' );

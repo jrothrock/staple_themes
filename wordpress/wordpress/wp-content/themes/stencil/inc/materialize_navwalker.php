@@ -49,6 +49,7 @@ if( ! class_exists( 'Materialize_Walker_Desktop_Nav_Menu' ) ) :
          */
         function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
             global $wp_query;
+            global $stencil_options;
             $this->curItem = $item;
             $indent = ( $depth > 0 ? str_repeat( "\t", $depth ) : '' ); // code indent
 
@@ -79,17 +80,20 @@ if( ! class_exists( 'Materialize_Walker_Desktop_Nav_Menu' ) ) :
             if( in_array( 'menu-item-has-children', $item->classes ) ) 
                 $attributes .= ' data-activates="' . $item->post_name . '-nav-menu"';
 
-			$left_arrow = ( $args->walker->has_children && 1 <= $depth ) ? ' <span class="fa fa-angle-left"></span> ' : '';
-			$down_arrow = ( $args->walker->has_children && 0 === $depth ) ? ' <span class="fa fa-angle-down"></span></a>' : '</a>';
+            $menu_right = (int)$stencil_options['layout-nav-menu'] % 2 === 1 ? true : false;
+
+			$left_icon = ( $args->walker->has_children && 1 <= $depth && $menu_right ) ? ' <span class="fa fa-angle-left"></span> ' : '';
+			$right_icon = ( $args->walker->has_children && 0 === $depth ) ? ' <span class="fa fa-angle-down"></span></a>' : '</a>';
+            $right_icon = ( $args->walker->has_children && 1 <= $depth && !$menu_right ) ? ' <span class="fa fa-angle-right"></span></a>' : $right_icon;
             // Build HTML output and pass through the proper filter.
             $item_output = sprintf( '%1$s<a%2$s>%3$s%4$s%5$s%6$s%7$s</a>%8$s',
                 $args->before,
                 $attributes,
                 $args->link_before,
-				$left_arrow,
+				$left_icon,
                 apply_filters( 'the_title', $item->title, $item->ID ),
                 $args->link_after,
-				$down_arrow,
+				$right_icon,
                 $args->after
             );
             $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );

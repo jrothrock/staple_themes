@@ -173,12 +173,36 @@
 			array(
                 'id'       => 'top-nav-menu',
                 'type'     => 'switch',
-                'title'    => esc_html__( 'Show or Hide Entire Top Nav Menu ', 'stencil-extensions' ),
+                'title'    => esc_html__( 'Show or Hide Top Nav Menu', 'stencil-extensions' ),
                 'subtitle' => esc_html__( 'You can enable or disable entire top nav menu section from here.', 'stencil-extensions' ),
                 'default'  => 1,
-                'on'       => 'SHOW',
-                'off'      => 'HIDE',
-            )
+                '1'       => 'SHOW',
+                '0'      => 'HIDE',
+            ),
+            array(
+                'id'       => 'fixed-nav-menu',
+                'type'     => 'switch',
+                'required' => array( 'top-nav-menu', '=', '1' ),
+                'title'    => esc_html__( 'Fixed Nav Menu', 'stencil-extensions' ),
+                'subtitle' => esc_html__( 'You can enable or disable a fixed nav menu here.', 'stencil-extensions' ),
+                'default'  => '0',
+                '1'       => 'FIXED',
+                '0'      => 'NOT',
+            ),
+            array(
+				'id'       => 'layout-nav-menu',
+				'type'     => 'select',
+                'required' => array( 'top-nav-menu', '=', '1' ),
+				'title'    => esc_html__( 'Home Page Layout', 'stencil-extensions' ),
+				'subtitle' => esc_html__( 'Choose Your Prefered Nav Menu Layout.', 'stencil-extensions' ),
+				'options'  => array(
+					'1' => 'Logo Left - Menu Right',
+					'2' => 'Logo Center - Menu Left',
+                    '3' => 'Logo Center - Menu Right',
+					'4' => 'Logo Right - Menu Left'
+				),
+				'default'  => '1',
+			)
 		)
      ));
      Redux::setSection( $opt_name, array(
@@ -194,8 +218,8 @@
                 'title'    => esc_html__( 'Show or Hide Back To The Top Button ', 'stencil-extensions' ),
                 'subtitle' => esc_html__( 'You can enable or disable the back to the button here .', 'stencil-extensions' ),
                 'default'  => 1,
-                'on'       => 'SHOW',
-                'off'      => 'HIDE',
+                '1'       => 'SHOW',
+                '0'      => 'HIDE',
             )
 		)
      ));
@@ -231,28 +255,39 @@
         'id'         => 'page-footer',
         'icon'   => 'el el-photo',
 		'fields'     => array(
-			array(
-                'id'       => 'footer-social',
-                'type'     => 'switch',
-                'title'    => esc_html__( 'Footer Social Icons', 'stencil-extensions' ),
-                'subtitle' => esc_html__( 'Enable or disable social icons in footer section.', 'stencil-extensions' ),
-                'default'  => 1,
-                'on'       => 'ON',
-                'off'      => 'OFF',
-            ),
-			array(
+            array(
                 'id'       => 'stencil-footer',
                 'type'     => 'switch',
                 'title'    => esc_html__( 'Show or Hide Entire Footer', 'stencil-extensions' ),
                 'subtitle' => esc_html__( 'You can enable or disable entire footer section from here.', 'stencil-extensions' ),
                 'default'  => 1,
-                'on'       => 'SHOW',
-                'off'      => 'HIDE',
+                '1'       => 'SHOW',
+                '0'      => 'HIDE',
+            ),
+            array(
+                'id'       => 'footer-social',
+                'type'     => 'switch',
+                'required' => array( 'stencil-footer', '=', '1' ),
+                'title'    => esc_html__( 'Footer Social Icons', 'stencil-extensions' ),
+                'subtitle' => esc_html__( 'Enable or disable social icons in footer section.', 'stencil-extensions' ),
+                'default'  => 1,
+                '1'       => 'ON',
+                '0'      => 'OFF',
+            ),
+            array(
+                'id'       => 'stencil-footer-top',
+                'type'     => 'switch',
+                'required' => array( 'stencil-footer', '=', '1' ),
+                'title'    => esc_html__( 'Show or Hide The Top Part Of The Footer', 'stencil-extensions' ),
+                'subtitle' => esc_html__( 'You can enable or disable the top part of the footer from here.', 'stencil-extensions' ),
+                'default'  => 1,
+                '1'       => 'ON',
+                '0'      => 'OFF',
             ),
             array(
                 'id'       => 'footer-text-title',
                 'type'     => 'text',
-				'required' => array( 'stencil-footer', '=', '1' ),
+				'required' => array( 'stencil-footer-top', '=', '1' ),
                 'title'    => esc_html__( 'Footer Description Title', 'stencil-extensions' ),
                 'subtitle' => esc_html__( 'Enter the title for the footer description.', 'stencil-extensions' ),
                 'default' => "About",
@@ -261,14 +296,14 @@
 			array(
                 'id'       => 'footer-text',
                 'type'     => 'textarea',
-				'required' => array( 'stencil-footer', '=', '1' ),
+				'required' => array( 'stencil-footer-top', '=', '1' ),
                 'title'    => esc_html__( 'Footer Description Text', 'stencil-extensions' ),
                 'subtitle' => esc_html__( 'Enter text explaing your blog and/or about yourself.', 'stencil-extensions' ),
             ),
             array(
                 'id'       => 'footer-links-title',
                 'type'     => 'text',
-				'required' => array( 'stencil-footer', '=', '1' ),
+				'required' => array( 'stencil-footer-top', '=', '1' ),
                 'title'    => esc_html__( 'Footer Description Title', 'stencil-extensions' ),
                 'subtitle' => esc_html__( 'Enter the title for the footer description.', 'stencil-extensions' ),
                 'default' => "Links",
@@ -572,6 +607,21 @@
 	
 	// custom css
     Redux::setSection( $opt_name, array(
+        'title'      => esc_html__( 'Analytics', 'stencil-extensions' ),
+        'id'         => 'stencil-analytics',
+        'icon'  => 'el el-graph',
+        'desc'       => 'This section allows you to enter your Google Analytics Script. <br> To register your site, follow this video until the 5:00 mark, then paste the UA identifier in the field below: <br> <a href="https://www.youtube.com/watch?v=mXcQ7rVn3ro" target="_blank">https://www.youtube.com/watch?v=mXcQ7rVn3ro</a>',
+        'fields'     => array(
+            array(
+                'id'       => 'site-analytics',
+                'type'     => 'text',
+                'title'    => esc_html__( 'Site Analytics', 'stencil-extensions' ),
+                'subtitle' => esc_html__( "Enter your site's Google Analytics UA-XXXXX-X identifier here.", 'stencil-extensions' ),
+            )
+        )
+    ) );
+
+    Redux::setSection( $opt_name, array(
         'title'      => esc_html__( 'Custom CSS', 'stencil-extensions' ),
         'id'         => 'stencil-custom-css',
         'icon'  => 'el el-edit',
@@ -584,6 +634,24 @@
                 'subtitle' => esc_html__( 'Paste your CSS code here.', 'stencil-extensions' ),
                 'mode'     => 'css',
                 'theme'    => 'monokai',
+            )
+        )
+    ) );
+
+    Redux::setSection( $opt_name, array(
+        'title'      => esc_html__( 'Custom JavaScript', 'stencil-extensions' ),
+        'id'         => 'stencil-custom-javascript',
+        'icon'  => 'el el-file-edit',
+        'desc'       => esc_html__( 'This section allows you to enter your own custom JavaScript functions.', 'stencil-extensions' ),
+        'fields'     => array(
+            array(
+                'id'       => 'stencil-javascript-editor',
+                'type'     => 'ace_editor',
+                'title'    => esc_html__( 'JavaScript Code', 'stencil-extensions' ),
+                'subtitle' => esc_html__( 'Paste your JavaScript code here.', 'stencil-extensions' ),
+                'mode'     => 'javascript',
+                'theme'    => 'monokai',
+                'default'  => "jQuery(document).ready(function(){\n\n});"
             )
         )
     ) );

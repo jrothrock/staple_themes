@@ -15,6 +15,7 @@ services:
     volumes:
       - ./wordpress/:/var/www/html
       - ./utils/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./.htaccess:/var/www/.htaccess
     ports:
       - "80:80"
     links:
