@@ -24,7 +24,7 @@ TGM will ask to install Contact Form 7, MailChimp for WordPress, ACF RGBA Color 
 For quick development, run the `./start.sh` script. It will download the latest wordpress version, and create a docker container for Wordpress, MySQL (MariahDB), and PHPMYADMIN.
 - it will ask for admin permissions, as it writes to the hosts file. This can be disabled by passing in a false parameter - `./start.sh false`
 
-**Mac and Linux:** the site will be available at `wordpress.dev`, and phpmyadmin at `wordpress.dev:8181`. If the false parameter was passed in, read the Windows section below.
+**Mac and Linux:** the site will be available at `wordpress.site`, and phpmyadmin at `wordpress.site:8181`. If the false parameter was passed in, read the Windows section below.
 
 **Windows:** an IP address will be echoed out at the end, showing the address for the site and phpmyadmin.
 
@@ -41,6 +41,9 @@ Run the `./new.sh` script, and an input will appear asking for a new theme name.
 
 Run the `./rename.sh` script, and an input will appear asking for the old theme name, as well as the for the new theme name. The site url, theme url, license, etc. will remain the same, so it's best to change those manually in the theme's style.css, and the theme extensions plugin style.css.
 
+## Moving Theme To Production
+
+Run the `./prod.sh` script, and an input will appear asking for the theme name. The theme, along with its extension, will be zipped and moved into a folder called themes located into this directory.
 
 ## License:
     Everything within this folder (wordpress) is released under GPLv3. See license for more details.

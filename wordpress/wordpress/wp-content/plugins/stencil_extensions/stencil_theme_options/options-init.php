@@ -185,9 +185,19 @@
                 'required' => array( 'top-nav-menu', '=', '1' ),
                 'title'    => esc_html__( 'Fixed Nav Menu', 'stencil-extensions' ),
                 'subtitle' => esc_html__( 'You can enable or disable a fixed nav menu here.', 'stencil-extensions' ),
-                'default'  => '0',
+                'default'  => '1',
                 '1'       => 'FIXED',
                 '0'      => 'NOT',
+            ),
+            array(
+                'id'       => 'logo-nav-menu',
+                'type'     => 'switch',
+                'required' => array( 'nav-menu', '=', '1' ),
+                'title'    => esc_html__( 'Show Text Logo Nav Menu', 'stencil-extensions' ),
+                'subtitle' => esc_html__( 'You can enable or disable the text logo here.', 'stencil-extensions' ),
+                'default'  => '1',
+                '1'       => 'SHOW',
+                '0'      => 'HIDE',
             ),
             array(
 				'id'       => 'layout-nav-menu',
@@ -225,33 +235,12 @@
      ));
 	// header settings END
 	
-	// homepage settings START
-	Redux::setSection( $opt_name, array(
-        'title'      => esc_html__( 'Home Page', 'stencil-extensions' ),
-        'desc'       => esc_html__( 'All homepage related settings.', 'stencil-extensions' ),
-        'id'         => 'home-page',
-        'icon'   => 'el el-website',
-		'fields'     => array(
-             array(
-				'id'       => 'homepage-layout',
-				'type'     => 'select',
-				'title'    => esc_html__( 'Home Page Layout', 'stencil-extensions' ),
-				'subtitle' => esc_html__( 'Choose your prefered homepage layout.', 'stencil-extensions' ),
-				'options'  => array(
-					'sidebar_left' => 'Sidebar Left',
-					'sidebar_right' => 'Sidebar Right',
-					'no_sidebar' => 'No Sidebar'
-				),
-				'default'  => 'sidebar_right',
-			)
-		)
-     ));
 
 
-	// footer settings START
+    // footer settings START
 	 Redux::setSection( $opt_name, array(
         'title'      => esc_html__( 'Footer', 'stencil-extensions' ),
-        'desc'       => esc_html__( 'All footer related settings can be done from here.', 'stencil-extensions' ),
+        'desc'       => esc_html__( 'General footer related settings can be changed from here.', 'stencil-extensions' ),
         'id'         => 'page-footer',
         'icon'   => 'el el-photo',
 		'fields'     => array(
@@ -284,31 +273,6 @@
                 '1'       => 'ON',
                 '0'      => 'OFF',
             ),
-            array(
-                'id'       => 'footer-text-title',
-                'type'     => 'text',
-				'required' => array( 'stencil-footer-top', '=', '1' ),
-                'title'    => esc_html__( 'Footer Description Title', 'stencil-extensions' ),
-                'subtitle' => esc_html__( 'Enter the title for the footer description.', 'stencil-extensions' ),
-                'default' => "About",
-                'desc' => esc_html__( 'If left empty, no title will appear.', 'stencil-extensions' ),
-            ),
-			array(
-                'id'       => 'footer-text',
-                'type'     => 'textarea',
-				'required' => array( 'stencil-footer-top', '=', '1' ),
-                'title'    => esc_html__( 'Footer Description Text', 'stencil-extensions' ),
-                'subtitle' => esc_html__( 'Enter text explaing your blog and/or about yourself.', 'stencil-extensions' ),
-            ),
-            array(
-                'id'       => 'footer-links-title',
-                'type'     => 'text',
-				'required' => array( 'stencil-footer-top', '=', '1' ),
-                'title'    => esc_html__( 'Footer Description Title', 'stencil-extensions' ),
-                'subtitle' => esc_html__( 'Enter the title for the footer description.', 'stencil-extensions' ),
-                'default' => "Links",
-                'desc' => esc_html__( 'If left empty, no title will appear.', 'stencil-extensions' ),
-            ),
 			array(
                 'id'       => 'stencil-copyright',
                 'type'     => 'text',
@@ -319,7 +283,147 @@
             )
 		)
     ) );
+
+    Redux::setSection( $opt_name, array(
+        'title'      => esc_html__( 'Footer Left', 'stencil-extensions' ),
+        'desc'       => esc_html__( 'Left footer section related settings can be changed from here.', 'stencil-extensions' ),
+        'id'         => 'page-footer-left',
+        'subsection' => true,
+        'icon'   => 'el el-photo',
+		'fields'     => array(
+            array(
+				'id'       => 'footer-left-layout',
+				'type'     => 'select',
+				'title'    => esc_html__( 'Footer Left Layout', 'stencil-extensions' ),
+				'subtitle' => esc_html__( 'Choose your prefered sidebar layout.', 'stencil-extensions' ),
+				'options'  => array(
+					'text' => 'Text',
+					'menu' => 'Menu',
+				),
+				'default'  => 'text',
+			),
+            array(
+                'id'       => 'footer-left-title',
+                'type'     => 'text',
+                'title'    => esc_html__( 'Footer Description Title', 'stencil-extensions' ),
+                'subtitle' => esc_html__( 'Enter the title for the footer description.', 'stencil-extensions' ),
+                'default' => "About",
+                'desc' => esc_html__( 'If left empty, no title will appear.', 'stencil-extensions' ),
+            ),
+			array(
+                'id'       => 'footer-left-text',
+                'type'     => 'textarea',
+				'required' => array(array( 'stencil-footer-top', '=', '1' ),array( 'footer-left-layout', '=', 'text' ) ),
+                'title'    => esc_html__( 'Footer Left Text', 'stencil-extensions' ),
+                'subtitle' => esc_html__( 'Enter text For The Left For Section.', 'stencil-extensions' ),
+                'default' => "Lorem Ipsum"
+            )
+		)
+    ) );
+
+      	// footer settings START
+	Redux::setSection( $opt_name, array(
+        'title'      => esc_html__( 'Footer Right', 'stencil-extensions' ),
+        'desc'       => esc_html__( 'Right footer section related settings can be changed from here.', 'stencil-extensions' ),
+        'id'         => 'page-footer-right',
+        'subsection' => true,
+        'icon'   => 'el el-photo',
+		'fields'     => array(
+            array(
+				'id'       => 'footer-right-layout',
+				'type'     => 'select',
+				'title'    => esc_html__( 'Footer Right Layout', 'stencil-extensions' ),
+				'subtitle' => esc_html__( 'Choose your prefered sidebar layout.', 'stencil-extensions' ),
+				'options'  => array(
+					'text' => 'Text',
+					'menu' => 'Menu'
+				),
+				'default'  => 'menu',
+			),
+            array(
+                'id'       => 'footer-right-title',
+                'type'     => 'text',
+                'title'    => esc_html__( 'Footer Right Title', 'stencil-extensions' ),
+                'subtitle' => esc_html__( 'Enter the title for the footer right section.', 'stencil-extensions' ),
+                'default' => "Links",
+                'desc' => esc_html__( 'If left empty, no title will appear.', 'stencil-extensions' ),
+            ),
+			array(
+                'id'       => 'footer-text-right',
+                'type'     => 'textarea',
+				'required' => array(array( 'stencil-footer-top', '=', '1' ),array( 'footer-right-layout', '=', 'text' ) ),
+                'title'    => esc_html__( 'Footer Description Text', 'stencil-extensions' ),
+                'subtitle' => esc_html__( 'Enter text explaing your blog and/or about yourself.', 'stencil-extensions' ),
+                'default' => "Lorem Ipsum."
+            ),
+		)
+    ) );
+
 	// footer settings END
+
+    	// sidebar settings START
+		Redux::setSection( $opt_name, array(
+        'title'      => esc_html__( 'Sidebar', 'stencil-extensions' ),
+        'desc'       => esc_html__( 'All sidebar related settings.', 'stencil-extensions' ),
+        'id'         => 'home-page',
+        'icon'   => 'el el-website',
+		'fields'     => array(
+             array(
+				'id'       => 'sidebar-layout',
+				'type'     => 'select',
+				'title'    => esc_html__( 'Sidebar Layout', 'stencil-extensions' ),
+				'subtitle' => esc_html__( 'Choose your prefered sidebar layout.', 'stencil-extensions' ),
+				'options'  => array(
+					'sidebar_left' => 'Sidebar Left',
+					'sidebar_right' => 'Sidebar Right',
+					'no_sidebar' => 'No Sidebar'
+				),
+				'default'  => 'sidebar_right',
+			),
+            array(
+                'id'       => 'sidebar-pages',
+                'type'     => 'switch',
+                'required' => array( 'sidebar-layout', '!=', 'no_sidebar' ),
+                'title'    => esc_html__( 'Show or Hide Sidebar For Pages', 'stencil-extensions' ),
+                'subtitle' => esc_html__( 'This includes the home page, and blog as well.', 'stencil-extensions' ),
+                'default'  => '0',
+                '1'       => 'SHOW',
+                '0'      => 'HIDE',
+            ),
+            array(
+                'id'       => 'sidebar-shop',
+                'type'     => 'switch',
+                'required' => array( 'sidebar-layout', '!=', 'no_sidebar' ),
+                'title'    => esc_html__( 'Show or Hide Sidebar For Woocomerce Shop', 'stencil-extensions' ),
+                'subtitle' => esc_html__( 'Enable or Disable the sidebar for the Woocomerce Shop page here.', 'stencil-extensions' ),
+                'default'  => '1',
+                '1'       => 'SHOW',
+                '0'      => 'HIDE',
+            ),
+            array(
+                'id'       => 'sidebar-posts',
+                'type'     => 'switch',
+                'required' => array( 'sidebar-layout', '!=', 'no_sidebar' ),
+                'title'    => esc_html__( 'Show or Hide Sidebar For Posts', 'stencil-extensions' ),
+                'subtitle' => esc_html__( 'This includes both posts and Woocomerce products.', 'stencil-extensions' ),
+                'default'  => '1',
+                '1'       => 'SHOW',
+                '0'      => 'HIDE',
+            ),
+            array(
+                'id'       => 'sidebar-archive',
+                'type'     => 'switch',
+                'required' => array( 'sidebar-layout', '!=', 'no_sidebar' ),
+                'title'    => esc_html__( 'Show or Hide Sidebar For Archive page', 'stencil-extensions' ),
+                'subtitle' => esc_html__( 'Enable or Disable the sidebar for the Archive page here.', 'stencil-extensions' ),
+                'default'  => '1',
+                '1'       => 'SHOW',
+                '0'      => 'HIDE',
+            ),
+		)
+     ));
+
+    // sidebar settings end
 	
 	// social links START
 	 Redux::setSection( $opt_name, array(
@@ -354,6 +458,13 @@
                 'type'     => 'text',
                 'title'    => esc_html__( 'Twitter', 'stencil-extensions' ),
                 'subtitle' => esc_html__( 'Enter your twitter profile link here.', 'stencil-extensions' ),
+                'validate' => 'url',
+            ),
+            array(
+                'id'       => 'yelp',
+                'type'     => 'text',
+                'title'    => esc_html__( 'Yelp', 'stencil-extensions' ),
+                'subtitle' => esc_html__( 'Enter your yelp profile link here.', 'stencil-extensions' ),
                 'validate' => 'url',
             ),
 			array(
@@ -513,7 +624,7 @@
                 'type'     => 'color',
                 'title'    => esc_html__( 'Menu Drop Down Hover Background Color', 'stencil-extensions' ),
                 'subtitle' => esc_html__( 'Choose your preferred custom button color.', 'stencil-extensions' ),
-                'default'  => '#a0a0aa',
+                'default'  => '#ebebeb',
             ),
             array(
                 'id'       => 'stencil-menu-drop-link-color',

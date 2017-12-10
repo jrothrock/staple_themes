@@ -28,6 +28,7 @@ rm -rf {latest.tar.gz,./wordpress/wp-content}
 cp -r ./hold_temp/wp-content ./hold_temp/wp-config.php ./wordpress
 rm -rf ./hold_temp
 
+
 docker-compose up -d
 docker exec -it wordpress usermod -u 1000 www-data
 
@@ -38,9 +39,9 @@ ips=(${hostSplit[4]:2} ${hostSplit[4]:2}:8181)
 echo ""
 if ([[ "$(uname -s)" == "Darwin" ]] || [["$(uname -s)" == "Linux"]]) && $HOST_WRITE; then
   # need a way to either get a reverse proxy, or to get each container their own IP through docker's network
-  #sites=(wordpress.dev phpmyadmin.dev)
+  #sites=(wordpress.site phpmyadmin.site)
   hosts_file=$([ "$(uname)" == "Darwin" ] && echo "/private/etc/hosts" || echo "/etc/hosts")
-  sites=(wordpress.dev)
+  sites=(wordpress.site)
   for i in "${!sites[@]}"
   do
       current_ip=$(grep -r "${sites[i]}" ${hosts_file} 2> /dev/null || echo "none")
@@ -53,9 +54,9 @@ if ([[ "$(uname -s)" == "Darwin" ]] || [["$(uname -s)" == "Linux"]]) && $HOST_WR
         sudo -- bash -c -e "grep -r -l ${stringSplitAgain[1]} ${hosts_file} | xargs sed -i \"\" \"s/${stringSplitAgain[1]}/${ips[i]}/g\""
       fi
   done
-  echo "WEBSITE: wordpress.dev"
-  #echo "PHPMYADMIN: phpmyadmin.dev"
-  echo "PHPMYADMIN: wordpress.dev:8181"
+  echo "WEBSITE: wordpress.site"
+  #echo "PHPMYADMIN: phpmyadmin.site"
+  echo "PHPMYADMIN: wordpress.site:8181"
 else
   echo "WEBSITE: ${ips[0]}"
   echo "PHPMYADMIN: ${ips[1]}"

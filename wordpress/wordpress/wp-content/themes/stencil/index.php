@@ -16,9 +16,9 @@ global $stencil_options;
 
 $home_layout = $stencil_options['homepage-layout'];
 $class = '';
-if($home_layout == 'sidebar_left'){
+if($home_layout == 'sidebar_left' && $stencil_options['sidebar-pages']){
 	$class = 'right';
-} elseif($home_layout == 'no_sidebar'){
+} elseif($home_layout == 'no_sidebar' || !$stencil_options['sidebar-pages']){
 	$class = 'full';
 }
 
@@ -35,20 +35,25 @@ get_header(); ?>
 				</header>
 			<?php
 			endif;
+			?>
+			<div class='posts-container'>
+				<?php 
+					/* Start the Loop */
+					while ( have_posts() ) : the_post();
 
-			/* Start the Loop */
-			while ( have_posts() ) : the_post();
+						/*
+						* Include the Post-Format-specific template for the content.
+						* If you want to override this in a child theme, then include a file
+						* called content-___.php (where ___ is the Post Format name) and that will be used instead.
+						*/
+						get_template_part( 'components/post/content', get_post_format() );
 
-				/*
-				 * Include the Post-Format-specific template for the content.
-				 * If you want to override this in a child theme, then include a file
-				 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-				 */
-				get_template_part( 'components/post/content', get_post_format() );
+					endwhile;
+				?>
+			</div>
+			<?php
 
-			endwhile;
-
-			the_posts_navigation();
+				the_posts_navigation();
 
 		else :
 
@@ -60,5 +65,7 @@ get_header(); ?>
 	</div><!-- #primary -->
 
 <?php
-get_sidebar();
+if($stencil_options['sidebar-pages']){
+	get_sidebar();
+}
 get_footer();

@@ -30,6 +30,13 @@ switch ($stencil_options['layout-nav-menu']) {
 		$nav_menu = 'left';
         break;
 }
+
+add_filter( 'body_class', function( $classes ) {
+	global $stencil_options;
+
+    return array_merge( $classes, array( $stencil_options['sidebar-layout'], ($stencil_options['sidebar-pages'] ? 'sidebar-pages' : 'no-sidebar-pages' ), ($stencil_options['sidebar-posts'] ? 'sidebar-posts' : 'no-sidebar-posts' ), ($stencil_options['sidebar-shop'] ? 'sidebar-shop' : 'no-sidebar-shop' ), ($stencil_options['sidebar-archive'] ? 'sidebar-archive' : 'no-sidebar-archive' ) ) );
+} );
+
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -55,13 +62,19 @@ switch ($stencil_options['layout-nav-menu']) {
 
 				<!--<?php stencil_social_menu(); ?>-->
 				<div class='<?php echo ($stencil_options['fixed-nav-menu'] ? "navbar-fixed" : "" ) ?>'>
-					<nav>
+					<nav class='top-main'>
 						<div class="nav-wrapper">
-							<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="fa fa-navicon" style='font-size:1.6em;color:white'></i></a>
+							<a href="#" data-activates="mobile-demo" class="button-collapse">
+								<div class='nav-icon'>
+  									<span></span>
+  									<span></span>
+  									<span></span>
+								</div>
+							</a>
 							<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="brand-logo <?php echo $logo ?>" title="<?php bloginfo('name'); ?>">
 								<?php if( !empty( $stencil_options['stencil-logo']['url'] ) ) : ?>
 									<?php echo '<img src="' . esc_url( $stencil_options['stencil-logo']['url'] ) . '"'; ?> alt="<?php get_bloginfo('name'); ?>">
-								<?php else : ?>
+								<?php elseif ($stencil_options['logo-nav-menu']) : ?>
 									<?php echo get_bloginfo('name'); ?>
 								<?php endif; ?>
 							</a>

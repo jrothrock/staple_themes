@@ -80,6 +80,21 @@ add_action( 'after_setup_theme', 'stencil_setup' );
 
 
 /**
+*
+* Move Comment Form Body Field To The Bottom
+*
+**/
+
+function stencil_move_comment_body_field_to_bottom( $fields ) {
+	$comment_field = $fields['comment'];
+	unset( $fields['comment'] );
+	$fields['comment'] = $comment_field;
+	return $fields;
+}
+ 
+add_filter( 'comment_form_fields', 'stencil_move_comment_body_field_to_bottom' );
+
+/**
  * Set the content width in pixels, based on the theme's design and stylesheet.
  *
  * Priority 0 to make it available to lower priority callbacks.

@@ -21,27 +21,50 @@
 			<?php if( $stencil_options['stencil-footer-top'] ) : ?>
 				<div class="container">
 					<div class="row">
-						<div class="col l6 s12">
-							<h5 class="white-text"><?php echo esc_html( $stencil_options['footer-text-title'] ) ?></h5>
-							<p class="grey-text text-lighten-4"><?php echo esc_html( $stencil_options['footer-text'] ) ?></p>
-						</div>
-						<div class="col l4 offset-l2 s12">
-							<h5 class="white-text"><?php echo esc_html( $stencil_options['footer-links-title'] ) ?></h5>
+						<div class="col l5 s12">
+							<h5 class="white-text"><?php echo esc_html__( $stencil_options['footer-left-title'], 'dentist' ) ?></h5>
 							<?php
-								
-								if(has_nav_menu('footer_menu')) {
-									$args = array(
-										'theme_location'	=> 'footer_menu',
-										'menu_class'		=> 'footer-menu',
-										'container'			=> 'false',
-										'depth'				=> 1
-									);
-									wp_nav_menu( $args );
+								if($stencil_options['footer-left-layout'] === 'hours'){
+									get_template_part('/components/footer/hours', 'footer-hours');
+								} elseif($stencil_options['footer-left-layout'] === 'text'){
+									echo "<p class='grey-text text-lighten-4'>" . esc_html__( $stencil_options['footer-left-text'], 'dentist' ) . "</p>";
+								} else {
+									if(has_nav_menu('footer_menu')) {
+										$args = array(
+											'theme_location'	=> 'footer_menu',
+											'menu_class'		=> 'footer-menu',
+											'container'			=> 'false',
+											'depth'				=> 1
+										);
+										wp_nav_menu( $args );
+									}
+									else {
+										echo '<ul class="footer-menu"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'dentist' ) . '</a></li></ul>';
+									}
 								}
-								else {
-									echo '<ul class="footer-menu"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'stencil' ) . '</a></li></ul>';
+							?>
+						</div>
+						<div class="col l5 offset-l2 s12">
+							<h5 class="white-text"><?php echo esc_html__( $stencil_options['footer-right-title'], 'dentist' ) ?></h5>
+							<?php
+								if($stencil_options['footer-right-layout'] === 'hours'){
+									get_template_part('/components/footer/hours', 'footer-hours');
+								} elseif($stencil_options['footer-right-layout'] === 'text'){
+									echo "<p class='grey-text text-lighten-4'>" . esc_html__( $stencil_options['footer-right-text'], 'dentist' ) . "</p>";
+								} else {
+									if(has_nav_menu('footer_menu')) {
+										$args = array(
+											'theme_location'	=> 'footer_menu',
+											'menu_class'		=> 'footer-menu',
+											'container'			=> 'false',
+											'depth'				=> 1
+										);
+										wp_nav_menu( $args );
+									}
+									else {
+										echo '<ul class="footer-menu"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'dentist' ) . '</a></li></ul>';
+									}
 								}
-								// main menu END
 							?>
 						</div>
 					</div>
@@ -66,8 +89,7 @@
 		?>
 		<?php if( $stencil_options['to-top-button']): ?>
 			<a href="#" id="back-to-top" class="rippler rippler-bs-default back-to-top" style='display:none'>
-				<i class="fa fa-angle-up"></i>
-				<div class="rippler-effect rippler-div" style="width: 0px; height: 0px; left: 6px; top: 23px;"></div>
+				<i class="waves-effect waves-light fa fa-angle-up"></i>
 			</a>
 		<?php
 			endif;

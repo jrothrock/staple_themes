@@ -1,2 +1,5 @@
 *
-!/stencil/
+!stencil/
+!stencil/*
+!stencil/*/*
+!stencil/*/*/*

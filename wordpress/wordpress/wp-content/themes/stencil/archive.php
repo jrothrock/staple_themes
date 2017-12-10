@@ -11,9 +11,9 @@ global $stencil_options;
 
 $home_layout = $stencil_options['homepage-layout'];
 $class = '';
-if($home_layout == 'sidebar_left'){
+if($home_layout == 'sidebar_left' && $dentist_options['sidebar-archive']){
 	$class = 'right';
-} elseif($home_layout == 'no_sidebar'){
+} elseif($home_layout == 'no_sidebar' || !$dentist_options['sidebar-archive']){
 	$class = 'full';
 }
 
@@ -57,5 +57,7 @@ get_header(); ?>
 	</div><!-- #primary -->
 
 <?php
-get_sidebar();
+if($dentist_options['sidebar-archive']){
+	get_sidebar();
+}
 get_footer();

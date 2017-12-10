@@ -1,8 +1,8 @@
 <?php
 /**
- * template Plugins Activation
+ * Stencil Plugins Activation
  *
- * @package template
+ * @package Stencil
  */
 
 require get_template_directory() . '/lib/tgm/tgm-plugin-activation.php';
@@ -11,9 +11,9 @@ require get_template_directory() . '/lib/tgm/tgm-plugin-activation.php';
  * Register Required Plugins
  */
 
-if ( ! function_exists( 'template_register_required_plugins' ) ) :
+if ( ! function_exists( 'stencil_register_required_plugins' ) ) :
 
-function template_register_required_plugins() {
+function stencil_register_required_plugins() {
 
     /**
      * Array of plugin arrays. Required keys are name and slug.
@@ -24,18 +24,17 @@ function template_register_required_plugins() {
 		// This is an example of how to include a plugin bundled with a theme.
 
 		array(
-			'name'               => esc_html__( 'Template Theme Extensions', 'template' ), 
-			'slug'               => 'templatetheme_extensions', 
-			'source'             =>  get_template_directory() . '/lib/plugins/templatetheme.zip', 
+			'name'               => esc_html__( 'Stencil Theme Extensions', 'stencil' ), 
+			'slug'               => 'stencil_extensions', 
+			'source'             =>  get_template_directory() . '/lib/plugins/stencil_extensions.zip', 
 			'force_activate'	 => false,
 			'force_deactivation' => false,
 			'required'           => true, 
 			'version'            => '', 
 			'external_url'		 => ''
 		),	
-
 		array(
-			'name'               => esc_html__( 'Favicon Generator', 'template' ),
+			'name'               => esc_html__( 'Favicon Generator', 'stencil' ),
 			'slug'               => 'favicon-by-realfavicongenerator', 
 			'force_activate'	 => false,
 			'force_deactivation' => false,
@@ -45,7 +44,7 @@ function template_register_required_plugins() {
 		),
 
 		array(
-			'name'               => esc_html__( 'Contact Form 7', 'template' ),
+			'name'               => esc_html__( 'Contact Form 7', 'stencil' ),
 			'slug'               => 'contact-form-7', 
 			'force_activate'	 => false,
 			'force_deactivation' => false,
@@ -54,7 +53,7 @@ function template_register_required_plugins() {
 			'external_url'		 => ''
 		),
 		array(
-			'name'               => esc_html__( 'MailChimp for WordPress', 'template' ),
+			'name'               => esc_html__( 'MailChimp for WordPress', 'stencil' ),
 			'slug'               => 'mailchimp-for-wp', 
 			'force_activate'	 => false,
 			'force_deactivation' => false,
@@ -63,7 +62,7 @@ function template_register_required_plugins() {
 			'external_url'		 => ''
 		),
 		array(
-			'name'               => esc_html__( 'ACF RGBA Color Picker', 'template' ),
+			'name'               => esc_html__( 'ACF RGBA Color Picker', 'stencil' ),
 			'slug'               => 'acf-rgba-color-picker', 
 			'force_activate'	 => false,
 			'force_deactivation' => false,
@@ -72,7 +71,7 @@ function template_register_required_plugins() {
 			'external_url'		 => ''
 		),
 		array(
-			'name'               => esc_html__( 'One Click Demo Import', 'template' ),
+			'name'               => esc_html__( 'One Click Demo Import', 'stencil' ),
 			'slug'               => 'one-click-demo-import', 
 			'force_activate'	 => false,
 			'force_deactivation' => false,
@@ -81,7 +80,7 @@ function template_register_required_plugins() {
 			'external_url'		 => ''
 		),
 		array(
-			'name'               => esc_html__( 'iThemes Security (formerly Better WP Security)', 'template' ),
+			'name'               => esc_html__( 'iThemes Security (formerly Better WP Security)', 'stencil' ),
 			'slug'               => 'better-wp-security', 
 			'force_activate'	 => false,
 			'force_deactivation' => false,
@@ -96,4 +95,4 @@ function template_register_required_plugins() {
 }
 endif;
 
-add_action( 'tgmpa_register', 'template_register_required_plugins' );
+add_action( 'tgmpa_register', 'stencil_register_required_plugins' );

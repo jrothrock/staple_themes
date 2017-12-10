@@ -3,4 +3,4 @@ Clean up the JavaScript file a little more
 There's a bug that is currently being patched with a boolean - see main.js comments for more details. Find an actual fix and remove the patch
 
 Create a networked docker file, so phpmyadmin and the main app each have their own ip. This would enable writing to the hosts file for phpmyadmin,
-allowing it be accessed at phpmyadmin.dev, instead of wordpress.dev:8181
+allowing it be accessed at phpmyadmin.site, instead of wordpress.site:8181

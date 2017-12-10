@@ -10,9 +10,9 @@ global $stencil_options;
 
 $home_layout = $stencil_options['homepage-layout'];
 $class = '';
-if($home_layout == 'sidebar_left'){
+if($home_layout == 'sidebar_left' && $stencil_options['sidebar-posts']){
 	$class = 'right';
-} elseif($home_layout == 'no_sidebar'){
+} elseif($home_layout == 'no_sidebar' || !$stencil_options['sidebar-posts']){
 	$class = 'full';
 }
 
@@ -40,5 +40,7 @@ get_header(); ?>
 	</div><!-- #primary -->
 
 <?php
-get_sidebar();
+if($stencil_options['sidebar-posts']){
+	get_sidebar();
+}
 get_footer();
