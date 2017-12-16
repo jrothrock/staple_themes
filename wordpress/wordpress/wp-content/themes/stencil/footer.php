@@ -22,12 +22,12 @@
 				<div class="container">
 					<div class="row">
 						<div class="col l5 s12">
-							<h5 class="white-text"><?php echo esc_html__( $stencil_options['footer-left-title'], 'dentist' ) ?></h5>
+							<h5 class="white-text"><?php echo esc_html__( $stencil_options['footer-left-title'], 'stencil' ) ?></h5>
 							<?php
 								if($stencil_options['footer-left-layout'] === 'hours'){
 									get_template_part('/components/footer/hours', 'footer-hours');
 								} elseif($stencil_options['footer-left-layout'] === 'text'){
-									echo "<p class='grey-text text-lighten-4'>" . esc_html__( $stencil_options['footer-left-text'], 'dentist' ) . "</p>";
+									echo "<p class='grey-text text-lighten-4'>" . esc_html__( $stencil_options['footer-left-text'], 'stencil' ) . "</p>";
 								} else {
 									if(has_nav_menu('footer_menu')) {
 										$args = array(
@@ -39,18 +39,18 @@
 										wp_nav_menu( $args );
 									}
 									else {
-										echo '<ul class="footer-menu"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'dentist' ) . '</a></li></ul>';
+										echo '<ul class="footer-menu"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'stencil' ) . '</a></li></ul>';
 									}
 								}
 							?>
 						</div>
 						<div class="col l5 offset-l2 s12">
-							<h5 class="white-text"><?php echo esc_html__( $stencil_options['footer-right-title'], 'dentist' ) ?></h5>
+							<h5 class="white-text"><?php echo esc_html__( $stencil_options['footer-right-title'], 'stencil' ) ?></h5>
 							<?php
 								if($stencil_options['footer-right-layout'] === 'hours'){
 									get_template_part('/components/footer/hours', 'footer-hours');
 								} elseif($stencil_options['footer-right-layout'] === 'text'){
-									echo "<p class='grey-text text-lighten-4'>" . esc_html__( $stencil_options['footer-right-text'], 'dentist' ) . "</p>";
+									echo "<p class='grey-text text-lighten-4'>" . esc_html__( $stencil_options['footer-right-text'], 'stencil' ) . "</p>";
 								} else {
 									if(has_nav_menu('footer_menu')) {
 										$args = array(
@@ -62,7 +62,7 @@
 										wp_nav_menu( $args );
 									}
 									else {
-										echo '<ul class="footer-menu"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'dentist' ) . '</a></li></ul>';
+										echo '<ul class="footer-menu"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'stencil' ) . '</a></li></ul>';
 									}
 								}
 							?>

@@ -10,77 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170930192037) do
+ActiveRecord::Schema.define(version: 20171219225254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "comments", id: :serial, force: :cascade do |t|
-    t.text "body"
-    t.integer "generation"
-    t.string "submitted_by"
+  create_table "comments", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "theme_id"
+    t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "commentable_type"
-    t.integer "upvotes", default: 0, null: false
-    t.integer "downvotes", default: 0, null: false
-    t.integer "average_vote", default: 0, null: false
-    t.boolean "edited", default: false, null: false
-    t.integer "user_id"
-    t.boolean "flagged", default: false, null: false
-    t.boolean "deleted", default: false, null: false
-    t.boolean "flag_checked", default: false, null: false
-    t.string "deleted_body"
-    t.string "deleted_submitted_by"
-    t.string "deleted_user_id"
-    t.boolean "hidden", default: false, null: false
-    t.boolean "hide_proccessing", default: false, null: false
-    t.jsonb "votes", default: {}, null: false
-    t.integer "votes_count", default: 0, null: false
-    t.text "marked", default: "", null: false
-    t.text "stripped", default: "", null: false
-    t.boolean "notified", default: false, null: false
-    t.string "category"
-    t.string "subcategory"
-    t.string "url"
-    t.string "post_type"
-    t.string "post_id"
-    t.integer "user_voted"
-    t.string "title"
-    t.boolean "admin", default: false, null: false
-    t.boolean "seller", default: false, null: false
-    t.boolean "submitter", default: false, null: false
-    t.string "time_ago"
-    t.boolean "styled", default: false, null: false
-    t.boolean "archived", default: false, null: false
-    t.integer "karma_update", default: 0, null: false
-    t.boolean "voted", default: false, null: false
-    t.boolean "removed", default: false, null: false
-    t.boolean "locked", default: false, null: false
-    t.boolean "stickied", default: false, null: false
-    t.jsonb "votes_ip", default: {}, null: false
-    t.boolean "checked", default: false, null: false
-    t.boolean "reported", default: false, null: false
-    t.text "report_users", default: [], null: false, array: true
-    t.boolean "user_reported", default: false, null: false
-    t.text "report_types", default: [], null: false, array: true
-    t.integer "report_count", default: 0, null: false
-    t.boolean "report_checked", default: false, null: false
-    t.datetime "report_created"
-    t.datetime "flag_created"
-    t.jsonb "human_votes", default: {}, null: false
-    t.integer "human_votes_count", default: 0, null: false
-    t.integer "human_average_vote", default: 0, null: false
-    t.integer "human_upvotes", default: 0, null: false
-    t.integer "human_downvotes", default: 0, null: false
-    t.string "uuid", default: "", null: false
-    t.string "commentable_uuid", default: "", null: false
-    t.string "parent_uuid", default: ""
-    t.index ["commentable_type", "commentable_uuid"], name: "index_comments_on_commentable_type_and_commentable_uuid"
-    t.index ["flag_checked"], name: "index_comments_on_flag_checked"
-    t.index ["flagged"], name: "index_comments_on_flagged"
-    t.index ["hidden"], name: "index_comments_on_hidden"
-    t.index ["submitted_by"], name: "index_comments_on_submitted_by"
+    t.integer "rating", default: 0
+    t.index ["theme_id"], name: "index_comments_on_theme_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "orders", id: :serial, force: :cascade do |t|
@@ -119,7 +62,6 @@ ActiveRecord::Schema.define(version: 20170930192037) do
     t.integer "comment_count", default: 0, null: false
     t.boolean "hidden", default: false, null: false
     t.integer "user_rated"
-    t.integer "average_rating", default: 100, null: false
     t.integer "ratings_count", default: 0, null: false
     t.jsonb "ratings", default: {}, null: false
     t.text "description"
@@ -161,6 +103,10 @@ ActiveRecord::Schema.define(version: 20170930192037) do
     t.integer "human_ratings_count", default: 0, null: false
     t.string "uuid", default: "", null: false
     t.integer "user_id"
+    t.integer "purchase_type", default: 1
+    t.string "purchase_url"
+    t.integer "downloads"
+    t.decimal "average_rating", precision: 8, scale: 2, default: "0.0"
     t.index "properties jsonb_path_ops", name: "products_properties_idx", using: :gin
     t.index ["created_at"], name: "index_product_on_created_at"
     t.index ["hidden"], name: "index_product_on_hidden"
@@ -191,6 +137,8 @@ ActiveRecord::Schema.define(version: 20170930192037) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "comments", "themes"
+  add_foreign_key "comments", "users"
   add_foreign_key "orders", "themes"
   add_foreign_key "orders", "users"
   add_foreign_key "themes", "users"

@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
 
   resources :themes do
+    resources :comments
   end
   post ':themes/new/upload', to:'themes#upload', as: :upload
-
 end

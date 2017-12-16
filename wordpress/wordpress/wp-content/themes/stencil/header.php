@@ -72,11 +72,16 @@ add_filter( 'body_class', function( $classes ) {
 								</div>
 							</a>
 							<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="brand-logo <?php echo $logo ?>" title="<?php bloginfo('name'); ?>">
-								<?php if( !empty( $stencil_options['stencil-logo']['url'] ) ) : ?>
-									<?php echo '<img src="' . esc_url( $stencil_options['stencil-logo']['url'] ) . '"'; ?> alt="<?php get_bloginfo('name'); ?>">
-								<?php elseif ($stencil_options['logo-nav-menu']) : ?>
-									<?php echo get_bloginfo('name'); ?>
-								<?php endif; ?>
+								<div class='nav-img'>
+									<?php if( !empty( $stencil_options['dentist-logo']['url'] ) ) : ?>
+										<?php echo '<img src="' . esc_url( $stencil_options['dentist-logo']['url'] ) . '"'; ?> alt="<?php get_bloginfo('name'); ?>">
+									<?php endif; ?>
+								</div>
+								<div class='nav-text'>
+									<?php if ( $stencil_options['logo-nav-menu'] ) : ?>
+										<?php echo get_bloginfo('name'); ?>
+									<?php endif; ?>
+								</div>
 							</a>
 							
 								<?php 
@@ -84,27 +89,13 @@ add_filter( 'body_class', function( $classes ) {
 										wp_nav_menu( array( 
 											'theme_location' => 'top_menu', 
 											'menu_class' =>  $nav_menu . ' hide-on-med-and-down', 
+											'menu_id' => 'menu-top',
 											'walker'=> new Materialize_Walker_Desktop_Nav_Menu() 
 										) );
 									} else {
 										echo '<div class="no-menu-container"><ul class="' . $nav_menu . ' hide-on-med-and-down"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'stencil' ) . '</a></li></ul></div>';
 									}
 								?>
-								
-								<?php 
-									if(has_nav_menu('top_menu')) {
-										wp_nav_menu( array( 
-											'theme_location' => 'top_menu', 
-											'menu_class' => 'side-nav', 
-											'menu_id' => 'mobile-demo',
-											'depth' => 1,
-										) );
-									} else {
-										echo '<div class="no-menu-container"><ul class="side-nav" id="mobile-demo"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'stencil' ) . '</a></li></ul></div>';
-									} 
-								?>
-								
-
 						</div>
 					</nav>
 				</div>
@@ -112,6 +103,18 @@ add_filter( 'body_class', function( $classes ) {
 			</header><!-- #masthead -->
 		<?php
 			endif;
+		?>
+		<?php 
+			if(has_nav_menu('top_menu')) {
+				wp_nav_menu( array( 
+					'theme_location' => 'top_menu', 
+					'menu_class' => 'side-nav', 
+					'menu_id' => 'mobile-demo',
+					'depth' => 1,
+				) );
+			} else {
+				echo '<div class="no-menu-container"><ul class="side-nav" id="mobile-demo"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'stencil' ) . '</a></li></ul></div>';
+			} 
 		?>
 
 	<div id="content" class="site-content">

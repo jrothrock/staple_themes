@@ -8,7 +8,6 @@
  */
 
 global $stencil_options;
-
 $home_layout = $stencil_options['homepage-layout'];
 $class = '';
 if($home_layout == 'sidebar_left'){

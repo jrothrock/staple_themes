@@ -1,11 +1,11 @@
 - if user_signed_in?
     %ul#dropdown1.dropdown-content
         %li
-            = link_to "Profile", profile_path(current_user.email)
+            = link_to "Profile", profile_path(current_user.username)
         %li
             = link_to "Settings", edit_user_registration_path
         %li
-            = link_to "Purchases", purchases_path(current_user.email)
+            = link_to "Purchases", purchases_path(current_user.username)
         %li.divider
         %li
             = link_to "Logout", destroy_user_session_path, method: :delete
@@ -13,6 +13,10 @@
     .nav-wrapper
         %a.button-collapse{"data-activates" => "mobile-demo", :href => "#"}
             %i.fa.fa-navicon{style:"font-size:1.6em"}
+        %ul.right.hide-on-med-and-up
+            %li
+                %a
+                    %i.fa.fa-shopping-cart
         %ul.left.hide-on-med-and-down
             %li
                 = link_to "Home", root_path
@@ -35,9 +39,9 @@
                     = link_to "Login", new_user_session_path
         %ul.side-nav#mobile-demo
             %li
-                = link_to "test", "https://test.com"
+                = link_to "Home", root_path
             %li
-                = link_to "test two", "https://test.com"
+                = link_to "Themes", themes_path
             %li
                 = link_to "test three", "https://test.com"
 

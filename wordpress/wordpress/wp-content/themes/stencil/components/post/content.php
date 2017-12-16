@@ -25,7 +25,6 @@
 			}
 
 		if ( 'post' === get_post_type() ) : ?>
-		<!-- components/post/content-meta.php -->
 		<?php
 		endif; ?>
 	</header><!-- .entry-header -->
@@ -89,5 +88,4 @@
 		</ul>
 	</div>
 
-	<!-- components/post/content-footer.php -->
 </article><!-- #post-## -->

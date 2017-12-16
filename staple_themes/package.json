@@ -2,10 +2,14 @@
   "name": "staple_themes_two",
   "private": true,
   "dependencies": {
-    "@rails/webpacker": "^3.0.2",
-    "coffeescript": "1.12.7"
+    "@rails/webpacker": "^3.2.0",
+    "coffeescript": "1.12.7",
+    "raty-js": "^2.8.0",
+    "turbolinks": "^5.0.3"
   },
   "devDependencies": {
-    "webpack-dev-server": "^2.9.5"
+    "postcss-loader": "^2.0.9",
+    "postcss-smart-import": "^0.7.6",
+    "webpack-dev-server": "^2.9.7"
   }
 }

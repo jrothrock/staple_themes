@@ -6,18 +6,26 @@
 //
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
+import Turbolinks from 'turbolinks';
+import "raty-js/lib/jquery.raty.js";
+import "raty-js/lib/jquery.raty.css";
+Turbolinks.start();
+
 var themeApp = {
-    userProfileHover:()=>{
+    userProfileHover(){
         $("#profile-hover").dropdown({ hover: true, inDuration: 300, outDuration: 225, alignment: 'left', constrain_width: false, belowOrigin: true });
         $("#profile-hover").on('click', (e)=>{
             e.preventDefault();
             $("#profile-hover").trigger('hover');
         })
     },
-    uploadZip:()=>{
+
+    uploadZip(){
+        $('#upload-theme-input-zip').fileupload();
         var credential,policy,signature,store_dir,upload_date,upload_time,name,files,sent;
         var self = this;
         $('#upload-theme-input-zip').on('change', ()=>{
+            console.log('changed');
             self.files = $('#upload-theme-input-zip')[0].files
             self.name = $('#upload-theme-input-zip')[0].files[0].name
         })
@@ -29,6 +37,7 @@ var themeApp = {
             autoUpload: false,
             replaceFileInput:false,
             add:  (e, data) => { 
+                console.log('add')
                 $.ajax({
                     url: location.href + '/upload',
                     data:{'name': self.name},
@@ -61,7 +70,7 @@ var themeApp = {
             }
         });
     },
-    watchFormButtons:()=>{
+    watchFormButtons(){
         $("#upload-theme-button").on("click",(e)=>{
             e.preventDefault();
             $('#upload-theme-input').trigger('click');
@@ -71,11 +80,43 @@ var themeApp = {
             $("#upload-theme-input-zip").trigger('click');
         })
     },
-    backToTop: ()=> {
+    watchNewComments(){
+        if($('#new-comment-stars').has('img').length) $('#new-comments-star').empty(); 
+         $('#new-comment-stars').raty({
+            score: 0,
+            path: '/assets',
+            scoreName: 'rating'
+        });
+        $("#comment-submit").on('click', (e)=>{
+            e.preventDefault();
+            let rating = $('#new-comment-stars').find('input').val()
+            let content = $('#comment_content_Dentist').val();
+
+            if(rating && content){
+                $.ajax({
+                    url: window.location.pathname + '/comments' ,
+                    type: 'POST',
+                    data: { rating: rating, content:content }
+                }).fail((e)=>{
+                    console.log(e);
+                })
+            } else if(content) {
+                 Materialize.toast('Rating Is Required', 3000, 'failure-rounded')
+            } else if(rating){
+                Materialize.toast('Comment Body Is Required', 3000, 'failure-rounded')
+            } else {
+                Materialize.toast('Both Rating and Comment Body Are Required', 4000, 'failure-rounded')
+            }
+        })
+    },
+    backToTop(){
+        var showing = false;
 		$(window).scroll(()=>{
-			if ($(this).scrollTop() > 1) {
+			if ($(window).scrollTop() > 100 && !showing) {
+                showing = true;
 				$('#back-to-top').fadeIn();
-			} else {
+			} else if($(window).scrollTop() <= 100 && showing) {
+                showing = false;
 				$('#back-to-top').fadeOut();
 			}
 		});
@@ -88,7 +129,7 @@ var themeApp = {
 			return false;
 		});
 	},
-    watchAlert: ()=>{
+    watchAlert(){
             if($(".alert-container").length){
                 console.log('has container')
                 setTimeout(()=>{
@@ -99,15 +140,18 @@ var themeApp = {
                 },4000)
             }
     },
-    init: ()=>{
+    init(){
         // idk why this needs a set timeout, maybe for elements to load?
         setTimeout(()=>{
             themeApp.watchAlert();
             themeApp.backToTop();
             themeApp.userProfileHover();
             $(".button-collapse").sideNav();
+            Waves.displayEffect();
             themeApp.watchFormButtons();
+            themeApp.uploadZip();
+            themeApp.watchNewComments();
         },1)
     }
 }
-$(document).on('turbolinks:load', themeApp.init());
+$(document).on('turbolinks:load', ()=>{themeApp.init()});

@@ -1,0 +1,28 @@
+%footer.page-footer
+    .container
+        .row
+            .col.l6.s12
+                %h5.white-text About
+                %p.grey-text.text-lighten-4 Staple Themes brings to life stunning artison themes, which are usable in any industry and field.
+            .col.l4.offset-l2.s12
+                %h5.white-text Links
+                %ul
+                    %li
+                        = link_to "Home", root_path, class: "grey-text text-lighten-3" 
+                    %li
+                        = link_to "Themes", themes_path, class: "grey-text text-lighten-3" 
+    .footer-copyright
+        .container
+            ©
+            = Time.now.strftime("%Y") 
+            All Rights Reserved.
+            .grey-text.text-lighten-4.right.footer-social-icons
+                %a{href:"https://www.facebook.com/Staple-Themes-1694278880645952/", target:"_blank"}
+                    %li
+                        %i.waves-effect.waves-light.fa.fa-facebook
+                %a{href:"https://twitter.com/StapleThemes", target:"_blank"}
+                    %li
+                        %i.waves-effect.waves-light.fa.fa-twitter
+
+    %a#back-to-top{:href => "#", class:"waves-effect waves-light"}
+        %i.fa.fa-angle-up

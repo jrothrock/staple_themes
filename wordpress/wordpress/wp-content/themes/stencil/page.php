@@ -46,7 +46,7 @@ get_header();
 	</div><!-- #primary -->
 
 <?php
-if($dentist_options['sidebar-pages']){
+if($stencil_options['sidebar-pages']){
 	get_sidebar();
 }
 get_footer();

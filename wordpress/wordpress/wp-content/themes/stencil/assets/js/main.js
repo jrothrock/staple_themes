@@ -10,7 +10,7 @@
     var totalDepth = 1;
     var menu_right = $('#menu-top').length && $('#menu-top').get(0).className.split(' ')[0] === 'right' ? true : false;
 
-    
+
     var watchScroll = function(){
         $(window).scroll(function(){
             var scroll = $(this).scrollTop();
@@ -41,16 +41,13 @@
     }
 
     var watchMobileMenu = function(){
-        $('.nav-icon').click(function(){
-		    $(this).toggleClass('open');
-	    });
         $(".button-collapse").sideNav({
             menuWidth: 300, // Default is 300
             edge: 'left', // Choose the horizontal origin
             closeOnClick: true, 
             draggable: true, 
-            onOpen: function(el) { }, 
-            onClose: function(el) { $('.nav-icon').toggleClass('open') }, 
+            onOpen: function(el) { $('.nav-icon').get(0).className = "nav-icon open";  }, 
+            onClose: function(el) { $('.nav-icon').removeClass('open') }, 
         });
     }
 

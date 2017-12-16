@@ -11,9 +11,9 @@ global $stencil_options;
 
 $home_layout = $stencil_options['homepage-layout'];
 $class = '';
-if($home_layout == 'sidebar_left' && $dentist_options['sidebar-archive']){
+if($home_layout == 'sidebar_left' && $stencil_options['sidebar-archive']){
 	$class = 'right';
-} elseif($home_layout == 'no_sidebar' || !$dentist_options['sidebar-archive']){
+} elseif($home_layout == 'no_sidebar' || !$stencil_options['sidebar-archive']){
 	$class = 'full';
 }
 
@@ -27,7 +27,7 @@ get_header(); ?>
 
 			<header class="page-header">
 				<?php
-					the_archive_title( '<h1 class="page-title">', '</h1>' );
+					the_archive_title( '<h2 class="page-title center">', '</h2>' );
 					the_archive_description( '<div class="taxonomy-description">', '</div>' );
 				?>
 			</header><!-- .page-header -->
@@ -57,7 +57,7 @@ get_header(); ?>
 	</div><!-- #primary -->
 
 <?php
-if($dentist_options['sidebar-archive']){
+if($stencil_options['sidebar-archive']){
 	get_sidebar();
 }
 get_footer();

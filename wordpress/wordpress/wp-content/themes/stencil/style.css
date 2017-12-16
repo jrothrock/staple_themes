@@ -533,31 +533,36 @@ hr {
 }
 
 @media screen and (min-width: 37.5em) {
-  .blog article{
+  .blog article, .archive.no_sidebar article, .archive.no-sidebar-archive article{
     width:32%;
     float:left;
     margin: 5px calc((100% - 98%)/3) 10px calc((100% - 98%)/3);
   }
+  .archive.sidebar_right.sidebar-archive article, .archive.sidebar_left.sidebar-archive article {
+    width:42%;
+    float:left;
+    margin: 5px calc((100% - 92%)/2) 10px calc((100% - 92%)/2);
+  }
 }
 @media screen and (max-width: 37.5em) {
-  .blog article{
+  .blog article, .archive article{
     float:left;
     width:100%;
   }
 }
-.blog article{
+.blog article, .archive article{
   border:1px solid rgba(0,0,0,0.1);
 }
-.blog article .entry-title{
+.blog article .entry-title, .archive article .entry-title{
   text-align:center;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
-.blog .site-main{
+.blog .site-main, .archive .site-main{
   padding:5px;
 }
-.blog article .entry-content{
+.blog article .entry-content, .archive article .entry-content{
   padding: 0px 5px;
 }
 .single article.post{
@@ -774,9 +779,17 @@ nav .brand-logo{
 .side-nav{
   width:250px;
 }
-.brand-logo > img{
+.nav-img{
+  display:inline;
+}
+.nav-img > img{
   height:50px;
   margin:5px;
+}
+.nav-text{
+    display: inline;
+    position: relative;
+    top: -17px;
 }
 .nav-icon {
   width: 40px;
@@ -1012,11 +1025,11 @@ body {
   padding-top: 20px;
 }
 
-.blog .entry-title{
+.blog .entry-title, .archive .entry-title{
   padding-top: 0px;
 }
 
-.blog .share-container{
+.blog .share-container, .archive .share-container{
   margin:10px;
 }
 
@@ -1047,10 +1060,10 @@ body {
   color: #ffffff;
   background: #0091ea;
 }
-.blog .post-information, .blog .entry-excerpt{
+.blog .post-information, .blog .entry-excerpt, .archive .post-information, .archive .entry-excerpt{
   padding-left:5px;
 }
-.blog .entry-excerpt p{
+.blog .entry-excerpt p, .archive .entry-excerpt p{
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

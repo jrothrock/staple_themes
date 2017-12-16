@@ -1,11 +1,12 @@
 class ThemesController < ApplicationController
-  before_action :is_admin, only: [:edit, :update, :destroy]
-  before_action :set_theme, only: [:read, :edit, :update, :destroy, :like]
+  before_action :authenticate_user!, only: [:new, :edit, :update, :destroy]
+  before_action :is_admin, only: [:new, :edit, :update, :destroy]
+  before_action :set_theme, only: [:show, :edit, :update, :destroy, :like]
 
   def index
     @themes = Theme.all.order('created_at DESC')
   end
-  def read
+  def show
   end
   
   def new
@@ -83,13 +84,21 @@ class ThemesController < ApplicationController
     params.require(:theme).permit(:title, :description, :zip, :price, :sale_price, :url, photos: [])
   end
 
-  def set_post
-    @theme = Theme.find(params[:id])
+  def set_theme
+    if action_name === 'show'
+      @theme = Theme.where("lower(title) = ?", params[:id]).first
+    else
+      @theme = Theme.where("lower(title) = ?", params[:id]).includes(:comments).first
+    end
+    unless @theme
+      flash[:alert] = "There Is No Theme By That Name"
+      redirect_to root_path
+    end
   end
 
   def is_admin
     unless current_user.admin
-      flash[:alert] = "\"I'm sorry Dave, I'm afraid I can't do that\""
+      flash[:alert] = "\"I'm sorry Dave, I'm afraid I can't let you do that\""
       redirect_to root_path
     end
   end

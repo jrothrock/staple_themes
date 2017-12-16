@@ -4,9 +4,14 @@
     %meta{:charset => "utf-8"}
     %meta{"http-equiv" => "X-UA-Compatible", :content => "IE=edge"}
     %meta{:name => "viewport", :content => "width=700"}
+    - if current_page?(controller: 'devise/registrations', action: 'new') || current_page?(controller: 'devise/sessions', action: 'new')
+      %meta{:name => "turbolinks-cache-control", :content => "no-preview"}
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = stylesheet_pack_tag 'application'
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
-    = javascript_pack_tag 'application'
+    - if current_page?(controller: '/themes', action: 'new')
+      = javascript_include_tag 'upload', 'data-turbolinks-track' => true  
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true
     = csrf_meta_tags
 %body
   .main
@@ -17,6 +22,4 @@
         = content_tag :div, content_tag(:div, content_tag(:p, msg),  class: [:alert, alert_for(name)]), class:'alert-outer-container'
     .body-container
       = yield
-%footer
-  %a#back-to-top{:href => "#"}
-    %i.fa.fa-angle-up
+= render 'layouts/partials/footer'

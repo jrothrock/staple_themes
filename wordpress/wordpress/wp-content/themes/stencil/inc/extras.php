@@ -32,3 +32,17 @@ function stencil_body_classes( $classes ) {
 	return $classes;
 }
 add_filter( 'body_class', 'stencil_body_classes' );
+
+
+if( ! class_exists( 'getLinkTags' ) ) :
+	function getLinkTags($url,$icon){
+		$message = "
+			<a href='" . $url . "'>
+				<li>
+					<i class='waves-effect waves-light fa fa-" . $icon . "'></i>
+				</li>
+			</a>
+		";
+		echo $message;
+	}
+endif;

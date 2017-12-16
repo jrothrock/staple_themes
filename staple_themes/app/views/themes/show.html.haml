@@ -1,0 +1,28 @@
+.theme-container
+    .title
+        %h3.center
+            = @theme.title
+    .img-container
+        = image_tag(@theme.photos.first.photo.url)
+    .description
+        %h5
+            Description
+        %p
+            = @theme.description
+    .links
+        %a{href:@theme.url, target:"_blank"} Preview
+        %p Averate rating: 
+        - 5.times do |x|
+            -if @theme.average_rating > (x+0.75)
+                =image_tag('/assets/star-on.png')
+            -elsif @theme.average_rating > (x+0.3)
+                =image_tag('/assets/star-half.png')
+            -else
+                =image_tag('/assets/star-off.png')
+.comments-container
+    %h5 Comments:
+    -if @theme.comments.any?
+        = render @theme.comments
+    -if user_signed_in?
+        = render 'comments/form'
+        

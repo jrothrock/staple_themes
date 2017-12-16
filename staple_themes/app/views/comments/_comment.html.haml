@@ -1,0 +1,14 @@
+.comment
+  .user-name
+    = link_to comment.user.username, profile_path(comment.user.username)
+  .comment-rating
+    - 5.times do |x|
+      - if comment.rating > x
+        = image_tag('/assets/star-on.png')
+      - else
+        = image_tag('/assets/star-off.png')
+  .comment-content
+    = comment.content
+  - if comment.user == current_user
+    = link_to theme_comment_path(@theme, comment), method: :delete, data: {theme_id: @theme.id, value: @theme.comments.count, confirm: "Are you sure?" }, remote: true, id: "delete-#{comment.id}", class: "delete-comment" do
+      %span(class="glyphicon glyphicon-remove delete-comment-icon")

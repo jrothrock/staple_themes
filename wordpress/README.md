@@ -43,7 +43,7 @@ Run the `./rename.sh` script, and an input will appear asking for the old theme 
 
 ## Moving Theme To Production
 
-Run the `./prod.sh` script, and an input will appear asking for the theme name. The theme, along with its extension, will be zipped and moved into a folder called themes located into this directory.
+Run the `./prod.sh` script, and an input will appear asking for the theme name. The theme, along with the theme's extensions plugin, will be zipped and moved into a folder called themes located in this directory.
 
 ## License:
     Everything within this folder (wordpress) is released under GPLv3. See license for more details.
