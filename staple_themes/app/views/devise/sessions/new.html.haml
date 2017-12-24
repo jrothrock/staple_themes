@@ -15,5 +15,6 @@
               .input-field
                 = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
               .input-field
-                %i{class:"btn waves-effect waves-light waves-input-wrapper"}
-                  = f.submit "Log In", class: 'waves-button-input'
+                %i#sign-in-button{class:"btn waves-effect waves-light waves-input-wrapper"}
+                  %input{value:"Log In", class: 'waves-button-input', type:'submit'}
+                = f.submit "Log In", id:'submit-input-hidden', class: 'waves-button-input', style: "display:none"

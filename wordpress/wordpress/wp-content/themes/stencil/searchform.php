@@ -1,3 +1,13 @@
+<?php 
+/**
+ * The template for the search form.
+ *
+ * @link https://codex.wordpress.org/Styling_Theme_Forms
+ *
+ * @package Stencil
+ */
+ global $stencil_options;
+?>
 <form role="search" method="get" class="search-form" action="<?php echo home_url( '/' ); ?>">
     <label>
         <span class="screen-reader-text"><?php echo _x( 'Search for:', 'label' ) ?></span>

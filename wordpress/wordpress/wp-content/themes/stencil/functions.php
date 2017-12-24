@@ -159,8 +159,6 @@ function stencil_scripts() {
 	
 	wp_enqueue_style( 'stencil-style', get_stylesheet_uri() );
 
-	wp_enqueue_script( 'stencil-navigation', get_template_directory_uri() . '/assets/js/navigation.js', array(), '20151215', true );
-
 	wp_enqueue_script( 'stencil-skip-link-focus-fix', get_template_directory_uri() . '/assets/js/skip-link-focus-fix.js', array(), '20151215', true );
 
 	wp_enqueue_script( 'materialize', get_template_directory_uri() . '/assets/js/materialize.min.js', array('jquery'), '20151215', true );

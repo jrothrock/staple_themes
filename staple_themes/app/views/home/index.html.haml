@@ -1,9 +1,21 @@
-%div
-    %h3 Home
+.main-home-container
+    .img-container
+        =image_tag('/assets/background-image-home.jpg')
+    .carousel-container
+        .carousel
+            - @themes.each do |theme|
+                = link_to image_tag(theme.photos.first.photo.url), theme_path(theme.title.downcase), class:"carousel-item"
+    .info-container
+        .top-info-container
+            Stunning Artison Themes For Every Industry and Field
+        .button-container
+            %a.btn.waves-effect{href:"#themes"}
+                Discover
+    
 
 %div
-    - @themes.each do |theme|
-        .row
+    .row#themes
+        - @themes.each do |theme|
             .col.s12.m4
                 .card.medium
                     .card-image

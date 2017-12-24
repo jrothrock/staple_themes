@@ -27,7 +27,7 @@ function stencil_register_required_plugins() {
 			'name'               => esc_html__( 'Stencil Theme Extensions', 'stencil' ), 
 			'slug'               => 'stencil_extensions', 
 			'source'             =>  get_template_directory() . '/lib/plugins/stencil_extensions.zip', 
-			'force_activate'	 => false,
+			'force_activation'	 => true,
 			'force_deactivation' => false,
 			'required'           => true, 
 			'version'            => '', 
@@ -42,7 +42,6 @@ function stencil_register_required_plugins() {
 			'version'            => '', 
 			'external_url'		 => ''
 		),
-
 		array(
 			'name'               => esc_html__( 'Contact Form 7', 'stencil' ),
 			'slug'               => 'contact-form-7', 
@@ -88,7 +87,6 @@ function stencil_register_required_plugins() {
 			'version'            => '', 
 			'external_url'		 => ''
 		)
-
 	);
 
     tgmpa( $plugins );

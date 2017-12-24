@@ -34,7 +34,15 @@ switch ($stencil_options['layout-nav-menu']) {
 add_filter( 'body_class', function( $classes ) {
 	global $stencil_options;
 
-    return array_merge( $classes, array( $stencil_options['sidebar-layout'], ($stencil_options['sidebar-pages'] ? 'sidebar-pages' : 'no-sidebar-pages' ), ($stencil_options['sidebar-posts'] ? 'sidebar-posts' : 'no-sidebar-posts' ), ($stencil_options['sidebar-shop'] ? 'sidebar-shop' : 'no-sidebar-shop' ), ($stencil_options['sidebar-archive'] ? 'sidebar-archive' : 'no-sidebar-archive' ) ) );
+    return array_merge( $classes, array( 
+		 $stencil_options['sidebar-layout'],
+		 ($stencil_options['sidebar-pages'] ? 'sidebar-pages' : 'no-sidebar-pages' ), 
+		 ($stencil_options['sidebar-posts'] ? 'sidebar-posts' : 'no-sidebar-posts' ), 
+		 ($stencil_options['sidebar-shop'] ? 'sidebar-shop' : 'no-sidebar-shop' ), 
+		 ($stencil_options['sidebar-archive'] ? 'sidebar-archive' : 'no-sidebar-archive' ),
+		 ($stencil_options['nav-menu'] ? 'nav-menu' : ''),
+		 ($stencil_options['stencil-footer-top'] ? 'footer-top' : '')
+	) );
 } );
 
 ?><!DOCTYPE html>
@@ -54,13 +62,6 @@ add_filter( 'body_class', function( $classes ) {
 		<?php if( $stencil_options['top-nav-menu']): ?>
 			<header id="masthead" class="site-header" role="banner">
 
-				<!-- components/header/site-branding.php -->
-
-				<!--<?php stencil_the_custom_logo(); ?>-->
-
-				<!-- components/navigation/navigation-top.php -->
-
-				<!--<?php stencil_social_menu(); ?>-->
 				<div class='<?php echo ($stencil_options['fixed-nav-menu'] ? "navbar-fixed" : "" ) ?>'>
 					<nav class='top-main'>
 						<div class="nav-wrapper">
@@ -72,12 +73,12 @@ add_filter( 'body_class', function( $classes ) {
 								</div>
 							</a>
 							<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="brand-logo <?php echo $logo ?>" title="<?php bloginfo('name'); ?>">
-								<div class='nav-img'>
-									<?php if( !empty( $stencil_options['dentist-logo']['url'] ) ) : ?>
-										<?php echo '<img src="' . esc_url( $stencil_options['dentist-logo']['url'] ) . '"'; ?> alt="<?php get_bloginfo('name'); ?>">
-									<?php endif; ?>
-								</div>
-								<div class='nav-text'>
+								<?php if( !empty( $stencil_options['stencil-logo']['url'] ) ) : ?>
+									<div class='nav-img'>
+											<?php echo '<img src="' . esc_url( $stencil_options['stencil-logo']['url'] ) . '"'; ?> alt="<?php get_bloginfo('name'); ?>">
+									</div>
+								<?php endif; ?>
+								<div class='nav-text <?php echo (!empty( $stencil_options['stencil-logo']['url'] ) ? 'img' : '') ?>'>
 									<?php if ( $stencil_options['logo-nav-menu'] ) : ?>
 										<?php echo get_bloginfo('name'); ?>
 									<?php endif; ?>

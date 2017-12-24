@@ -10,8 +10,10 @@
     = stylesheet_pack_tag 'application'
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     - if current_page?(controller: '/themes', action: 'new')
+      = stylesheet_pack_tag 'upload'
       = javascript_include_tag 'upload', 'data-turbolinks-track' => true  
-    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true
+      = javascript_pack_tag 'upload', 'data-turbolinks-track': 'reload', defer: true
+    = javascript_pack_tag 'application', 'data-turbolinks-track': true
     = csrf_meta_tags
 %body
   .main
@@ -22,4 +24,5 @@
         = content_tag :div, content_tag(:div, content_tag(:p, msg),  class: [:alert, alert_for(name)]), class:'alert-outer-container'
     .body-container
       = yield
+    = render 'layouts/partials/cart'
 = render 'layouts/partials/footer'

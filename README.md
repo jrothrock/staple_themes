@@ -2,7 +2,7 @@
 
 Themes can be found at: https://staplethemes.com
 
-This project contains the rails site for Staple Themes, as well as the files needed for rapid theme and plugin development.
+This project contains the Rails site for the Staple Themes website, as well as the files needed for rapid theme and plugin development.
 
 ## Staple Themes Server
 

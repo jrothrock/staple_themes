@@ -44,11 +44,20 @@ get_header(); ?>
 
 			the_posts_navigation();
 
-		else :
+		else : ?>
 
-			get_template_part( 'components/post/content', 'none' );
+			<div class="page-header">
+				<h1 class="page-title">No results Found</h1>
+				<p>
+					It seems we can’t find what you’re looking for.
+					Perhaps you should try again with a different search term.
+				</p>
+			</div>
+			<div class="well">
+				<?php get_search_form(); ?>
+			</div>
 
-		endif; ?>
+		<?php endif; ?> 
 
 		</main><!-- #main -->
 	</section><!-- #primary -->

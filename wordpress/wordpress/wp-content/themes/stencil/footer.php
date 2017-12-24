@@ -88,7 +88,7 @@
 			endif;
 		?>
 		<?php if( $stencil_options['to-top-button']): ?>
-			<a href="#" id="back-to-top" class="rippler rippler-bs-default back-to-top" style='display:none'>
+			<a href="#" id="back-to-top" class="back-to-top" style='display:none'>
 				<i class="waves-effect waves-light fa fa-angle-up"></i>
 			</a>
 		<?php

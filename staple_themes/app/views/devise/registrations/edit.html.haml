@@ -17,4 +17,6 @@
               .input-field
                 = f.input :password_confirmation, required: true, label: false, label: 'Confirm Password', input_html: { class: 'input-lg' }
               .input-field
-                = f.button :submit, "Update", class: 'waves-effect waves-light btn'
+                %i#update-registration-button{class:"btn waves-effect waves-light waves-input-wrapper"}
+                  %input{value:"Update", class: 'waves-button-input', type:'submit'}
+                = f.button :submit, "Update", id:"submit-input-hidden", class: 'waves-effect waves-light btn', style:'display:none'

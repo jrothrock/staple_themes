@@ -688,6 +688,7 @@ GEM
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
     orm_adapter (0.5.0)
+    pandoc-ruby (2.0.2)
     paypal-sdk-rest (1.6.1)
       multi_json (~> 1.0)
       xml-simple
@@ -864,6 +865,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.2)
   materialize-sass
   mini_magick
+  pandoc-ruby
   paypal-sdk-rest (~> 1.6)
   pg (~> 0.18)
   pg_search

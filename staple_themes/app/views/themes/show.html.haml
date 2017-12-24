@@ -2,27 +2,46 @@
     .title
         %h3.center
             = @theme.title
-    .img-container
-        = image_tag(@theme.photos.first.photo.url)
+    .upper-half
+        .row
+            .col.m6.s12
+                .img-container
+                    = image_tag(@theme.photos.first.photo.url)
+            .col.m6.s12
+                .information
+                    .price
+                        %h5{style:'display:inline'} Price:
+                        %span{style:"text-decoration:#{@theme.sale_price ? 'line-throgu' : 'none' }"}
+                            = number_to_currency(@theme.price)
+                    - if @theme.sale_price
+                        .sale-price
+                            %h5{style:'display:inline'} Sale Price:
+                            %span{style:"font-size:1.1em"}
+                                = number_to_currency(@theme.sale_price)
+                    .rating
+                        %p Averate rating: 
+                        - 5.times do |x|
+                            -if @theme.average_rating > (x+0.75)
+                                =image_tag('/assets/star-on.png')
+                            -elsif @theme.average_rating > (x+0.3)
+                                =image_tag('/assets/star-half.png')
+                            -else
+                                =image_tag('/assets/star-off.png')
+                    .actions
+                        .preview
+                            %a.btn{:href => @theme.url, id:'preview-button', style:'margin-top:10px'} Preview
+                        .cart
+                            %a.btn{:href => "#", id:'add-to-cart-button', style:"margin-top:10px;background-color: #f44336;"} Add To Cart
+                
     .description
-        %h5
-            Description
-        %p
-            = @theme.description
-    .links
-        %a{href:@theme.url, target:"_blank"} Preview
-        %p Averate rating: 
-        - 5.times do |x|
-            -if @theme.average_rating > (x+0.75)
-                =image_tag('/assets/star-on.png')
-            -elsif @theme.average_rating > (x+0.3)
-                =image_tag('/assets/star-half.png')
-            -else
-                =image_tag('/assets/star-off.png')
+        = render 'description', theme: @theme
 .comments-container
     %h5 Comments:
     -if @theme.comments.any?
         = render @theme.comments
+    - else
+        %p
+            No Comments Have Been Added
     -if user_signed_in?
         = render 'comments/form'
         
