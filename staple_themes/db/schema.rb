@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171219225254) do
+ActiveRecord::Schema.define(version: 20171229213955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,9 +28,7 @@ ActiveRecord::Schema.define(version: 20171219225254) do
 
   create_table "orders", id: :serial, force: :cascade do |t|
     t.integer "status", default: 1, null: false
-    t.integer "type", default: 1, null: false
     t.integer "user_id"
-    t.integer "theme_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "total", precision: 8, scale: 2
@@ -40,7 +38,10 @@ ActiveRecord::Schema.define(version: 20171219225254) do
     t.string "paid_with", default: ""
     t.string "stripe_payment_id", default: ""
     t.string "paypal_payment_id", default: ""
-    t.index ["theme_id"], name: "index_orders_on_theme_id"
+    t.text "themes", default: [], null: false, array: true
+    t.datetime "purchased_at"
+    t.string "uuid", default: "", null: false
+    t.text "licenses", default: [], null: false, array: true
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -78,8 +79,6 @@ ActiveRecord::Schema.define(version: 20171219225254) do
     t.integer "discount_percentage", default: 0, null: false
     t.integer "lock_version", default: 0, null: false
     t.jsonb "purchasers", default: {}, null: false
-    t.decimal "price", precision: 8, scale: 2
-    t.decimal "sale_price", precision: 8, scale: 2
     t.boolean "updated", default: false, null: false
     t.boolean "archived", default: false, null: false
     t.boolean "locked", default: false, null: false
@@ -107,6 +106,12 @@ ActiveRecord::Schema.define(version: 20171219225254) do
     t.string "purchase_url"
     t.integer "downloads"
     t.decimal "average_rating", precision: 8, scale: 2, default: "0.0"
+    t.string "excerpt"
+    t.decimal "single_price", precision: 8, scale: 2
+    t.decimal "single_sale_price", precision: 8, scale: 2
+    t.decimal "multi_price", precision: 8, scale: 2
+    t.decimal "multi_sale_price", precision: 8, scale: 2
+    t.integer "purchases", default: 0, null: false
     t.index "properties jsonb_path_ops", name: "products_properties_idx", using: :gin
     t.index ["created_at"], name: "index_product_on_created_at"
     t.index ["hidden"], name: "index_product_on_hidden"
@@ -133,13 +138,13 @@ ActiveRecord::Schema.define(version: 20171219225254) do
     t.datetime "updated_at", null: false
     t.boolean "admin"
     t.string "username"
+    t.string "uuid", default: "", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "comments", "themes"
   add_foreign_key "comments", "users"
-  add_foreign_key "orders", "themes"
   add_foreign_key "orders", "users"
   add_foreign_key "themes", "users"
 end

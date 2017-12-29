@@ -16,6 +16,7 @@ class ThemesController < ApplicationController
   def create
     # puts post_params[:photos]
     @theme = current_user.themes.new(post_params.except(:photos))
+    @theme.url = (/^http(s)?:\/\// =~ @theme.url) === 0 ? @theme.url : "https://#{@theme.url}"
     # @theme = current_user.themes.build(post_params.except(:photos))
     if @theme.save
       if post_params[:photos]
@@ -49,8 +50,8 @@ class ThemesController < ApplicationController
 
   def update
     if @theme.update(post_params)
-      flash[:success] = "Post updated."
-      redirect_to root_path
+      flash[:success] = "Theme updated."
+      redirect_to theme_path(@theme.title)
     else
       flash[:alert] = "Update failed. Please check the form."
       render :edit
@@ -81,14 +82,16 @@ class ThemesController < ApplicationController
   end
 
   def post_params
-    params.require(:theme).permit(:title, :description, :zip, :price, :sale_price, :url, photos: [])
+    params.require(:theme).permit(:title, :description, :zip, :single_price, :single_sale_price, :multi_price, :multi_sale_price, :excerpt, :url, photos: [])
   end
 
   def set_theme
+    id = params[:theme] && params[:theme]['title'] ? params[:theme]['title'] : params[:id]
+    puts id
     if action_name === 'show'
-      @theme = Theme.where("lower(title) = ?", params[:id]).first
+      @theme = Theme.where("lower(title) = ?", id.downcase).first
     else
-      @theme = Theme.where("lower(title) = ?", params[:id]).includes(:comments).first
+      @theme = Theme.where("lower(title) = ?", id.downcase).includes(:comments).first
     end
     unless @theme
       flash[:alert] = "There Is No Theme By That Name"

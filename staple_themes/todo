@@ -1,1 +1,1 @@
-Navbar links use current_user.email instead of current_user.username
+If I'm wanting to do a sale, instead of showing the original price, and the sale price, it'll just show the sale price. This needs to be updated.

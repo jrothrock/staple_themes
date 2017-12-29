@@ -1,0 +1,11 @@
+#modal-purchase.modal
+    .modal-content.row
+        .col.m12
+            %h4.center#license-modal
+            %p There are two license options, single use, and multi use. Single use allows you to use to theme on one site, while multi use allows you to use the theme an unlimited amount of times.
+            %select#modal-license-select
+                %option#single-modal{value: 1, :selected => 'selected'}
+                %option#multi-modal{value: 2}
+        .row.col.m12.center.modal-actions
+            %button.btn#close-modal Cancel
+            %button.btn#add-to-cart Add To Cart

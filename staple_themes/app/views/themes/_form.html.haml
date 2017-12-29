@@ -33,12 +33,24 @@
             .col.m12.row
               .col.m6
                 .form-group.text-center
-                  %label Price ($)
-                  = f.number_field :price, :step => "any"
+                  %label Single Price ($)
+                  = f.number_field :single_price, :step => "any"
               .col.m6
                 .form-group.text-center
-                  %label Sale Price ($)
-                  = f.number_field :sale_price, :step => "any"
+                  %label Single Sale Price ($)
+                  = f.number_field :single_sale_price, :step => "any"
+            .col.m12.row
+              .col.m6
+                .form-group.text-center
+                  %label Multi Price ($)
+                  = f.number_field :multi_price, :step => "any"
+              .col.m6
+                .form-group.text-center
+                  %label Multi Sale Price ($)
+                  = f.number_field :multi_sale_price, :step => "any"
+            .col.m12.row
+              %p{style:"color:#aaa"} Excerpt
+              = f.text_area :excerpt
             .col.m12.row
               %p{style:"color:#aaa;"} Description
               = f.text_area :description, id:"markdown-editor"

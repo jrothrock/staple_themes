@@ -1,4 +1,5 @@
 ( function( $ ) {
+    "use strict";
     var showing = false;
     var hovering = false;
     var binds = {};
@@ -57,7 +58,7 @@
     //     $("a.main-menu-link").dropdown({'hover':true});
     // });
 
-    // Bind patch for the clearBinds needs the be figured out.
+    // Bind patch for the clearBinds needs to be figured out.
     //   - For some reason, the display none is not occuring, but the selector is being removed.
     //
     // Code should probably be cleaned up a little.

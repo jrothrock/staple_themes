@@ -11,3 +11,8 @@
             %li#cart
                 %a
                     %i.fa.fa-shopping-cart
+                    -if @order && @order['themes'].length
+                        .cart-number-container
+                            %span.cart-number
+                                = @order['themes'].length
+                            

@@ -5,4 +5,41 @@
             .shopping-cart-close-button-second
         %h5.center Shopping Cart
     .inner-container
-        %h6 No Items Have Been Added To The Cart
+        -if @order && @order['themes'].length
+            .row.col.m12
+                .col.m4{style:"white-space:nowrap;font-size:1.5em"}
+                    Total: 
+                    %span#total-cart-modal
+                        = number_to_currency(@order['total'])
+                .col.m8
+                    = link_to "Check Out", start_checkout_path, class:'btn waves-effect waves-light', style:"float:right"     
+            .cart-items{style:"border-top: 1px solid rgba(255,255,255,0.5);padding-top: 5px;"}
+                - @order['themes'].each_with_index do |theme, index|
+                    .cart-item.row{id:"cart-item-#{index}", data:{theme:"#{theme['id']}"}}
+                        .col.m12
+                            .title
+                                %h4{style:"margin:0px"}
+                                    = link_to theme['title'], theme_path(theme['title'].downcase)
+                        .col.m6
+                            .img
+                                = link_to image_tag(theme['photos'].first['photo'].url), theme_path(theme['title'].downcase), class: "cart-modal-image"
+                        .col.m6{style:"text-align:right"}
+                            .remove
+                                %i{id:"remove-#{index}", class:"fa fa-times remove-cart-item", style:'color:red;font-size:1.5em;margin-top:-25px;cursor:pointer', data:{index:index}}
+                            .license
+                                License:
+                                - if @order['licenses'][index].to_i === 1
+                                    Single
+                                - else
+                                    Multi
+                            .price
+                                - if @order['licenses'][index].to_i === 1
+                                    = (theme['single_sale_price'] ? number_to_currency(theme['single_sale_price']) : number_to_currency(theme['single_price']) )
+                                - else
+                                    = (theme['multi_sale_price'] ? number_to_currency(theme['multi_sale_price']) : number_to_currency(theme['multi_price']) )
+        -else
+            %h6 No Items Have Been Added To The Cart
+
+-if session[:order_id]
+    :javascript
+        localStorage.setItem("_staple_themes_cart","#{session[:order_id]}")

@@ -1,128 +1,144 @@
+include ActionView::Helpers::NumberHelper
 class OrdersController < ApplicationController
-  include PayPal::SDK::REST
-  include PayPal::SDK::Core::Logging
+  # include PayPal::SDK::REST
+  # include PayPal::SDK::Core::Logging
 
   before_action :authenticate_user!
-  before_action :set_user
-  before_action :owned_profile
+  # before_action :set_user
+  # before_action :owned_profile
 
   def index
-    @orders = @user.orders.order('created_at DESC')
+    @orders = current_user.orders.where("status = 2").order('created_at DESC').as_json
+    @orders.map do |order|
+      theme_ids = order['themes']
+      themes = Theme.where("id in (?)", theme_ids).as_json({:include => :photos})
+      order['themes'] = themes
+    end
   end
 
   def create
-    @order = current_user.themes.build(post_params)
+    if params[:license] && params[:theme]
+      theme = Theme.where("id = ?", params[:theme]).first.as_json({:include => :photos})
+      if theme
+        @order = current_user.orders.new
+        if params[:license].to_i === 1
+          @order.total = theme['single_sale_price'] ? theme['single_sale_price'] : theme['single_price']
+        elsif params[:license].to_i === 2
+          @order.total = theme['multi_sale_price'] ? theme['multi_sale_price'] : theme['multi_price']
+        else
+          render json:{message:"license needs to be either a \"1\" for single use or a \"2\" for multi use."}, status: :bad_request
+          return false
+        end
+        @order.themes = [params[:theme]]
+        @order.licenses = [params[:license]]
+        if @order.save
+          session[:order_id] = @order.uuid
+          order = @order.as_json
+          order['total'] = number_to_currency(order['total'])
+          theme['single_sale_price'] = theme['single_sale_price'] != nil ? number_to_currency(theme['single_sale_price']) : theme['single_sale_price'];
+          theme['single_price'] = theme['single_price'] != nil ? number_to_currency(theme['single_price']) : theme['single_price'];
+          theme['multi_sale_price'] = theme['multi_sale_price'] != nil ? number_to_currency(theme['multi_sale_price']) : theme['multi_sale_price'];
+          theme['multi_price'] = theme['multi_price'] != nil ? number_to_currency(theme['multi_price']) : theme['multi_price'];
+          render json:{order:order, theme:theme, index: 0, license: params[:license].to_i}, status: :ok
+        else
+          render json:{}, status: :internal_server_error
+          Rails.logger.info(@order.errors.inspect) 
+        end
+      else
+        render json:{message:"Theme was not found, please check the id and try again"}, status: :not_found
+      end
+    else
+      render json:{message:"Both the themes param and license param are required"}, status: :bad_request
+    end
   end
 
-  def read
-    @order = ApplicationRecord::Order.find_by_id(params[:order])
-    
+  def show
+    if(request.headers['X-Cart'])
+        order = ApplicationRecord::Order.where("uuid = ?", params[:id]).first
+        if order
+            session[:order_id] = order.uuid
+            render json:{}, status: :ok
+        end
+    end    
   end
 
   def update
-    @order = ApplicationRecord::Order.find_by_id(params[:order])
-    themes = Theme.where("id IN (?)", @order.themes)
-    themes.each do |theme|
-      theme.purchasers[current_user.username] = 1
-      theme.purchases += 1
-      theme.save
-    end
-    @order.email = params[:email] ? params[:email] : order.email
-    @order.status = 2
-    ApplicationRecord::Order.transaction do
-        begin
-            if order.save
-              if params[:paypal] === true || params[:paypal] === "true"
-                if !params[:paymentID] || !params[:payerID]
-                  render json:{}, status: :internal_server_error
-                  return false
-                end
-                begin
-                  mode = Rails.env.production? ? 'live' : 'sandbox'
-                  PayPal::SDK::REST.set_config(
-                      :mode => mode, # "sandbox" or "live"
-                      :client_id => Rails.application.secrets.paypal_id,
-                      :client_secret => Rails.application.secrets.paypal_secret
-                  )
-                  payment = Payment.find(params[:paymentID])
-                  if payment.execute( :payer_id => params[:payerID] )  # return true or false
-                      puts "Payment[#{payment.id}] executed successfully"
-                  else
-                      raise "payment execution failed"
-                  end
-                rescue Exception => e
-                    Rails.logger.info(e.inspect)
-                    Rails.logger.info(e.backtrace)
-                    Rails.logger.info(payment.error.inspect)
-                    ExceptionNotifier.notify_exception(e,
-                                :env => request.env, :data => {:message => "Paypal Order Payment Has Failed. Error: #{e.inspect}, #{e.backtrace}, Payment:#{payment.error.inspect}"})
-                    render json:{paylpal_fail:true, message:'paypal error', error:payment.error}, status: :internal_server_error
-                    Product.rollProductsBack(user,products,products_old_quantities,purchased_already)
-                    raise ActiveRecord::Rollback
-                end
-              else
-                Stripe.api_key =  Rails.application.secrets.stripe
-                puts Stripe.api_key
-                puts Stripe::Charge.as_json
-                # Get the credit card details submitted by the form
-                token = params[:token]
-                amount = (order.total * 100).to_i
-
-                # Create a charge: this will charge the user's card
-                begin
-                    charge = Stripe::Charge.create(
-                        :amount => amount, # Amount in cents
-                        :currency => "usd",
-                        :source => token,
-                        :description => `Charge for order #{order.uuid}`,
-                        :transfer_group => "ORDER_#{order.uuid}",
-                    )
-                rescue Stripe::CardError => e
-                    Rails.logger.info(e)
-                    render json:{card_fail:true, message:'card error'}, status: :internal_server_error
-                    Product.rollProductsBack(user,products,products_old_quantities,purchased_already)
-                    raise ActiveRecord::Rollback
-                    return false
-                rescue => e
-                    Rails.logger.info(e)
-                    ExceptionNotifier.notify_exception(e,
-                                :env => request.env, :data => {:message => "Paypal Stripe Payment Has Failed. Error: #{e.inspect}, #{e.backtrace}"})
-                    render json:{message:"failed in the stripe payment"}, status: :internal_server_error
-                    Product.rollProductsBack(user,products,products_old_quantities,purchased_already)
-                    raise ActiveRecord::Rollback
-                    return false
-                end
-              end
-              render json:{order:order.as_json.except("paid_with","stripe_payment_id", "stripe_payout_ids", "paypal_payment_id", "paypal_payouts_id", "tracker_sent", "tracker_updated")}, status: :ok
-              # NotifysellerWorker.perform_in(15.seconds)
-              # if user.is_a? String
-              #     user = OpenStruct.new({username: order.firstname, email:order.email})
-              # end
-              # ApplicationRecord::Order.sendEmails(order,user)
-              # puts clear_cache_ids
-              # if clear_cache_ids.length
-              #     clear_cache_ids.keys.each do |key|
-              #         PurgecacheWorker.perform_async(clear_cache_ids[key],key,clear_cache_ids[key])
-              #     end
-              # end
+    @order = ApplicationRecord::Order.where('uuid = ?',params[:id]).first
+    if(@order)
+      theme = Theme.where("id = ?", params[:theme]).first.as_json({:include => :photos})
+      if(theme)
+        if(params[:update_type].to_i === 1)
+          index = @order.themes.index(params[:theme])
+          update = false
+          if(index != nil)
+            license = @order.licenses[index]
+            if license.to_i === 1
+              @order.total -= theme['single_sale_price'] ? theme['single_sale_price'] : theme['single_price']
             else
-                render json:{}, status: :internal_server_error
-                Product.rollProductsBack(user,products,products_old_quantities,purchased_already)
-                Rails.logger.info(order.errors.inspect)
+              @order.total -= theme['multi_sale_price'] ? theme['multi_sale_price'] : theme['multi_price']
             end
-          rescue => e
-              # render json:{}, status: :internal_server_error
-              puts e
-              ExceptionNotifier.notify_exception(e,
-                  :env => request.env, :data => {:message => "Order Has Failed. Error: #{e.inspect}, #{e.backtrace}"})
-              if Rails.env.production?
-                  # render json:{error:e}, status: :internal_server_error
-              else
-                  # render json:{error:e, backtrace: e.backtrace}, status: :internal_server_error
-              end
-              # Product.rollProductsBack(user,products,products_old_quantities,purchased_already)
+            @order.licenses[index] = params[:license]
+            update = true
           end
+          if params[:license].to_i === 1
+            @order.total += theme['single_sale_price'] ? theme['single_sale_price'] : theme['single_price']
+          elsif params[:license].to_i === 2
+            @order.total += theme['multi_sale_price'] ? theme['multi_sale_price'] : theme['multi_price']
+          else
+            render json:{message:"license needs to be either a \"1\" for single use or a \"2\" for multi use."}, status: :bad_request
+            return false
+          end
+          if(index == nil)
+            @order.themes << params[:theme]
+            @order.licenses << params[:license]
+          end
+          if @order.save
+            order = @order.as_json
+            order['total'] = number_to_currency(order['total'])
+            theme['single_sale_price'] = theme['single_sale_price'] != nil ? number_to_currency(theme['single_sale_price']) : theme['single_sale_price'];
+            theme['single_price'] = theme['single_price'] != nil ? number_to_currency(theme['single_price']) : theme['single_price'];
+            theme['multi_sale_price'] = theme['multi_sale_price'] != nil ? number_to_currency(theme['multi_sale_price']) : theme['multi_sale_price'];
+            theme['multi_price'] = theme['multi_price'] != nil ? number_to_currency(theme['multi_price']) : theme['multi_price'];
+            render json:{order:order, theme:theme, index: (index ? index : order['themes'].length - 1), license: (params[:license].to_i === 1 ? 'Single' : 'Multi'), update:update }, status: :ok
+          else
+            render json:{}, status: :internal_server_error
+            Rails.logger.info(@order.errors.inspect) 
+          end
+        elsif(params[:update_type].to_i === 2)
+          index = @order.themes.index(params[:theme])
+          if(index != nil)
+            license = @order.licenses[index]
+            if(license).to_i === 1
+              @order.total -= theme['single_sale_price'] ? theme['single_sale_price'] : theme['single_price']
+            else
+              @order.total -= theme['multi_sale_price'] ? theme['multi_sale_price'] : theme['multi_price']
+            end
+            @order.themes.delete_at(index)
+            @order.licenses.delete_at(index)
+            if @order.save
+              order = @order.as_json
+              order['total'] = number_to_currency(order['total'])
+              render json:{order:order}, status: :ok
+            else
+              render json:{}, status: :ok
+              Rails.logger.info(@order.errors.inspect) 
+            end
+          else
+            render json:{message: "Your order does not contain that theme"}, status: :bad_request
+          end
+        else
+          render json:{message:"'update_type' param needs to be present, being either 1 for adding an item, or 2 for deleting an item"}, status: :bad_request
         end
+      else
+        render json:{message: "Theme was not found"}, status: :not_found
+      end
+    else
+      render json:{message:"Order was not found"}, status: :not_found
+    end
+  end
+
+  def delete
+
   end
 
   private 
@@ -132,6 +148,10 @@ class OrdersController < ApplicationController
       flash[:alert] = "That profile doesn't belong to you!"
       redirect_to root_path
     end
+  end
+
+  def post_params
+    params.permit(:theme, :license)
   end
 
   def set_user

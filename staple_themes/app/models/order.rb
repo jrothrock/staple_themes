@@ -2,8 +2,8 @@ class Order < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
-  has_many :themes
-  belongs_to :user
+  # has_many :themes
+  belongs_to :user, optional: true
 
   before_create do
     self.uuid = setUUID if self.uuid.blank?

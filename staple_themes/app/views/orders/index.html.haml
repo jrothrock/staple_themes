@@ -1,1 +1,37 @@
-%h3 Orders
+%div
+    %h3 Orders
+    - if @orders && @orders.length
+        %p
+        - @orders.each do |order|
+            .order.row
+            .col.s12
+                .created
+                    = order['created_at']
+                .total
+                    = number_to_currency(order['total'])
+                .items
+                    Items:
+                    = order['themes'].length
+            - order['themes'].each_with_index do |theme, index|
+                .order-item.row
+                    .col.m12
+                        .title
+                            %h4{style:"margin:0px"}
+                                = link_to theme['title'], theme_path(theme['title'].downcase)
+                    .col.m6
+                        .img
+                            = link_to image_tag(theme['photos'].first['photo'].url), theme_path(theme['title'].downcase), class: "orders-page-image"
+                    .col.m6{style:"text-align:right"}
+                        .license
+                            License:
+                            - if order['licenses'][index] === 1
+                                Single
+                            - else
+                                Multi
+                        .price
+                            - if order['licenses'][index] === 1
+                                = (theme['single_sale_price'] ? number_to_currency(theme['single_sale_price']) : number_to_currency(theme['single_price']) )
+                            - else
+                                = (theme['multi_sale_price'] ? number_to_currency(theme['multi_sale_price']) : number_to_currency(theme['multi_price']) )
+    - else
+        %p You haven't placed any orders.

@@ -1,6 +1,6 @@
 .main-home-container
     .img-container
-        =image_tag('/assets/background-image-home.jpg')
+        =image_tag('background-image-home.jpg')
     .carousel-container
         .carousel
             - @themes.each do |theme|
@@ -22,22 +22,22 @@
                         = link_to image_tag(theme.photos.first.photo.url), theme_path(theme.title.downcase)
                         = link_to theme.title, theme_path(theme.title.downcase) , class:'card-title', style:"padding:0px;left:24px;bottom:24px"
                         %button.btn.theme-price
-                            = number_to_currency(theme.price)
+                            = number_to_currency(theme.single_price)
                     .card-content
                         .card-rating
                             Average Rating: 
                             - 5.times do |x|
                                 -if theme.average_rating > (x+0.75)
-                                    =image_tag('/assets/star-on.png')
+                                    =image_tag('star-on.png')
                                 -elsif theme.average_rating > (x+0.3)
-                                    =image_tag('/assets/star-half.png')
+                                    =image_tag('star-half.png')
                                 -else
-                                    =image_tag('/assets/star-off.png')
+                                    =image_tag('star-off.png')
                             (
                             = theme.average_rating
                             )
                         %p
-                            = theme.description
+                            = theme.excerpt
                         .card-action
                             %a.btn{:href => theme.url} Preview
-                            %a.btn{:href => theme.url, style:"float:right;margin:0px;background-color: #f44336;"} Purchase
+                            %button.btn.modal-trigger{style:"float:right;margin:0px;background-color: #f44336;", data: {theme: theme.id, target: "modal-purchase", single: (theme.single_sale_price ? theme.single_sale_price : theme.single_price), multi: (theme.multi_sale_price ? theme.multi_sale_price : theme.multi_price), title: theme.title, single_text: "Single Use License: #{theme.single_sale_price ? number_to_currency(theme.single_sale_price) : number_to_currency(theme.single_price)}", multi_text: "Multi Site Use License: #{theme.multi_sale_price ? number_to_currency(theme.multi_sale_price) : number_to_currency(theme.multi_price)}"}} Purchase

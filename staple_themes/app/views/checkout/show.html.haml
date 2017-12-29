@@ -1,0 +1,56 @@
+.checkout-container.row
+    %div{style:"position:absolute;height:100%;width:1px;left:50vw;background-color:rgba(0,0,0,0.5)"}
+    .col.m6.right
+        .row{style:"white-space:nowrap;font-size:1.5em;text-align:center"}
+            Total: 
+            %span#total-checkout
+                = number_to_currency(@order['total'])
+        .row
+            %h6.center{style:"font-size:1.25em"} How would you like to pay?
+            .row.center
+                %button.btn{id:"credit-card-button"} Credit Card
+                %div#paypal-button
+
+        .row.hidden.credit-card-form#credit-card-form
+            =form_tag({url:new_purchase_path, remote: true}, {:class => 'order-submit-form'}) do
+                .row
+                    .col.m6
+                        =label_tag "Name"
+                        =text_field_tag :name, "", id: 'holder'
+                    .col.m6
+                        =label_tag "Number"
+                        =text_field_tag :number, "", id:'number'
+                .row
+                    .col.m6.expiration-tags
+                        =label_tag "Expiration"
+                        =select_date Date.current , :discard_day => true, :start_year => Date.today.year, :end_year => (Date.today.year+10), :use_month_numbers => true
+                    .col.m6
+                        =label_tag "CVV"
+                        =text_field_tag :cvv, "", id:'security'
+                =submit_tag 'Purchase', class: 'btn order-submit', id: "order-submit" # Hidden with CSS
+    .cart-items.col.m6
+        .row{style:"white-space:nowrap;font-size:1.5em;text-align:center"}
+            Order
+        - @order['themes'].each_with_index do |theme, index|
+            .cart-item.row{id:"cart-item-#{index}", data:{theme:"#{theme['id']}"}}
+                .col.m12
+                    .title
+                        %h4{style:"margin:0px"}
+                            = link_to theme['title'], theme_path(theme['title'].downcase)
+                .col.m6
+                    .img
+                        = link_to image_tag(theme['photos'].first['photo'].url), theme_path(theme['title'].downcase), class: "cart-modal-image"
+                .col.m6{style:"text-align:right"}
+                    .remove
+                        %i{id:"remove-#{index}", class:"fa fa-times remove-cart-item", style:'color:red;font-size:1.5em;margin-top:-25px;cursor:pointer', data:{index:index}}
+                    .license
+                        License:
+                        - if @order['licenses'][index].to_i === 1
+                            Single
+                        - else
+                            Multi
+                    .price
+                        - if @order['licenses'][index].to_i === 1
+                            = (theme['single_sale_price'] ? number_to_currency(theme['single_sale_price']) : number_to_currency(theme['single_price']) )
+                        - else
+                            = (theme['multi_sale_price'] ? number_to_currency(theme['multi_sale_price']) : number_to_currency(theme['multi_price']) )

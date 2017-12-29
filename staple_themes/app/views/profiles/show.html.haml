@@ -1,0 +1,41 @@
+%h1.center{style:"text-transform:capitalize"}
+    = @user.username
+
+.row
+    .col.m9.comments
+        %h3 Comments
+        -if @user.comments.order("created_at DESC")
+            - @user.comments.order("created_at DESC").each do |comment|
+                .comment
+                    .user-name
+                        = link_to comment.user.username, profile_path(comment.user.username)
+                    .comment-rating
+                        - 5.times do |x|
+                            - if comment.rating > x
+                                = image_tag('/assets/star-on.png')
+                            - else
+                                = image_tag('/assets/star-off.png')
+                    .comment-content
+                        = comment.content
+        -elsif current_user && current_user.username === @user.username
+            %p You haven't addded any comments.
+        -else
+            %p This user hasn't added any comments.
+        
+    .col.m3.about
+        %p
+            Age of Account:
+            = time_ago_in_words(@user.created_at)
+        -if current_user && current_user.username === @user.username
+            .divider
+            %p 
+                = link_to "Settings", edit_user_registration_path
+            %p 
+                = link_to "Purchases", purchases_path(current_user.username)
+            %p
+                = link_to "Logout", destroy_user_session_path, method: :delete
+
+            
+
+
+
