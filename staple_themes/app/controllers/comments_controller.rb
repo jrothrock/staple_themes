@@ -16,6 +16,7 @@ class CommentsController < ApplicationController
             @theme.average_rating = ((total_rating + params[:rating].to_f) / (@theme.ratings_count.to_f + 1)).to_f
             @theme.ratings_count += 1
             if comment.save && @theme.save
+                App.purge_cache
                 render json:{}, status: :ok
             else 
                 render json:{}, status: :internal_server_error
@@ -32,7 +33,7 @@ class CommentsController < ApplicationController
     private 
 
     def set_theme
-        @theme = Theme.where("lower(title) = ?", params[:theme_id]).first
+        @theme = Theme.where("title_url = ?", params[:theme_id]).first
         puts @theme
         unless @theme
             flash[:alert] = "There Is No Theme By That Name"

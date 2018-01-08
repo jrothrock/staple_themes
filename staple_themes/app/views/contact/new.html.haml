@@ -1,0 +1,28 @@
+.contact-container.row
+    %h2.contact.center
+        Contact
+    %form.col.s12.m8.offset-m2#contact-form.contact-form
+        .row
+            .input-field.col.s12
+                %input#contact-form-name.validate{:autofocus => true, :type => "text"}/
+                %label{:for => "name"} Name
+        .row
+            .input-field.col.s12
+                %input#contact-form-email.validate{:type => "text"}
+                %label{:for => "password"} Email
+        .row
+            .an-input-field.col.s12
+                %label{style:"font-size:1rem"} Contact Type
+                %select.browser-default#contact-form-type
+                    %option{:selected => :true, :value => "1"} General Inquiry
+                    %option{:value => "2"} Sales Inquiry
+                    %option{:value => "3"} Support
+                    %option{:value => "4"} Bug Report
+
+        .row
+            .input-field.col.s12
+                %span{style:'color:#999'} Body
+                %textarea#contact-form-body.validate{style:"height:10rem;border-radius: 3px;border: 1px solid rgba(0,0,0,0.1)"}
+        .row
+            .input-field.col.s12.center
+                %btn.btn{id:"submit-contact-form"} Submit

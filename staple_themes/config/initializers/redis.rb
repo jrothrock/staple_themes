@@ -1,0 +1,1 @@
+$redis = Redis::Namespace.new("staple_themes", :redis => Redis.new)

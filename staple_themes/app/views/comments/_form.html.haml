@@ -1,10 +1,10 @@
 .comment-form-container
     %h5 Add A Comment:
-    =form_for([@theme, @theme.comments.build], url:theme_comments_path(@theme.title.downcase), remote: true) do |f|
+    =form_for('comments', url:theme_comments_path(@theme['title'].downcase), remote: true) do |f|
         #new-comment-stars
         =f.text_field :content, placeholder: 'Add a comment...',
                                         class: "comment_content",
-                                        id: "comment_content_#{@theme.title}",
-                                        data: { theme: "#{@theme.title}",
-                                        value: "#{@theme.comments.count}" }
+                                        id: "comment_content_#{@theme['title']}",
+                                        data: { theme: "#{@theme['title']}",
+                                        value: "#{@theme['comments'].length}" }
         =f.submit 'New Comment', class: 'btn', id: "comment-submit" # Hidden with CSS

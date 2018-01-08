@@ -1,3 +1,5 @@
+import "card/dist/jquery.card.js";
+import "card/dist/card.css";
 var themeAppCheckout = {
     paypalLoaded:false,
     paypalButton(){
@@ -54,6 +56,15 @@ var themeAppCheckout = {
             }, '#paypal-button');
         }
     },
+    createCCForm(){
+        $('form').card({
+            // a selector or DOM element for the container
+            // where you want the card to appear
+            container: '.credit-card-form-js', // *required*
+
+            // all of the other options from above
+        });
+    },
     watchCCButton(){
         $(`#credit-card-button`).on('click', function(){
             $(`#credit-card-form`).css({'display':'block'});
@@ -66,8 +77,8 @@ var themeAppCheckout = {
         Stripe.card.createToken({
             number:$('#number').val().replace(/ /g,''),
             cvc:$('#security').val(),
-            exp_month:$('#date_month').val(),
-            exp_year:$('#date_year').val(),
+            exp_month:$('#expiry').val().replace(/ /g,"").split('/')[0],
+            exp_year:$('#expiry').val().replace(/ /g,"").split('/')[1],
             name:$('#holder').val(),
             address_zip:$('#zip').val()
         }, function stripeResponseHandler(status, response) {
@@ -118,6 +129,7 @@ var themeAppCheckout = {
     },
     init(){
         setTimeout(()=>{
+            themeAppCheckout.createCCForm();
             themeAppCheckout.paypalButton();
             themeAppCheckout.watchCCButton();
         },1)

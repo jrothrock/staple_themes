@@ -1,37 +1,45 @@
 %div
     %h3 Orders
-    - if @orders && @orders.length
+    - if @orders && @orders.length != 0
         %p
-        - @orders.each do |order|
-            .order.row
-            .col.s12
-                .created
-                    = order['created_at']
-                .total
-                    = number_to_currency(order['total'])
-                .items
-                    Items:
-                    = order['themes'].length
-            - order['themes'].each_with_index do |theme, index|
-                .order-item.row
-                    .col.m12
-                        .title
-                            %h4{style:"margin:0px"}
-                                = link_to theme['title'], theme_path(theme['title'].downcase)
-                    .col.m6
-                        .img
-                            = link_to image_tag(theme['photos'].first['photo'].url), theme_path(theme['title'].downcase), class: "orders-page-image"
-                    .col.m6{style:"text-align:right"}
-                        .license
-                            License:
-                            - if order['licenses'][index] === 1
-                                Single
-                            - else
-                                Multi
-                        .price
-                            - if order['licenses'][index] === 1
-                                = (theme['single_sale_price'] ? number_to_currency(theme['single_sale_price']) : number_to_currency(theme['single_price']) )
-                            - else
-                                = (theme['multi_sale_price'] ? number_to_currency(theme['multi_sale_price']) : number_to_currency(theme['multi_price']) )
+        .orders-container
+            - @orders.each do |order|
+                .order.row
+                    .col.s12.top-section
+                        .total
+                            Total:
+                            = number_to_currency(order['total'])
+                        .created
+                            Purchased:
+                            = order['created_at'].strftime("%m-%d-%Y")
+                        .items
+                            Items:
+                            = order['themes'].length
+                    - order['themes'].each_with_index do |theme, index|
+                        .order-item.row
+                            .col.m12
+                                .title
+                                    %h4{style:"margin:0px"}
+                                        = link_to theme['title'], theme_path(theme['title_url'])
+                            .col.m6
+                                .img
+                                    = link_to image_tag(theme['photos'].first['photo'].url), theme_path(theme['title_url']), class: "orders-page-image"
+                            .col.m6{style:"text-align:right"}
+                                .license
+                                    License:
+                                    - if order['licenses'][index].to_i === 1
+                                        Single
+                                    - else
+                                        Multi
+                                .price
+                                    - if order['licenses'][index].to_i === 1
+                                        = (theme['single_sale_price'] ? number_to_currency(theme['single_sale_price']) : number_to_currency(theme['single_price']) )
+                                    - else
+                                        = (theme['multi_sale_price'] ? number_to_currency(theme['multi_sale_price']) : number_to_currency(theme['multi_price']) )
+                                .download
+                                    %button.btn.download-btn.capitalize.waves-effect.waves-light{data:{theme:theme['title_url']}} 
+                                        Download
+                                        %i{class:"fa fa-cloud-download", style:"font-size:1.1em"}
+
     - else
         %p You haven't placed any orders.

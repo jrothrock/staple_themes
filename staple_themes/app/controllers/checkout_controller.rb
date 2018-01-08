@@ -6,17 +6,16 @@ class CheckoutController < ApplicationController
     include PayPal::SDK::Core::Logging
     def show
         @order_checkout = ApplicationRecord::Order.where("uuid = ?", session[:order_id]).first
+        unless @order
+            flash[:alert] = "You don't have an order started"
+            redirect_to root_path
+        end
     end
 
     def update
     @order = ApplicationRecord::Order.where("uuid = ?", session[:order_id]).first
     if(@order)
         themes = Theme.where("id IN (?)", @order.themes)
-        themes.each do |theme|
-            theme.purchasers[current_user.username] = 1
-            theme.purchases += 1
-            theme.save
-        end
         # @order.email = current_user.email ? current_user.email : order.email
         @order.status = 2
         ApplicationRecord::Order.transaction do
@@ -83,7 +82,13 @@ class CheckoutController < ApplicationController
                     @order.stripe_payment_id = charge.id
                     @order.save
                 end
+                themes.each do |theme|
+                    theme.purchasers[current_user.uuid] = 1
+                    theme.purchases += 1
+                    theme.save
+                end
                 session[:order_id] = nil
+                UserMailer.order_email(current_user, @order, themes).deliver
                 render json:{order:@order.as_json, username:current_user.username}, status: :ok
                 # NotifysellerWorker.perform_in(15.seconds)
                 # if user.is_a? String

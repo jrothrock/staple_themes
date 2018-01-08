@@ -1,46 +1,52 @@
 .theme-container
     .title
         %h3.center
-            = @theme.title
+            = @theme['title']
     .upper-half
         .row
             .col.m6.s12
                 .img-container
-                    = image_tag(@theme.photos.first.photo.url)
+                    = image_tag(@theme['photo_urls'][0])
             .col.m6.s12
                 .information
                     .rating
                         %p Averate rating: 
                         - 5.times do |x|
-                            -if @theme.average_rating > (x+0.75)
+                            -if @theme['average_rating'].to_f > (x+0.75)
                                 =image_tag('star-on.png')
-                            -elsif @theme.average_rating > (x+0.3)
+                            -elsif @theme['average_rating'].to_f > (x+0.3)
                                 =image_tag('star-half.png')
                             -else
                                 =image_tag('star-off.png')
                     .actions
                         .preview
-                            %a.btn.waves-effect.waves-light{:href => @theme.url, id:'preview-button', style:'margin-top:10px', target:"_blank"} Preview
-                        .cart
-                            %select#license-select{style:"margin-top:10px", data:{theme:@theme.id}}
-                                %option#single-license-option{value: 1, :selected => 'selected'}
-                                    Single Use License:
-                                    = (@theme.single_sale_price ? number_to_currency(@theme.single_sale_price) : number_to_currency(@theme.single_price))
-                                %option#multi-license-option{value: 2}
-                                    Multi Use License:
-                                    = (@theme.multi_sale_price ? number_to_currency(@theme.multi_sale_price) : number_to_currency(@theme.multi_price))
-                            %button.btn.waves-effect.waves-light#add-to-cart{style:"margin-top:10px;background-color: #f44336;"} Add To Cart
+                            %a.btn.waves-effect.waves-light{:href => @theme['url'], id:'preview-button', style:'margin-top:10px', target:"_blank"} Preview
+                        -if (current_user && @theme['purchasers'].key?(current_user.uuid)) || (@theme['single_sale_price'] === 0.00 && @theme['multi_sale_price'] === 0.00) || (@theme['single_price'] === 0.00 && @theme['multi_price'] === 0.00)
+                            %button.btn.download-btn.capitalize.waves-effect.waves-light{data:{theme:@theme['title_url']}} 
+                                Download
+                                %i{class:"fa fa-cloud-download", style:"font-size:1.1em"}
+                        -else
+                            .cart
+                                %select#license-select{style:"margin-top:10px", data:{theme:@theme['id']}}
+                                    %option#single-license-option{value: 1, :selected => 'selected'}
+                                        Single Use License:
+                                        = (@theme['single_sale_price'] ? number_to_currency(@theme['single_sale_price']) : number_to_currency(@theme['single_price']))
+                                    %option#multi-license-option{value: 2}
+                                        Multi Use License:
+                                        = (@theme['multi_sale_price'] ? number_to_currency(@theme['multi_sale_price']) : number_to_currency(@theme['multi_price']))
+                                %button.btn.waves-effect.waves-light#add-to-cart{style:"margin-top:10px;background-color: #f44336;"} Add To Cart
     
-    - if current_user === @theme.user
+    - if current_user === @theme['user']
         .edit-links
-            = link_to "Edit Theme", edit_theme_path(@theme.title.downcase)
+            = link_to "Edit Theme", edit_theme_path(@theme['title'].downcase)
                 
     .description
         = render 'description', theme: @theme
 .comments-container
     %h5 Comments:
-    -if @theme.comments.any?
-        = render @theme.comments
+    -if @theme['comments'].any?
+        - @theme['comments'].each do |comment|
+            = render 'comments/comment', {comment: comment, theme:@theme}
     - else
         %p
             No Comments Have Been Added

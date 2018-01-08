@@ -12,6 +12,25 @@ import "raty-js/lib/jquery.raty.css";
 Turbolinks.start();
 
 var themeApp = {
+    watchDownload(){
+        $('.download-btn').on('click', function(){
+            let theme = $(this).data('theme');
+            $.ajax({
+                url: `${location.origin}/themes/${theme}/download`,
+                type: 'GET',
+                success: (data) => {
+                    let tag = document.createElement('a');
+					tag.setAttribute('href', data.url);
+					tag.setAttribute('target', "_blank");
+					tag.setAttribute('download', data.name);
+					tag.click();
+                },
+                error: (error)=> {
+                    console.log(error);
+                }
+            });
+        });
+    },
     userProfileHover(){
         $("#profile-hover").dropdown({ hover: true, inDuration: 300, outDuration: 225, alignment: 'left', constrain_width: false, belowOrigin: true });
         $("#profile-hover").on('click', (e)=>{
@@ -39,7 +58,7 @@ var themeApp = {
         // watch open
         $('.modal-trigger').on('click', function(){
             $('#add-to-cart').unbind('click');
-            $('.modal').modal('open');
+            $('#modal-purchase').modal('open');
             let modal = $(this).data('target');
             let theme = $(this).data('theme');
             if($(`#${modal}`).length) $(`#${modal}`).data('theme', theme);
@@ -50,14 +69,16 @@ var themeApp = {
         })
         // watch close
         $('#close-modal').on('click', function(){
-            $('.modal').modal('close');
+            $('#modal-purchase').modal('close');
         })
     },
     addToCartHtml(order,theme,index,license){
         let price, html = '';
-        if(license === 'Single'){
+        if(license === 1){
+            license = "Single";
             price = theme.single_sale_price ? theme.single_sale_price : theme.single_price;
         } else {
+            license = "Multi"
             price = theme.multi_sale_price ? theme.multi_sale_price : theme.multi_price;
         }
         if(index === 0){
@@ -159,8 +180,13 @@ var themeApp = {
                 error: (error)=> {
                     console.log(error);
                     localStorage.removeItem("_staple_themes_cart")
+                    $('#modal-purchase.modal').modal('open');
                     if(error.status === 401){
-                        Turbolinks.visit(`/users/sign_up/`, { action: "replace" })
+                        themeApp.watchLoginModal($(this));
+                        $(`#modal-sign-in`).modal('open')
+                        // Turbolinks.visit(`/users/sign_up/`, { action: "replace" })
+                    } else {
+                        Materialize.toast('Failed To Add To Cart. Please Try Again', 3000, 'failure-rounded')
                     }
                 }
             });
@@ -174,71 +200,89 @@ var themeApp = {
             $(".shopping-cart-modal").removeClass('show');
         })
     },
-    watchRegisterModal(){
-
+    loginHTML(user,admin){
+        let html = '';
+        if(admin){
+            html+= `<li>
+                        <a href="/themes/new">Create Theme</a>
+                    </li>`
+        }
+        html += `
+        <li class="dropdown-button" data-activates="dropdown1" id="profile-hover">
+            <a class="profile-dropdown" href="" style="border-left: 1px solid rgba(255,255,255,0.5)">
+                <i class="fa fa-user-circle"></i>
+                <i class="fa fa-angle-down" style="margin-left:2px"></i>
+                    ${user}
+            </a>
+        </li>
+        <ul class="dropdown-content" id="dropdown1">
+            <li>
+                <a href="/users/${user}">Profile</a>
+            </li>
+            <li>
+                <a href="/users/edit">Settings</a>
+            </li>
+            <li>
+                <a href="/users/${user}/purchases">Purchases</a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a rel="nofollow" data-method="delete" href="/users/sign_out">Logout</a>
+            </li>
+        </ul>
+        `;
+        return html;
     },
-    uploadPhoto(){
-        $("#upload-theme-input").change(function() {
-             if (this.files && this.files[0]) {
-                var reader = new FileReader();
+    watchLoginModal(button){
+        $(`#log-in-button-modal, #sign-up-button-modal`).unbind('click');
 
-                reader.onload = function(e) {
-                    $('#upload-theme-image').attr('src', e.target.result);
+        //watch login
+        $(`#log-in-button-modal`).on('click', (e)=>{
+            let username = $(`#username_log_in`).val();
+            let password = $(`#password_log_in`).val();
+            $.ajax({
+                url: window.location.origin + '/users/sign_in.json',
+                type: 'POST',
+                data: { user:{login: username, password:password, remember_me:0 }},
+                success: (data, status, xhr) => {
+                    $("meta[name='csrf-token']").attr("content", xhr.getResponseHeader('X-CSRF-TOKEN'))
+                    $(`.right.hide-on-med-and-down`).empty();
+                    $(`.right.hide-on-med-and-down`).html(themeApp.loginHTML(data.username, data.admin))
+                    $(`#modal-sign-in`).modal('close');
+                    themeApp.userProfileHover();
+                    $('#modal-purchase.modal').modal('close');
+                    button.click();
+                },
+                error: (error, status, xhr)=> {
+                    console.log(error);
                 }
-
-                reader.readAsDataURL(this.files[0]);
-            }
-        });
-    },
-    uploadZip(){
-        $('#upload-theme-input-zip').fileupload();
-        var credential,policy,signature,store_dir,upload_date,upload_time,name,files,sent;
-        var self = this;
-        $('#upload-theme-input-zip').on('change', ()=>{
-            self.files = $('#upload-theme-input-zip')[0].files
-            self.name = $('#upload-theme-input-zip')[0].files[0].name
-            $('.file-name').text(self.name)
+            })
         })
 
-        $('#upload-theme-input-zip').fileupload({
-            url: 'https://staplethemes.s3.amazonaws.com',
-            dataType: 'multipart/form-data',
-            fileInput: $('#upload-theme-input-zip'),
-            autoUpload: false,
-            replaceFileInput:false,
-            add:  (e, data) => { 
-                $.ajax({
-                    url: location.href + '/upload',
-                    data:{'name': self.name},
-                    dataType:'json',
-                    type: 'POST',
-                    success: (amz_data) => {
-                        self.credential = amz_data.credential;
-                        self.policy = amz_data.policy;
-                        self.signature = amz_data.signature;
-                        self.store_dir = amz_data.store;
-                        self.upload_date, self.upload_time = amz_data.date_stamp;
-                        data.submit();
-                    },
-                    error: (error)=> {
-                        console.log(error);
-                    }
-                });
-            },
-            submit: (e, data)=> {
-                data.formData = {key:self.store_dir, "Policy":self.policy,"X-Amz-Signature":self.signature,"X-Amz-Credential":self.credential,"X-Amz-Algorithm":"AWS4-HMAC-SHA256", "X-Amz-Date":self.upload_time};
-                $(".progress-container").css({'display':'initial'})
-            },
-            progress: (e, data)=> {
-                var progress = `${Math.floor(((parseInt(data.loaded)*0.9)  / (parseInt(data.total))) * 100)}%`;
-                $('.inner-progress-bar').css({'transform':`translateX(${progress}%)`});
-                $('.progress-text-container').text(progress);
-            },
-            done: (e, data)=> {
-                $('.progress-text-container').text('100%');
-                if(e) console.log(e);
-            }
-        });
+        //watch signup
+        $(`#sign-up-button-modal`).on('click', (e)=>{
+            let username = $(`#username_sign_up`).val();
+            let email = $(`#email_sign_up`).val();
+            let password = $(`#password_sign_up`).val();
+            let password_confirmation = $(`#password_confirmation_sign_up`).val();
+            $.ajax({
+                url: window.location.origin + '/users.json',
+                type: 'POST',
+                data: { user:{username: username, email:email, password:password,password_confirmation:password_confirmation }},
+                success: (data, status, xhr) => {
+                    $("meta[name='csrf-token']").attr("content", xhr.getResponseHeader('X-CSRF-TOKEN'))
+                    $(`.right.hide-on-med-and-down`).empty();
+                    $(`.right.hide-on-med-and-down`).html(themeApp.loginHTML(data.username, data.admin))
+                    $(`#modal-sign-in`).modal('close');
+                    themeApp.userProfileHover();
+                    $('#modal-purchase.modal').modal('close');
+                    button.click();
+                },
+                error: (error)=> {
+                    console.log(error);
+                }
+            })
+        })
     },
     watchCarousel(){
         if($(".carousel").length){
@@ -374,14 +418,48 @@ var themeApp = {
 		});
 	},
     watchAlert(){
-            if($(".alert-container").length){
+        if($(".alert-container").length){
+            setTimeout(()=>{
+                $(".alert-container").addClass('fadeout')
                 setTimeout(()=>{
-                    $(".alert-container").addClass('fadeout')
-                    setTimeout(()=>{
-                        $(".alert-container").remove();
-                    },400);
-                },4000)
+                    $(".alert-container").remove();
+                },400);
+            },4000)
+        }
+    },
+    watchContact(){
+        $('#submit-contact-form').on('click', (e)=>{
+            let name = $('#contact-form-name').val();
+            let email = $('#contact-form-email').val()
+            let type = $('#contact-form-type').val()
+            let body = $('#contact-form-body').val()
+            if(!name){
+                $('#contact-form-name').addClass('invalid');
             }
+            if(!email){
+                $('#contact-form-email').addClass('invalid');
+            }
+            if(!type){
+                $('#contact-form-type').addClass('invalid');
+            }
+            if(!body){
+                $('#contact-form-body').addClass('invalid');
+            }
+            if(!name || !email || !type || !body) return;
+            $.ajax({
+                url: `${location.origin}/contact`,
+                data:{name:name, email:email, type:type,body:body},
+                type: 'POST',
+                success: (data) => {
+                    Materialize.toast('Contact Successfully Sent', 3500, 'success-rounded')
+                    $('#contact-form-name,#contact-form-email,#contact-form-body').val("").blur();
+                    $('#contact-form-type').val(1).blur();
+                },
+                error: (error)=> {
+                    Materialize.toast('Contact Failed To Send. Please Try Again', 3000, 'failure-rounded')
+                }
+            });
+        })
     },
     unbind(){
         $('#back-to-top').unbind('click');
@@ -396,15 +474,15 @@ var themeApp = {
             themeApp.watchThemeModal();
             themeApp.watchCartModal();
             themeApp.backToTop();
-            themeApp.uploadPhoto();
             themeApp.userProfileHover();
             themeApp.watchCarousel();
+            themeApp.watchDownload();
             themeApp.watchSignInButtons();
             themeApp.watchFormButtons();
-            themeApp.uploadZip();
             themeApp.watchScrollTo();
             themeApp.watchNewComments();
             themeApp.removeItemFromCart();
+            themeApp.watchContact();
             $('.modal').modal();
             $(".button-collapse").sideNav();
             Waves.displayEffect();

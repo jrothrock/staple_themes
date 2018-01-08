@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "@rails/webpacker": "^3.2.0",
+    "card": "^2.4.0",
     "coffeescript": "1.12.7",
     "raty-js": "^2.8.0",
     "simplemde": "^1.11.2",

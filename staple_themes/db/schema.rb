@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171229213955) do
+ActiveRecord::Schema.define(version: 20180108213651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,7 +104,6 @@ ActiveRecord::Schema.define(version: 20171229213955) do
     t.integer "user_id"
     t.integer "purchase_type", default: 1
     t.string "purchase_url"
-    t.integer "downloads"
     t.decimal "average_rating", precision: 8, scale: 2, default: "0.0"
     t.string "excerpt"
     t.decimal "single_price", precision: 8, scale: 2
@@ -112,6 +111,12 @@ ActiveRecord::Schema.define(version: 20171229213955) do
     t.decimal "multi_price", precision: 8, scale: 2
     t.decimal "multi_sale_price", precision: 8, scale: 2
     t.integer "purchases", default: 0, null: false
+    t.string "download_url", default: "", null: false
+    t.string "download_name", default: "", null: false
+    t.string "title_url", default: "", null: false
+    t.integer "downloads", default: 0, null: false
+    t.text "photo_urls", default: [], array: true
+    t.integer "upload_status", default: 0, null: false
     t.index "properties jsonb_path_ops", name: "products_properties_idx", using: :gin
     t.index ["created_at"], name: "index_product_on_created_at"
     t.index ["hidden"], name: "index_product_on_hidden"

@@ -35,7 +35,7 @@ class User < ApplicationRecord
     end
   end
 
-  def self.setUUID
+  def setUUID
       begin 
       uuid = SecureRandom.hex(5)
       uuid[0] = '' # bring string down to 9 characters, 68B possibilitis

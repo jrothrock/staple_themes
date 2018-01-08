@@ -2,7 +2,6 @@ include ActionView::Helpers::NumberHelper
 class OrdersController < ApplicationController
   # include PayPal::SDK::REST
   # include PayPal::SDK::Core::Logging
-
   before_action :authenticate_user!
   # before_action :set_user
   # before_action :owned_profile

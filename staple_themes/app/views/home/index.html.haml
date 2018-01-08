@@ -4,7 +4,7 @@
     .carousel-container
         .carousel
             - @themes.each do |theme|
-                = link_to image_tag(theme.photos.first.photo.url), theme_path(theme.title.downcase), class:"carousel-item"
+                = link_to image_tag(theme['photo_urls'][0]), theme_path(theme['title_url']), class:"carousel-item"
     .info-container
         .top-info-container
             Stunning Artison Themes For Every Industry and Field
@@ -19,25 +19,33 @@
             .col.s12.m4
                 .card.medium
                     .card-image
-                        = link_to image_tag(theme.photos.first.photo.url), theme_path(theme.title.downcase)
-                        = link_to theme.title, theme_path(theme.title.downcase) , class:'card-title', style:"padding:0px;left:24px;bottom:24px"
+                        = link_to image_tag(theme['photo_urls'][0]), theme_path(theme['title_url'])
+                        = link_to theme['title'], theme_path(theme['title_url']) , class:'card-title', style:"padding:0px;left:24px;bottom:24px"
                         %button.btn.theme-price
-                            = number_to_currency(theme.single_price)
+                            -if theme['single_price'] != 0.00 && theme['single_sale_price'] != 0.00
+                                = number_to_currency((theme['single_sale_price'] ? theme['single_sale_price'] : theme['single_price']))
+                            -else
+                                FREE
                     .card-content
                         .card-rating
                             Average Rating: 
                             - 5.times do |x|
-                                -if theme.average_rating > (x+0.75)
+                                -if theme['average_rating'].to_f > (x+0.75)
                                     =image_tag('star-on.png')
-                                -elsif theme.average_rating > (x+0.3)
+                                -elsif theme['average_rating'].to_f > (x+0.3)
                                     =image_tag('star-half.png')
                                 -else
                                     =image_tag('star-off.png')
                             (
-                            = theme.average_rating
+                            = theme['average_rating']
                             )
                         %p
-                            = theme.excerpt
+                            = theme['excerpt']
                         .card-action
-                            %a.btn{:href => theme.url} Preview
-                            %button.btn.modal-trigger{style:"float:right;margin:0px;background-color: #f44336;", data: {theme: theme.id, target: "modal-purchase", single: (theme.single_sale_price ? theme.single_sale_price : theme.single_price), multi: (theme.multi_sale_price ? theme.multi_sale_price : theme.multi_price), title: theme.title, single_text: "Single Use License: #{theme.single_sale_price ? number_to_currency(theme.single_sale_price) : number_to_currency(theme.single_price)}", multi_text: "Multi Site Use License: #{theme.multi_sale_price ? number_to_currency(theme.multi_sale_price) : number_to_currency(theme.multi_price)}"}} Purchase
+                            %a.btn{:href => theme['url']} Preview
+                            -if (current_user && theme['purchasers'].key?(current_user.uuid)) || (theme['single_sale_price'] === 0.00 && theme['multi_sale_price'] === 0.00) || (theme['single_price'] === 0.00 && theme['multi_price'] === 0.00)
+                                %button.btn.download-btn.capitalize.waves-effect.waves-light{style:"float:right;margin:0px;", data:{theme:theme['title_url']}} 
+                                    Download 
+                                    %i{class:"fa fa-cloud-download", style:"font-size:1.1em"}
+                            -else
+                                %button.btn.modal-trigger{style:"float:right;margin:0px;background-color: #f44336;", data: {theme: theme['id'], target: "modal-purchase", single: (theme['single_sale_price'] ? theme['single_sale_price'] : theme['single_price']), multi: (theme['multi_sale_price'] ? theme['multi_sale_price'] : theme['multi_price']), title: theme['title'], single_text: "Single Use License: #{theme['single_sale_price'] ? number_to_currency(theme['single_sale_price']) : number_to_currency(theme['single_price'])}", multi_text: "Multi Site Use License: #{theme['multi_sale_price'] ? number_to_currency(theme['multi_sale_price']) : number_to_currency(theme['multi_price'])}"}} Purchase

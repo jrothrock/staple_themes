@@ -13,18 +13,19 @@
     %meta{property:"twitter:card", content:"summary"}
     %meta{property:"twitter:title", content:"Staple Themes: Artison Themes For Every Industry"}
     = favicon_link_tag 'favicon.png'
-    - if current_page?(controller: 'devise/registrations', action: 'new') || current_page?(controller: 'devise/sessions', action: 'new')
+    - if current_page?(controller: 'registrations', action: 'new') || current_page?(controller: 'sessions', action: 'new') || ((controller_name.eql? "contact") && (action_name.eql? "new"))
       %meta{:name => "turbolinks-cache-control", :content => "no-preview"}
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = stylesheet_pack_tag 'application'
     = javascript_include_tag 'application', 'data-turbolinks-track' => true 
-    - if current_page?(controller: '/themes', action: 'new')
+    - if current_page?(controller: '/themes', action: 'new') || ((controller_name.eql? "themes") && (action_name.eql? "edit"))
       = stylesheet_pack_tag 'upload'
       = javascript_include_tag 'upload', 'data-turbolinks-track' => true  
       = javascript_pack_tag 'upload', 'data-turbolinks-track': 'reload', defer: true
     - if ((controller_name.eql? "checkout") && (action_name.eql? "show"))
       = javascript_include_tag 'https://js.stripe.com/v2/'
       = javascript_include_tag 'https://www.paypalobjects.com/api/checkout.js'
+      -# = stylesheet_pack_tag 'checkout'
       = javascript_pack_tag 'checkout', 'data-turbolinks-track': 'reload', defer: true
     = javascript_pack_tag 'application', 'data-turbolinks-track': true
     = csrf_meta_tags
@@ -41,6 +42,7 @@
 = render 'layouts/partials/footer'
 - if !((controller_name.eql? "themes") && (action_name.eql? "show"))
   = render 'layouts/partials/modal'
+= render 'layouts/partials/login_modal'
 
 %noscript
   %h2{:style => "text-align:center;color:#8708bd"} Staple Themes

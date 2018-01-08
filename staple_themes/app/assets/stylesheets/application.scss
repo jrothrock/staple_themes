@@ -242,7 +242,8 @@ select{
     .img-container{
         text-align:center;
         img{
-            height:250px;
+            max-height: 250px;
+            max-width: 100%;
             border: 1px solid #dedede;
             box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
         }
@@ -264,6 +265,10 @@ select{
 .comments-container{
     margin-top:20px;
     border-top:1px solid rgba(0,0,0,0.1);
+}
+.success-rounded{
+    background-color: #25c91a !important;
+    border-radius:30px;
 }
 .failure-rounded{
     background-color:red;
@@ -306,6 +311,7 @@ i.btn.waves-effect input{
         opacity:0.7;
         img{
             opacity:0.4;
+            width:100%;
         }
     }
     .carousel-container{
@@ -491,4 +497,55 @@ i.btn.waves-effect input{
 }
 .orders-page-image img{
     height:150px;
+}
+.copyright-link{
+    color:rgba(255, 255, 255, 0.8);
+    &:hover{
+        color:rgba(255, 255, 255, 0.8);
+        text-decoration: underline;
+    }
+}
+.orders-container{
+    width:80%;
+    margin:auto;
+    background-color:#efefef;
+    border-radius:3px;
+    .order{
+        border-bottom: 1px solid rgba(0,0,0,0.5);
+    }
+    .order:last-child{
+        border-bottom:none;
+    }
+    .top-section{
+        font-size:1.15em;
+        border-bottom: 1px solid rgba(0,0,0,0.2);
+        margin-bottom:10px;
+        padding:5px 0px;
+        .total,.created,.items{
+            display:inline;
+            margin-right:10px;
+        }
+    }
+}
+.download-btn, .download-btn:visited, .download-btn:focus, .download-btn:active{
+    margin-top:10px;
+    background-color:#25c91a;
+    &:hover{
+        background-color: rgba(37, 201, 26, 0.8);
+    }
+}
+.contact-form{
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius:3px;
+    padding:5px !important;
+}
+@media(min-width:700px){
+    .terms,.cookies,.privacy{
+        width:80%;
+        margin:auto;
+    }
+}
+.credit-card-form-js{
+    margin-bottom: 10px;
+    margin-top: -10px;
 }

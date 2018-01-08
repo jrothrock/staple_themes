@@ -10,23 +10,24 @@
             .row.center
                 %button.btn{id:"credit-card-button"} Credit Card
                 %div#paypal-button
-
+            
         .row.hidden.credit-card-form#credit-card-form
+            .credit-card-form-js
             =form_tag({url:new_purchase_path, remote: true}, {:class => 'order-submit-form'}) do
                 .row
                     .col.m6
                         =label_tag "Name"
-                        =text_field_tag :name, "", id: 'holder'
+                        =text_field_tag :name, "", id: 'name'
                     .col.m6
                         =label_tag "Number"
                         =text_field_tag :number, "", id:'number'
                 .row
                     .col.m6.expiration-tags
                         =label_tag "Expiration"
-                        =select_date Date.current , :discard_day => true, :start_year => Date.today.year, :end_year => (Date.today.year+10), :use_month_numbers => true
+                        =text_field_tag :expiry, "", id:'expiry'
                     .col.m6
-                        =label_tag "CVV"
-                        =text_field_tag :cvv, "", id:'security'
+                        =label_tag "CVC"
+                        =text_field_tag :cvc, "", id:'cvc'
                 =submit_tag 'Purchase', class: 'btn order-submit', id: "order-submit" # Hidden with CSS
     .cart-items.col.m6
         .row{style:"white-space:nowrap;font-size:1.5em;text-align:center"}

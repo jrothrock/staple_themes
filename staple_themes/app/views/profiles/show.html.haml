@@ -4,7 +4,7 @@
 .row
     .col.m9.comments
         %h3 Comments
-        -if @user.comments.order("created_at DESC")
+        -if @user.comments.order("created_at DESC").length != 0
             - @user.comments.order("created_at DESC").each do |comment|
                 .comment
                     .user-name
@@ -18,9 +18,11 @@
                     .comment-content
                         = comment.content
         -elsif current_user && current_user.username === @user.username
-            %p You haven't addded any comments.
+            %p 
+                You haven't addded any comments.
         -else
-            %p This user hasn't added any comments.
+            %p 
+                This user hasn't added any comments.
         
     .col.m3.about
         %p

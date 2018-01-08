@@ -54,5 +54,7 @@
             .col.m12.row
               %p{style:"color:#aaa;"} Description
               = f.text_area :description, id:"markdown-editor"
+            .hidden
+              = f.input :download_name, class:'hidden'
             .form-group.text-center
               = f.button :submit, class: 'btn-success btn-block', style: "margin:auto"

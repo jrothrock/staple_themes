@@ -38,7 +38,7 @@
                                 - else
                                     = (theme['multi_sale_price'] ? number_to_currency(theme['multi_sale_price']) : number_to_currency(theme['multi_price']) )
         -else
-            %h6 No Items Have Been Added To The Cart
+            %h6.center{style:"font-size:1.1em"} No Items Have Been Added To The Cart
 
 -if session[:order_id]
     :javascript

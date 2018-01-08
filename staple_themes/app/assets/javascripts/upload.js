@@ -10,6 +10,8 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+// File Upload wasn't playing nicely with NPM, so it'll be included this way.
+//
 //= require ./vendor/jquery.ui.widget.js
 //= require ./vendor/jquery.iframe-transport.js
 //= require ./vendor/jquery.fileupload.js
