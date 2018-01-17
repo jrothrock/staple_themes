@@ -184,6 +184,9 @@ var themeApp = {
                     if(error.status === 401){
                         themeApp.watchLoginModal($(this));
                         $(`#modal-sign-in`).modal('open')
+                        // setTimeout(()=>{
+                            $('#modal-sign-in-tabs').find('.indicator').css({'right':`${$('#modal-sign-in-tabs').width() / 2}px`,'left':'0px' })
+                        // },300)
                         // Turbolinks.visit(`/users/sign_up/`, { action: "replace" })
                     } else {
                         Materialize.toast('Failed To Add To Cart. Please Try Again', 3000, 'failure-rounded')
@@ -238,6 +241,7 @@ var themeApp = {
 
         //watch login
         $(`#log-in-button-modal`).on('click', (e)=>{
+            $(`#log-in-button-modal`).addClass('disabled');
             let username = $(`#username_log_in`).val();
             let password = $(`#password_log_in`).val();
             $.ajax({
@@ -254,13 +258,23 @@ var themeApp = {
                     button.click();
                 },
                 error: (error, status, xhr)=> {
+                    console.log(status);
                     console.log(error);
+                    $(`#log-in-button-modal`).addClass('disabled');
+                    if(error.status === 401){
+                        $(`#username_log_in`).parent().parent().prepend(`<span style='text-transform:capitalize;text-align:center;display:block;color:red;position:relative;top:-10px'>${error.responseJSON.error}</span>`)
+                        $(`#username_log_in`).parent().addClass("error");
+                        $(`#password_log_in`).parent().addClass("error");
+                    } else if(error.status === 500){
+                        Materialize.toast('Internal Server Error Please Try Again', 3000, 'failure-rounded');
+                    }
                 }
             })
         })
 
         //watch signup
         $(`#sign-up-button-modal`).on('click', (e)=>{
+            $(`#sign-up-button-modal`).addClass('disabled');
             let username = $(`#username_sign_up`).val();
             let email = $(`#email_sign_up`).val();
             let password = $(`#password_sign_up`).val();
@@ -279,7 +293,23 @@ var themeApp = {
                     button.click();
                 },
                 error: (error)=> {
+                    $(`#sign-up-button-modal`).removeClass('disabled')
                     console.log(error);
+                    if(error.responseJSON.errors.email){
+                        $('#email_sign_up').parent().addClass('error');
+                        $("#email_sign_up").parent().append(`<span style='text-transform:capitalize;color:red;position:relative;top:-10px'>Email ${error.responseJSON.errors.email[0]}</span>`);
+                    }
+                    if(error.responseJSON.errors.username){
+                        $('#username_sign_up').parent().addClass('error');
+                        $("#username_sign_up").parent().append(`<span style='text-transform:capitalize;color:red;position:relative;top:-10px'>Username ${error.responseJSON.errors.username[0]}</span>`);
+                    }
+                    if(error.responseJSON.errors.password){
+                        $('#password_sign_up').parent().addClass('error');
+                        $('#password_confirmation_sign_up').parent().addClass('error');
+                        if(error.responseJSON.errors.password[0] === 'is too short (minimum is 6 characters)'){
+                            $("#password_sign_up").parent().append(`<span style='text-transform:capitalize;color:red;position:relative;top:-10px'>Password ${error.responseJSON.errors.password[0]}</span>`);
+                        } 
+                    }
                 }
             })
         })
@@ -294,6 +324,7 @@ var themeApp = {
         $("#sign-in-button, #sign-up-button, #update-registration-button").on("click", function(e){
             if(event.target.nodeName === 'INPUT') e.preventDefault();
             $(this).parents('.input-field').find('#submit-input-hidden').trigger('click');
+            $(this).addClass('disabled');
         })
     },
     watchFormButtons(){
@@ -348,7 +379,7 @@ var themeApp = {
         if($('#new-comment-stars').has('img').length) $('#new-comments-star').empty(); 
          $('#new-comment-stars').raty({
             score: 0,
-            path: '/assets',
+            path: 'https://cdn.staplethemes.com/images',
             scoreName: 'rating'
         });
         $("#comment-submit").on('click', (e)=>{
@@ -373,6 +404,64 @@ var themeApp = {
             }
         })
     },
+    watchResetForm(){
+        $(`#reset-password-button-modal`).on('click', function(){
+            $(this).addClass('disabled');
+            let login = $(`#username_reset`).val()
+            if(!login){
+                $(`#username_reset`).parent().addClass('error');
+                return;
+            }
+             $.ajax({
+                    url: window.location.pathname,
+                    type: 'POST',
+                    data: { login:login },
+                    success: (data) => {
+                        Turbolinks.visit(`/`, { action: "replace" })
+                    },
+                    error:(data) =>{
+                        $(this).removeClass('disabled')
+                        Materialize.toast('User Not Found', 4000, 'failure-rounded')
+                        $(`#username_reset`).val('').blur()
+                    }
+                })
+        });
+    },
+    watchResetConfirmationForm(){
+        $(`#reset-password-confirm-button-modal`).on('click', function(){
+            $(this).addClass('disabled');
+            let password = $(`#password_reset`).val()
+            let confirm_password = $(`#password_confirmation_reset`).val();
+            let user_uuid = $(`#user_uuid`).val()
+            if(!password){
+                $(`#password_reset`).parent().addClass('error');
+                return;
+            }
+            if(!confirm_password){
+                $(`#password_confirmation_reset`).parent().addClass('error');
+                return;
+            }
+            if(password != confirm_password){
+                $(`#password_reset`).parent().addClass('error');
+                $(`#password_confirmation_reset`).parent().addClass('error');
+                Materialize.toast('Passwords Must Match', 4000, 'failure-rounded')
+                return;
+            }
+             $.ajax({
+                    url: window.location.pathname,
+                    type: 'POST',
+                    data: { password:password,user_uuid:user_uuid },
+                    success: (data) => {
+                        Turbolinks.visit(`/`, { action: "replace" })
+                    },
+                    error:(data) =>{
+                        $(this).removeClass('disabled')
+                        Materialize.toast('User Not Found', 4000, 'failure-rounded')
+                        $(`#username_reset`).val('').blur()
+                    }
+                })
+        });
+    },
     removeItemFromCart(){
         $(".remove-cart-item").on('click', function(){
             let cart = localStorage.getItem('_staple_themes_cart');
@@ -388,7 +477,6 @@ var themeApp = {
                     $(container).remove();
                     $('#total-cart-modal').text(data.order.total);
                     if($('#total-checkout').length) $('#total-checkout').text(data.order.total);
-                    console.log(`index: ${index}`);
                     if($(`#cart-item-${index}`).length) $(`#cart-item-${index}`).remove();
                 },
                 error: (error)=> {
@@ -429,6 +517,7 @@ var themeApp = {
     },
     watchContact(){
         $('#submit-contact-form').on('click', (e)=>{
+            $('#submit-contact-form').addClass('disabled');
             let name = $('#contact-form-name').val();
             let email = $('#contact-form-email').val()
             let type = $('#contact-form-type').val()
@@ -454,8 +543,10 @@ var themeApp = {
                     Materialize.toast('Contact Successfully Sent', 3500, 'success-rounded')
                     $('#contact-form-name,#contact-form-email,#contact-form-body').val("").blur();
                     $('#contact-form-type').val(1).blur();
+                    $('#submit-contact-form').removeClass('disabled');
                 },
                 error: (error)=> {
+                    $('#submit-contact-form').removeClass('disabled')
                     Materialize.toast('Contact Failed To Send. Please Try Again', 3000, 'failure-rounded')
                 }
             });
@@ -483,6 +574,8 @@ var themeApp = {
             themeApp.watchNewComments();
             themeApp.removeItemFromCart();
             themeApp.watchContact();
+            themeApp.watchResetForm();
+            themeApp.watchResetConfirmationForm();
             $('.modal').modal();
             $(".button-collapse").sideNav();
             Waves.displayEffect();

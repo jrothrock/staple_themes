@@ -1259,12 +1259,12 @@ footer.page-footer{
   margin-right:5px;
 }
 
-.footer-social-icons > a > li{
+.footer-social-icons > a > div{
     list-style: none;
     display:inline;
 }
 
-.footer-social-icons > a > li > i{
+.footer-social-icons > a > div > i{
   width:35px;
   height:35px;
   line-height: 35px;

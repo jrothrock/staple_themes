@@ -29,6 +29,21 @@ class User < ApplicationRecord
       end
   end
 
+  def self.resetPassword(user)
+    begin
+      random_string = SecureRandom.hex(20)
+      if(User.unscoped.where("reset_password_token = ?", random_string).any?) then raise "Go buy some lotto tickets, the email_token has a duplicate!" end
+      rescue
+        retry
+    end
+    user.reset_password_token = random_string
+    user.reset_password_sent_at = Time.now
+    user.save!
+    UserMailer.reset_email(user).deliver
+  end
+
+  private
+
   def validate_username
     if User.where(email: username).exists?
       errors.add(:username, :invalid)

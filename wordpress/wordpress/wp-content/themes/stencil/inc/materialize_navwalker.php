@@ -86,7 +86,7 @@ if( ! class_exists( 'Materialize_Walker_Desktop_Nav_Menu' ) ) :
 			$right_icon = ( $args->walker->has_children && 0 === $depth ) ? ' <span class="fa fa-angle-down"></span></a>' : '</a>';
             $right_icon = ( $args->walker->has_children && 1 <= $depth && !$menu_right ) ? ' <span class="fa fa-angle-right"></span></a>' : $right_icon;
             // Build HTML output and pass through the proper filter.
-            $item_output = sprintf( '%1$s<a%2$s>%3$s%4$s%5$s%6$s%7$s</a>%8$s',
+            $item_output = sprintf( '%1$s<a%2$s>%3$s%4$s%5$s%6$s%7$s%8$s',
                 $args->before,
                 $attributes,
                 $args->link_before,

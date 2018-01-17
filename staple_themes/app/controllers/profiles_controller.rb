@@ -13,6 +13,6 @@ class ProfilesController < ApplicationController
   # end
 
   def set_user
-    @user = User.find_by(username: params[:profile])
+    @user = User.where("username = ?", params[:profile]).first
   end
 end

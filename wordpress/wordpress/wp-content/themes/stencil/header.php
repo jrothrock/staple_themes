@@ -41,7 +41,8 @@ add_filter( 'body_class', function( $classes ) {
 		 ($stencil_options['sidebar-shop'] ? 'sidebar-shop' : 'no-sidebar-shop' ), 
 		 ($stencil_options['sidebar-archive'] ? 'sidebar-archive' : 'no-sidebar-archive' ),
 		 ($stencil_options['nav-menu'] ? 'nav-menu' : ''),
-		 ($stencil_options['stencil-footer-top'] ? 'footer-top' : '')
+		 ($stencil_options['stencil-footer-top'] ? 'footer-top' : ''),
+		 ($stencil_options['preloader'] ? 'preloader-body has-preloader-body' : '')
 	) );
 } );
 
@@ -57,65 +58,80 @@ add_filter( 'body_class', function( $classes ) {
 </head>
 
 <body <?php body_class(); ?>>
-<div id="page" class="site">
-	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'stencil' ); ?></a>
-		<?php if( $stencil_options['top-nav-menu']): ?>
-			<header id="masthead" class="site-header" role="banner">
-
-				<div class='<?php echo ($stencil_options['fixed-nav-menu'] ? "navbar-fixed" : "" ) ?>'>
-					<nav class='top-main'>
-						<div class="nav-wrapper">
-							<a href="#" data-activates="mobile-demo" class="button-collapse">
-								<div class='nav-icon'>
-  									<span></span>
-  									<span></span>
-  									<span></span>
-								</div>
-							</a>
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="brand-logo <?php echo $logo ?>" title="<?php bloginfo('name'); ?>">
-								<?php if( !empty( $stencil_options['stencil-logo']['url'] ) ) : ?>
-									<div class='nav-img'>
-											<?php echo '<img src="' . esc_url( $stencil_options['stencil-logo']['url'] ) . '"'; ?> alt="<?php get_bloginfo('name'); ?>">
-									</div>
-								<?php endif; ?>
-								<div class='nav-text <?php echo (!empty( $stencil_options['stencil-logo']['url'] ) ? 'img' : '') ?>'>
-									<?php if ( $stencil_options['logo-nav-menu'] ) : ?>
-										<?php echo get_bloginfo('name'); ?>
-									<?php endif; ?>
-								</div>
-							</a>
-							
-								<?php 
-									if(has_nav_menu('top_menu')) {
-										wp_nav_menu( array( 
-											'theme_location' => 'top_menu', 
-											'menu_class' =>  $nav_menu . ' hide-on-med-and-down', 
-											'menu_id' => 'menu-top',
-											'walker'=> new Materialize_Walker_Desktop_Nav_Menu() 
-										) );
-									} else {
-										echo '<div class="no-menu-container"><ul class="' . $nav_menu . ' hide-on-med-and-down"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'stencil' ) . '</a></li></ul></div>';
-									}
-								?>
-						</div>
-					</nav>
+	<?php if($stencil_options['preloader']): ?>
+		<div class='preloader-container'>
+			<div class="preloader-wrapper big active" style='position: absolute;'>
+				<div class="spinner-layer spinner-blue-only">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div><div class="gap-patch">
+					<div class="circle"></div>
+				</div><div class="circle-clipper right">
+					<div class="circle"></div>
 				</div>
+				</div>
+			</div>
+		</div>
+	<?php endif; ?>
+	<div id="page" class="site">
+		<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'stencil' ); ?></a>
+			<?php if( $stencil_options['top-nav-menu']): ?>
+				<header id="masthead" class="site-header" role="banner">
 
-			</header><!-- #masthead -->
-		<?php
-			endif;
-		?>
-		<?php 
-			if(has_nav_menu('top_menu')) {
-				wp_nav_menu( array( 
-					'theme_location' => 'top_menu', 
-					'menu_class' => 'side-nav', 
-					'menu_id' => 'mobile-demo',
-					'depth' => 1,
-				) );
-			} else {
-				echo '<div class="no-menu-container"><ul class="side-nav" id="mobile-demo"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'stencil' ) . '</a></li></ul></div>';
-			} 
-		?>
+					<div class='<?php echo ($stencil_options['fixed-nav-menu'] ? "navbar-fixed" : "" ) ?>'>
+						<nav class='top-main'>
+							<div class="nav-wrapper">
+								<a href="#" data-activates="mobile-demo" class="button-collapse">
+									<div class='nav-icon'>
+										<span></span>
+										<span></span>
+										<span></span>
+									</div>
+								</a>
+								<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="brand-logo <?php echo $logo ?>" title="<?php bloginfo('name'); ?>">
+									<?php if( !empty( $stencil_options['stencil-logo']['url'] ) ) : ?>
+										<div class='nav-img'>
+												<?php echo '<img src="' . esc_url( $stencil_options['stencil-logo']['url'] ) . '"'; ?> alt="<?php get_bloginfo('name'); ?>">
+										</div>
+									<?php endif; ?>
+									<div class='nav-text <?php echo (!empty( $stencil_options['stencil-logo']['url'] ) ? 'img' : '') ?>'>
+										<?php if ( $stencil_options['logo-nav-menu'] ) : ?>
+											<?php echo get_bloginfo('name'); ?>
+										<?php endif; ?>
+									</div>
+								</a>
+								
+									<?php 
+										if(has_nav_menu('top_menu')) {
+											wp_nav_menu( array( 
+												'theme_location' => 'top_menu', 
+												'menu_class' =>  $nav_menu . ' hide-on-med-and-down', 
+												'menu_id' => 'menu-top',
+												'walker'=> new Materialize_Walker_Desktop_Nav_Menu() 
+											) );
+										} else {
+											echo '<div class="no-menu-container"><ul class="' . $nav_menu . ' hide-on-med-and-down"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'stencil' ) . '</a></li></ul></div>';
+										}
+									?>
+							</div>
+						</nav>
+					</div>
 
-	<div id="content" class="site-content">
+				</header><!-- #masthead -->
+			<?php
+				endif;
+			?>
+			<?php 
+				if(has_nav_menu('top_menu')) {
+					wp_nav_menu( array( 
+						'theme_location' => 'top_menu', 
+						'menu_class' => 'side-nav', 
+						'menu_id' => 'mobile-demo',
+						'depth' => 1,
+					) );
+				} else {
+					echo '<div class="no-menu-container"><ul class="side-nav" id="mobile-demo"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'stencil' ) . '</a></li></ul></div>';
+				} 
+			?>
+
+		<div id="content" class="site-content">

@@ -549,3 +549,24 @@ i.btn.waves-effect input{
     margin-bottom: 10px;
     margin-top: -10px;
 }
+span.error{
+    color:red;
+    position:relative;
+    top:-20px;
+}
+.error_notification{
+    text-align: center;
+    font-size: 1.3em;
+    color: #ab39d6;
+}
+.card.medium .card-height{
+    height:240px;
+}
+.input-field.error, div.error{
+    label{
+        color:red;
+    }
+    input{
+        border-bottom: 1px solid red;
+    }
+}

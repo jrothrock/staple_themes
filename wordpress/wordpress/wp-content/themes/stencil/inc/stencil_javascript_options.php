@@ -15,6 +15,19 @@
         ga('send', 'pageview');";
 
     }
+    if($stencil_options['preloader']){
+        $stencil_javascript .= "
+                                var start_time = new Date().getTime()
+                                jQuery(window).ready(function(){
+                                    var load_time = new Date().getTime()
+                                    var difference_time = 1000 - (load_time - start_time)
+                                    setTimeout(function(){
+                                        jQuery('body').removeClass('preloader-body');
+                                        jQuery('.preloader-container').remove();
+                                    },difference_time)
+                                })
+                                ";
+    }
     if($stencil_javascript){
         wp_add_inline_script( 'main-js' , $stencil_javascript, 'after' );
     }

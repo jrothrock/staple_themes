@@ -12,9 +12,9 @@
                     .comment-rating
                         - 5.times do |x|
                             - if comment.rating > x
-                                = image_tag('/assets/star-on.png')
+                                = image_tag('https://cdn.staplethemes.com/images/star-on.png')
                             - else
-                                = image_tag('/assets/star-off.png')
+                                = image_tag('https://cdn.staplethemes.com/images/star-off.png')
                     .comment-content
                         = comment.content
         -elsif current_user && current_user.username === @user.username

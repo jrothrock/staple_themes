@@ -1,8 +1,9 @@
 If I'm wanting to do a sale, instead of showing the original price, and the sale price, it'll just show the sale price. This needs to be updated.
 
-better error handling, like non matching passwords for forms, 422s (authenticity_token), bad credit card number, username already used, etc.
-
-Disable buttons on submit
-
 authenticity_tokens may need to be worked on
     - especially with registering for first users when trying to purchase theme
+    * May be fixed
+
+Improve Form Title Validation - may need another database column when using a before_validation hook
+
+Improve caching. Currently, it's pretty conservative and will have a lot more misses

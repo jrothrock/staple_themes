@@ -1,6 +1,6 @@
 .main-home-container
     .img-container
-        =image_tag('background-image-home.jpg')
+        =image_tag('https://cdn.staplethemes.com/images/background-image-home.jpg')
     .carousel-container
         .carousel
             - @themes.each do |theme|
@@ -31,11 +31,11 @@
                             Average Rating: 
                             - 5.times do |x|
                                 -if theme['average_rating'].to_f > (x+0.75)
-                                    =image_tag('star-on.png')
+                                    =image_tag('https://cdn.staplethemes.com/images/star-on.png')
                                 -elsif theme['average_rating'].to_f > (x+0.3)
-                                    =image_tag('star-half.png')
+                                    =image_tag('https://cdn.staplethemes.com/images/star-half.png')
                                 -else
-                                    =image_tag('star-off.png')
+                                    =image_tag('https://cdn.staplethemes.com/images/star-off.png')
                             (
                             = theme['average_rating']
                             )

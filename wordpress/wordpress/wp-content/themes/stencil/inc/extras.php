@@ -38,9 +38,9 @@ if( ! class_exists( 'getLinkTags' ) ) :
 	function getLinkTags($url,$icon){
 		$message = "
 			<a href='" . $url . "'>
-				<li>
+				<div>
 					<i class='waves-effect waves-light fa fa-" . $icon . "'></i>
-				</li>
+				</div>
 			</a>
 		";
 		echo $message;

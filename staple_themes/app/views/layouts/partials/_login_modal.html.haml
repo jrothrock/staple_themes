@@ -1,6 +1,6 @@
 #modal-sign-in.modal.modal-fixed-footer
-    %ul.tabs.row{:materialize => "tabs"}
-        %li.tab.col.s6
+    %ul.tabs.row#modal-sign-in-tabs{:materialize => "tabs"}
+        %li.tab.col.s6.active
             %a#sign-in-link{:href => "#signin"} Sign In
         %li.tab.col.s6
             %a{:href => "#signup"} Sign Up
@@ -15,6 +15,7 @@
             .input-field.center
                 %i#log-in-button-modal{class:"btn waves-effect waves-light waves-input-wrapper"}
                     .waves-button-input{style:"font-style:initial"} Log In
+                = link_to 'Reset Password', reset_password_path, style:"font-size: 0.95rem;margin-left: 10px;"
     #signup.row
         .col.m8.offset-m2{style:"margin-top:10px"}
             .input-field

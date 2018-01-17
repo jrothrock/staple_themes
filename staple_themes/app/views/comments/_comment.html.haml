@@ -4,9 +4,9 @@
   .comment-rating
     - 5.times do |x|
       - if comment['rating'].to_f > x
-        = image_tag('/assets/star-on.png')
+        = image_tag('https://cdn.staplethemes.com/images/star-on.png')
       - else
-        = image_tag('/assets/star-off.png')
+        = image_tag('https://cdn.staplethemes.com/images/star-off.png')
   .comment-content
     = comment['content']
   - if current_user && comment['user']['id'].to_i == current_user.id

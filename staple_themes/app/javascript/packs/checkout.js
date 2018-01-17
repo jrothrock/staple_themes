@@ -67,6 +67,7 @@ var themeAppCheckout = {
     },
     watchCCButton(){
         $(`#credit-card-button`).on('click', function(){
+            $(this).addClass('disabled')
             $(`#credit-card-form`).css({'display':'block'});
             let key = location.host === "localhost:3000" ? "pk_test_V6S48hbNKZVYxW57qLsBTY8e" : "pk_live_PfBjJGWp1M62Bg20RAyBOGXs"
             Stripe.setPublishableKey(key);
@@ -85,18 +86,10 @@ var themeAppCheckout = {
             if (response.error) { // Problem!
                 // Show the errors on the form
                 console.log(response)
-                // component._location.go('/cart#payment');
-                // $(`#payment-content`).slideDown();
-                // $(`#processing-content`).slideUp();
-                // component.cardInvalid = true;
-                // component.location = 'payment';
-                // $(`#checkout-bar`).get(0).className = 'payment'
-                // component.watchCard();
-                // clearTimeout(component.failedRequest);
-                // component.paying = false;
-
-                // $form.find('.payment-errors').text(response.error.message);
-                // $form.find('button').prop('disabled', false); // Re-enable submission
+               
+                $('#name, #number, #expiry, #cvc').parent().addClass('error');
+                Materialize.toast('Failed To Process Card. Please Check Inputs And Try Again', 4200, 'failure-rounded')
+                $(this).prop('disabled', false);
             } else { // Token was created!
                 // Get the token ID:
                 console.log()
@@ -123,6 +116,7 @@ var themeAppCheckout = {
                       Turbolinks.visit(`/users/${data.username}/purchases/`, { action: "replace" })
                     },
                     error: (error)=> {
+                        $(this).prop('disabled', false);
                         console.log(error);
                     }
                 });

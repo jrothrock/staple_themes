@@ -12,7 +12,7 @@
     %meta{property:"twitter:site", content:"Staple Themes"}
     %meta{property:"twitter:card", content:"summary"}
     %meta{property:"twitter:title", content:"Staple Themes: Artison Themes For Every Industry"}
-    = favicon_link_tag 'favicon.png'
+    = favicon_link_tag 'https://cdn.staplethemes.com/images/favicon.png'
     - if current_page?(controller: 'registrations', action: 'new') || current_page?(controller: 'sessions', action: 'new') || ((controller_name.eql? "contact") && (action_name.eql? "new"))
       %meta{:name => "turbolinks-cache-control", :content => "no-preview"}
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true

@@ -68,10 +68,17 @@ var themeAppUpload = {
     simplemde(){
         var simplemde = new SimpleMDE({ element: jQuery("#markdown-editor")[0]});
     },
+    watchSubmit(){
+        $(`#submit-theme-button`).on('click', function(){
+            $(this).addClass('disabled');
+            $('submit-theme-hidden').trigger('click');
+        })
+    },
     init(){
         themeAppUpload.simplemde();
         themeAppUpload.uploadZip();
         themeAppUpload.uploadPhoto();
+        themeAppUpload.watchSubmit();
     }
 }
 $(document).on('turbolinks:load', ()=>{themeAppUpload.init()});

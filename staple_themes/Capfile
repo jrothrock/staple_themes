@@ -41,6 +41,7 @@ require "capistrano/rails/migrations"
 require 'capistrano/puma'
 require "whenever/capistrano"
 require 'capistrano/postgresql'
+require 'capistrano/sidekiq'
 
 install_plugin Capistrano::Puma
 

@@ -27,3 +27,5 @@
 
 /config/secrets.yml
 /config/more_secrets.yml
+
+dump.rdb

@@ -57,4 +57,6 @@
             .hidden
               = f.input :download_name, class:'hidden'
             .form-group.text-center
-              = f.button :submit, class: 'btn-success btn-block', style: "margin:auto"
+              %i#submit-theme-button{class:"btn waves-effect waves-light waves-input-wrapper"}
+                %input{value:"Submit Theme", class: 'waves-button-input', type:'submit'}
+              = f.button :submit, class: 'btn-success btn-block', id:'submit-theme-hidden', style:'display:none'

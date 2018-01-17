@@ -13,11 +13,11 @@
                         %p Averate rating: 
                         - 5.times do |x|
                             -if @theme['average_rating'].to_f > (x+0.75)
-                                =image_tag('star-on.png')
+                                =image_tag('https://cdn.staplethemes.com/images/star-on.png')
                             -elsif @theme['average_rating'].to_f > (x+0.3)
-                                =image_tag('star-half.png')
+                                =image_tag('https://cdn.staplethemes.com/images/star-half.png')
                             -else
-                                =image_tag('star-off.png')
+                                =image_tag('https://cdn.staplethemes.com/images/star-off.png')
                     .actions
                         .preview
                             %a.btn.waves-effect.waves-light{:href => @theme['url'], id:'preview-button', style:'margin-top:10px', target:"_blank"} Preview
@@ -36,7 +36,7 @@
                                         = (@theme['multi_sale_price'] ? number_to_currency(@theme['multi_sale_price']) : number_to_currency(@theme['multi_price']))
                                 %button.btn.waves-effect.waves-light#add-to-cart{style:"margin-top:10px;background-color: #f44336;"} Add To Cart
     
-    - if current_user === @theme['user']
+    - if current_user && current_user === @theme['user']
         .edit-links
             = link_to "Edit Theme", edit_theme_path(@theme['title'].downcase)
                 

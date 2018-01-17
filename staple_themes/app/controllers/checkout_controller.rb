@@ -88,6 +88,7 @@ class CheckoutController < ApplicationController
                     theme.save
                 end
                 session[:order_id] = nil
+                App.purge_cache
                 UserMailer.order_email(current_user, @order, themes).deliver
                 render json:{order:@order.as_json, username:current_user.username}, status: :ok
                 # NotifysellerWorker.perform_in(15.seconds)

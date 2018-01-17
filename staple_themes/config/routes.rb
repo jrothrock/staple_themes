@@ -6,6 +6,10 @@ Rails.application.routes.draw do
 
   root to: "home#index"
 
+  get '/users/reset', to: 'reset#show', as:'reset_password'
+  post '/users/reset', to: 'reset#create', as:'create_reset_password'
+  get '/users/reset/confirm', to:'reset#update', as:'confirm_reset_password'
+  post '/users/reset/confirm', to: 'reset#update_password', as:'update_reset_password'
 
   get '/users/:profile', to: 'profiles#show', as: :profile
   get '/users/:profile/purchases', to: 'orders#index', as: :purchases
@@ -16,14 +20,18 @@ Rails.application.routes.draw do
   resources :themes do
     resources :comments
   end
+
   get '/themes/:id/download', to:'themes#download', as:"download_theme"
   post '/themes/new/upload', to:'themes#upload', as: :upload
-  get '/checkout', to:'checkout#show', as:'start_checkout'
+
   get '/contact', to: 'contact#new', as:'contact'
   post '/contact', to: 'contact#create', as:"create_contact"
+
   get '/terms', to: 'terms#terms', as:"terms"
   get '/privacy', to: 'terms#privacy', as:'privacy'
   get '/cookies', to: 'terms#cookies', as:'cookies'
+
+  get '/checkout', to:'checkout#show', as:'start_checkout'
   post '/checkout', to:'checkout#update', as:'new_purchase'
   post '/checkout/paypal', to:'checkout#paypal', as:'paypal_purchase'
 end
