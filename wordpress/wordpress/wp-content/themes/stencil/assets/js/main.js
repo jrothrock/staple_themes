@@ -65,7 +65,7 @@
     //
     var clearBinds = function(n){
         while(n <= totalDepth){
-            nth_key = n.toString();
+            var nth_key = n.toString();
             if(binds[nth_key]){
                 var children = binds[nth_key];
                 for(let i = 0; i < binds[nth_key].length; i++){
@@ -79,7 +79,7 @@
     
     var clearSelectors = function(selector_type, n){
         while(n <= totalDepth){
-            nth_key = n.toString()
+            var nth_key = n.toString()
             if(selector_type[nth_key]){
                 if(n === 0){
                     $(selector_type[nth_key]).css({'display':'none', 'opacity':0})

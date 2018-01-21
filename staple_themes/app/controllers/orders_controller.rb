@@ -62,7 +62,7 @@ class OrdersController < ApplicationController
   end
 
   def update
-    @order = ApplicationRecord::Order.where('uuid = ?',params[:id]).first
+    @order = ApplicationRecord::Order.where('uuid = ? AND user_id = ? AND status = 1',params[:id], current_user.id).first
     if(@order)
       theme = Theme.where("id = ?", params[:theme]).first.as_json({:include => :photos})
       if(theme)

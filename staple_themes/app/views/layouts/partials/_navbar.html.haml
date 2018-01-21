@@ -8,7 +8,7 @@
             = link_to "Purchases", purchases_path(current_user.username)
         %li.divider
         %li
-            = link_to "Logout", destroy_user_session_path, method: :delete
+            = link_to "Logout", destroy_user_session_path, method: :delete, id:'logout-button'
 %nav
     .nav-wrapper
         %a.button-collapse{"data-activates" => "mobile-demo", :href => "#"}

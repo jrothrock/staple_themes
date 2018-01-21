@@ -129,6 +129,11 @@ var themeApp = {
                 `
             return html;
     },
+    watchLogOut(){
+        $(`#logout-button`).on('click', function(){
+            localStorage.clear();
+        })
+    },
     addToCart(){
         $('#add-to-cart').on('click', function(){
             let theme, license, modal;
@@ -188,6 +193,8 @@ var themeApp = {
                             $('#modal-sign-in-tabs').find('.indicator').css({'right':`${$('#modal-sign-in-tabs').width() / 2}px`,'left':'0px' })
                         // },300)
                         // Turbolinks.visit(`/users/sign_up/`, { action: "replace" })
+                    } if(error.status === 404) {
+                        $(this).trigger('click');
                     } else {
                         Materialize.toast('Failed To Add To Cart. Please Try Again', 3000, 'failure-rounded')
                     }
@@ -542,7 +549,7 @@ var themeApp = {
                 success: (data) => {
                     Materialize.toast('Contact Successfully Sent', 3500, 'success-rounded')
                     $('#contact-form-name,#contact-form-email,#contact-form-body').val("").blur();
-                    $('#contact-form-type').val(1).blur();
+                    $('#contact-form-type').val('General').blur();
                     $('#submit-contact-form').removeClass('disabled');
                 },
                 error: (error)=> {
@@ -552,6 +559,20 @@ var themeApp = {
             });
         })
     },
+    checkContactType(){
+        if(window.location.pathname === '/contact'){
+            let string = decodeURIComponent(window.location.search);
+            if(string){
+                string = string.slice(1)
+                let type = string.split('=')[1].split(' ');
+                for(let i = 0; i < type.length; i++){
+                    type[i] = `${type[i].charAt(0).toUpperCase()}${type[i].slice(1)}`
+                }
+                type = type.join(' ');
+                $('#contact-form-type').val(type);
+            }
+        }
+    },
     unbind(){
         $('#back-to-top').unbind('click');
         $(window).unbind('scroll');
@@ -559,6 +580,7 @@ var themeApp = {
     init(){
         // idk why this needs a set timeout, maybe for elements to load?
         setTimeout(()=>{
+            themeApp.watchLogOut();
             themeApp.unbind();
             themeApp.checkCart();
             themeApp.watchAlert();
@@ -574,6 +596,7 @@ var themeApp = {
             themeApp.watchNewComments();
             themeApp.removeItemFromCart();
             themeApp.watchContact();
+            themeApp.checkContactType();
             themeApp.watchResetForm();
             themeApp.watchResetConfirmationForm();
             $('.modal').modal();

@@ -7,3 +7,5 @@ authenticity_tokens may need to be worked on
 Improve Form Title Validation - may need another database column when using a before_validation hook
 
 Improve caching. Currently, it's pretty conservative and will have a lot more misses
+
+Messages are pretty buggy. Should be worked on.

@@ -14,10 +14,13 @@
             .an-input-field.col.s12
                 %label{style:"font-size:1rem"} Contact Type
                 %select.browser-default#contact-form-type
-                    %option{:selected => :true, :value => "1"} General Inquiry
-                    %option{:value => "2"} Sales Inquiry
-                    %option{:value => "3"} Support
-                    %option{:value => "4"} Bug Report
+                    %option{:selected => :true, :value => "General"} General
+                    %option{:value => "Sales"} Sales
+                    %option{:value => "Support"} Support
+                    %option{:value => "Custom Work"} Custom Work
+                    %option{:value => "Installation"} Installation
+                    %option{:value => "Hosting"} Hosting
+                    %option{:value => "Other"} Other
 
         .row
             .input-field.col.s12
@@ -25,4 +28,4 @@
                 %textarea#contact-form-body.validate{style:"height:10rem;border-radius: 3px;border: 1px solid rgba(0,0,0,0.1)"}
         .row
             .input-field.col.s12.center
-                %btn.btn{id:"submit-contact-form"} Submit
+                %btn.btn.waves-effect.waves-light{id:"submit-contact-form"} Submit

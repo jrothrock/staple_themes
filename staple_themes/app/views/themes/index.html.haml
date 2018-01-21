@@ -31,11 +31,11 @@
                         %p
                             = theme['excerpt']
                         .card-action
-                            %a.btn{:href => theme['url']} Preview
+                            %a.waves-effect.waves-light.btn{:href => theme['url']} Preview
                             -if (current_user && theme['purchasers'].key?(current_user.uuid)) || (theme['single_sale_price'] === 0.00 && theme['multi_sale_price'] === 0.00) || (theme['single_price'] === 0.00 && theme['multi_price'] === 0.00)
                                 %button.btn.download-btn.capitalize.waves-effect.waves-light{style:"float:right;margin:0px;", data:{theme:theme['title_url']}} 
                                     Download
                                     %i{class:"fa fa-cloud-download", style:"font-size:1.1em"}
                             -else
-                                %button.btn.modal-trigger{style:"float:right;margin:0px;background-color: #f44336;", data: {theme: theme['id'], target: "modal-purchase", single: (theme['single_sale_price'] ? theme['single_sale_price'] : theme['single_price']), multi: (theme['multi_sale_price'] ? theme['multi_sale_price'] : theme['multi_price']), title: theme['title'], single_text: "Single Use License: #{theme['multi_sale_price'] ? number_to_currency(theme['single_sale_price']) : number_to_currency(theme['single_price']) }", multi_text: "Multi Site Use License: #{theme['multi_sale_price'] ? number_to_currency(theme['multi_sale_price']) : number_to_currency(theme['multi_price'])}"}} Purchase
+                                %button.waves-effect.waves-light.btn.modal-trigger{style:"float:right;margin:0px;background-color: #f44336;", data: {theme: theme['id'], target: "modal-purchase", single: (theme['single_sale_price'] ? theme['single_sale_price'] : theme['single_price']), multi: (theme['multi_sale_price'] ? theme['multi_sale_price'] : theme['multi_price']), title: theme['title'], single_text: "Single Use License: #{theme['multi_sale_price'] ? number_to_currency(theme['single_sale_price']) : number_to_currency(theme['single_price']) }", multi_text: "Multi Site Use License: #{theme['multi_sale_price'] ? number_to_currency(theme['multi_sale_price']) : number_to_currency(theme['multi_price'])}"}} Purchase
                             
