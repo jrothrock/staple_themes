@@ -4,11 +4,12 @@
   .comment-rating
     - 5.times do |x|
       - if comment['rating'].to_f > x
-        = image_tag('https://cdn.staplethemes.com/images/star-on.png')
+        = image_tag('https://cdn.staplethemes.com/images/star-on.png', style:"height:0.9em")
       - else
-        = image_tag('https://cdn.staplethemes.com/images/star-off.png')
+        = image_tag('https://cdn.staplethemes.com/images/star-off.png', style:"height:0.9em")
   .comment-content
     = comment['content']
   - if current_user && comment['user']['id'].to_i == current_user.id
-    = link_to theme_comment_path(theme, comment), method: :delete, data: {theme_id: theme['id'], value: theme['comments'].length, confirm: "Are you sure?" }, remote: true, id: "delete-#{comment['id']}", class: "delete-comment" do
-      %span(class="fa fa-times delete-comment-icon")
+    .comment-actions
+      = link_to theme_comment_path(theme, comment), method: :delete, data: {theme_id: theme['id'], value: theme['comments'].length, confirm: "Are you sure?" }, remote: true, id: "delete-#{comment['id']}", class: "delete-comment", style:"color:#9e9e9e;font-size:0.7em" do
+        Remove

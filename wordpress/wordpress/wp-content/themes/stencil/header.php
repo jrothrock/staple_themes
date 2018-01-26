@@ -50,7 +50,7 @@ add_filter( 'body_class', function( $classes ) {
 <html <?php language_attributes(); ?>>
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
 <link rel="profile" href="http://gmpg.org/xfn/11">
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 <title><?php echo "${title} | ${description}" ?></title>
@@ -81,7 +81,7 @@ add_filter( 'body_class', function( $classes ) {
 					<div class='<?php echo ($stencil_options['fixed-nav-menu'] ? "navbar-fixed" : "" ) ?>'>
 						<nav class='top-main'>
 							<div class="nav-wrapper">
-								<a href="#" data-activates="mobile-demo" class="button-collapse">
+								<a href="#" data-activates="mobile-menu" class="button-collapse">
 									<div class='nav-icon'>
 										<span></span>
 										<span></span>
@@ -121,16 +121,17 @@ add_filter( 'body_class', function( $classes ) {
 			<?php
 				endif;
 			?>
+			
 			<?php 
 				if(has_nav_menu('top_menu')) {
 					wp_nav_menu( array( 
 						'theme_location' => 'top_menu', 
 						'menu_class' => 'side-nav', 
-						'menu_id' => 'mobile-demo',
+						'menu_id' => 'mobile-menu',
 						'depth' => 1,
 					) );
 				} else {
-					echo '<div class="no-menu-container"><ul class="side-nav" id="mobile-demo"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'stencil' ) . '</a></li></ul></div>';
+					echo '<div class="no-menu-container"><ul class="side-nav" id="mobile-menu"><li><a href="/wp-admin/nav-menus.php?action=edit&menu=0">' . esc_html__( 'No menu assigned!', 'stencil' ) . '</a></li></ul></div>';
 				} 
 			?>
 

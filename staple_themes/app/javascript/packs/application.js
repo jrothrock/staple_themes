@@ -14,21 +14,25 @@ Turbolinks.start();
 var themeApp = {
     watchDownload(){
         $('.download-btn').on('click', function(){
-            let theme = $(this).data('theme');
-            $.ajax({
-                url: `${location.origin}/themes/${theme}/download`,
-                type: 'GET',
-                success: (data) => {
-                    let tag = document.createElement('a');
-					tag.setAttribute('href', data.url);
-					tag.setAttribute('target', "_blank");
-					tag.setAttribute('download', data.name);
-					tag.click();
-                },
-                error: (error)=> {
-                    console.log(error);
-                }
-            });
+            if(!/Mobile|webOS|Mobi/.test(navigator.userAgent)){
+                let theme = $(this).data('theme');
+                $.ajax({
+                    url: `${location.origin}/themes/${theme}/download`,
+                    type: 'GET',
+                    success: (data) => {
+                        let tag = document.createElement('a');
+                        tag.setAttribute('href', data.url);
+                        tag.setAttribute('target', "_blank");
+                        tag.setAttribute('download', data.name);
+                        tag.click();
+                    },
+                    error: (error)=> {
+                        console.log(error);
+                    }
+                });
+            } else {
+                Materialize.toast('Downloads Disabled For Mobile Devices', 4000, 'failure-rounded')
+            }
         });
     },
     userProfileHover(){
@@ -74,7 +78,7 @@ var themeApp = {
     },
     addToCartHtml(order,theme,index,license){
         let price, html = '';
-        if(license === 1){
+        if(license === "Single"){
             license = "Single";
             price = theme.single_sale_price ? theme.single_sale_price : theme.single_price;
         } else {
@@ -156,7 +160,8 @@ var themeApp = {
                     if($('.cart-number').length){
                         $('.cart-number').text(data.order.themes.length);
                     } else {
-                        $("#cart").find('a').append(`
+                        let cart_id = window.innerWidth > 500 ? "#cart" : "#cart-mobile"
+                        $(cart_id).find('a').append(`
                             <div class="cart-number-container">
                                 <span class="cart-number">
                                     1
@@ -183,17 +188,13 @@ var themeApp = {
                     if(modal) $('#modal-purchase.modal').modal('close');
                 },
                 error: (error)=> {
-                    console.log(error);
                     localStorage.removeItem("_staple_themes_cart")
                     $('#modal-purchase.modal').modal('open');
                     if(error.status === 401){
                         themeApp.watchLoginModal($(this));
                         $(`#modal-sign-in`).modal('open')
-                        // setTimeout(()=>{
-                            $('#modal-sign-in-tabs').find('.indicator').css({'right':`${$('#modal-sign-in-tabs').width() / 2}px`,'left':'0px' })
-                        // },300)
-                        // Turbolinks.visit(`/users/sign_up/`, { action: "replace" })
-                    } if(error.status === 404) {
+                        $('#modal-sign-in-tabs').find('.indicator').css({'right':`${$('#modal-sign-in-tabs').width() / 2}px`,'left':'0px' })
+                    } else if(error.status === 404) {
                         $(this).trigger('click');
                     } else {
                         Materialize.toast('Failed To Add To Cart. Please Try Again', 3000, 'failure-rounded')
@@ -203,7 +204,7 @@ var themeApp = {
         });
     },
     watchCartModal(){
-        $("#cart").on('click', ()=>{
+        $("#cart, #cart-mobile").on('click', ()=>{
             $(".shopping-cart-modal").addClass("show");
         })
         $(".shopping-cart-close-container").on('click', ()=>{
@@ -267,9 +268,9 @@ var themeApp = {
                 error: (error, status, xhr)=> {
                     console.log(status);
                     console.log(error);
-                    $(`#log-in-button-modal`).addClass('disabled');
+                    $(`#log-in-button-modal`).removeClass('disabled');
                     if(error.status === 401){
-                        $(`#username_log_in`).parent().parent().prepend(`<span style='text-transform:capitalize;text-align:center;display:block;color:red;position:relative;top:-10px'>${error.responseJSON.error}</span>`)
+                        if(!$(`#modal-login-error-text`).length) $(`#username_log_in`).parent().parent().prepend(`<span style='text-transform:capitalize;text-align:center;display:block;color:red;position:relative;top:-10px' id='modal-login-error-text'>${error.responseJSON.error}</span>`)
                         $(`#username_log_in`).parent().addClass("error");
                         $(`#password_log_in`).parent().addClass("error");
                     } else if(error.status === 500){
@@ -383,7 +384,7 @@ var themeApp = {
         $('a[href="#"]').click(function(e){e.preventDefault()});
     },
     watchNewComments(){
-        if($('#new-comment-stars').has('img').length) $('#new-comments-star').empty(); 
+        if($('#new-comment-stars').has('img').length) $('#new-comment-stars').empty(); 
          $('#new-comment-stars').raty({
             score: 0,
             path: 'https://cdn.staplethemes.com/images',

@@ -1,36 +1,11 @@
 .checkout-container.row
-    %div{style:"position:absolute;height:100%;width:1px;left:50vw;background-color:rgba(0,0,0,0.5)"}
-    .col.m6.right
-        .row{style:"white-space:nowrap;font-size:1.5em;text-align:center"}
-            Total: 
-            %span#total-checkout
-                = number_to_currency(@order['total'])
-        .row
-            %h6.center{style:"font-size:1.25em"} How would you like to pay?
-            .row.center
-                %button.btn{id:"credit-card-button"} Credit Card
-                %div#paypal-button
-            
-        .row.hidden.credit-card-form#credit-card-form
-            .credit-card-form-js
-            =form_tag({url:new_purchase_path, remote: true}, {:class => 'order-submit-form'}) do
-                .row
-                    .col.m6
-                        =label_tag "Name"
-                        =text_field_tag :name, "", id: 'name'
-                    .col.m6
-                        =label_tag "Number"
-                        =text_field_tag :number, "", id:'number'
-                .row
-                    .col.m6.expiration-tags
-                        =label_tag "Expiration"
-                        =text_field_tag :expiry, "", id:'expiry'
-                    .col.m6
-                        =label_tag "CVC"
-                        =text_field_tag :cvc, "", id:'cvc'
-                =submit_tag 'Purchase', class: 'btn order-submit', id: "order-submit" # Hidden with CSS
-    .cart-items.col.m6
-        .row{style:"white-space:nowrap;font-size:1.5em;text-align:center"}
+    .row.col.s12{style:"white-space:nowrap;font-size:1.5em;text-align:center"}
+        Total: 
+        %span#total-checkout
+            = number_to_currency(@order['total'])
+    %div.hide-on-med-and-down{style:"position:absolute;height:80%;top:20%;width:1px;left:50vw;background-color:rgba(0,0,0,0.5)"}
+    .cart-items.col.m6.s12
+        .row.hide-on-med-and-down{style:"white-space:nowrap;font-size:1.5em;text-align:center"}
             Order
         - @order['themes'].each_with_index do |theme, index|
             .cart-item.row{id:"cart-item-#{index}", data:{theme:"#{theme['id']}"}}
@@ -43,7 +18,7 @@
                         = link_to image_tag(theme['photos'].first['photo'].url), theme_path(theme['title'].downcase), class: "cart-modal-image"
                 .col.m6{style:"text-align:right"}
                     .remove
-                        %i{id:"remove-#{index}", class:"fa fa-times remove-cart-item", style:'color:red;font-size:1.5em;margin-top:-25px;cursor:pointer', data:{index:index}}
+                        %i{id:"remove-#{index}", class:"fa fa-times remove-cart-item", data:{index:index}}
                     .license
                         License:
                         - if @order['licenses'][index].to_i === 1
@@ -55,3 +30,28 @@
                             = (theme['single_sale_price'] ? number_to_currency(theme['single_sale_price']) : number_to_currency(theme['single_price']) )
                         - else
                             = (theme['multi_sale_price'] ? number_to_currency(theme['multi_sale_price']) : number_to_currency(theme['multi_price']) )
+    .col.m6.s12
+        .row
+            %h6.center{style:"font-size:1.25em"} How would you like to pay?
+            .row.center
+                %button.btn{id:"credit-card-button"} Credit Card
+                %div#paypal-button
+            
+        .row.hidden.credit-card-form#credit-card-form
+            .credit-card-form-js
+            =form_tag({url:new_purchase_path, remote: true}, {:class => 'order-submit-form'}) do
+                .row
+                    .col.s6
+                        =label_tag "Name"
+                        =text_field_tag :name, "", id: 'name'
+                    .col.s6
+                        =label_tag "Number"
+                        =text_field_tag :number, "", id:'number'
+                .row
+                    .col.s6.expiration-tags
+                        =label_tag "Expiration"
+                        =text_field_tag :expiry, "", id:'expiry'
+                    .col.s6
+                        =label_tag "CVC"
+                        =text_field_tag :cvc, "", id:'cvc'
+                =submit_tag 'Purchase', class: 'btn order-submit', id: "order-submit" # Hidden with CSS

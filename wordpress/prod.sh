@@ -38,6 +38,9 @@ done
 UPPER_THEME_NAME_UNDERSCORE=$(echo ${UPPER_THEME_NAME// /_})
 LOWER_THEME_NAME_UNDERSCORE=$(echo ${LOWER_THEME_NAME// /_})
 
+if [  -d "./themes/${LOWER_THEME_NAME_UNDERSCORE}" ]; then
+    rm -rf "./themes/${LOWER_THEME_NAME_UNDERSCORE}"
+fi
 mkdir "./themes/${LOWER_THEME_NAME_UNDERSCORE}"
 
 cp -r ./Documentation "./themes/${LOWER_THEME_NAME_UNDERSCORE}"

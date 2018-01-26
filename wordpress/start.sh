@@ -28,8 +28,13 @@ rm -rf {latest.tar.gz,./wordpress/wp-content}
 cp -r ./hold_temp/wp-content ./hold_temp/wp-config.php ./wordpress
 rm -rf ./hold_temp
 
+if [[ $STATUS == 'Running' ]];
+then
+  docker-compose up -d
+else
+  docker-compuse up -d --force-recreate
+fi
 
-docker-compose up -d
 docker exec -it wordpress usermod -u 1000 www-data
 
 host=$(docker-machine env wordpress-vm | grep "DOCKER_HOST")

@@ -88,6 +88,22 @@ done
 mv * "../${NEW_LOWER_THEME_NAME_UNDERSCORE}"
 cd ..
 rm -rf "./${OLD_LOWER_THEME_NAME_UNDERSCORE}"
+
+mkdir "${NEW_LOWER_THEME_NAME_UNDERSCORE}-child"
+cd "./${OLD_LOWER_THEME_NAME_UNDERSCORE}-child"
+
+grep -r -l "${OLD_LOWER_THEME_NAME_UNDERSCORE}" . | xargs sed -i "" "s/${OLD_LOWER_THEME_NAME_UNDERSCORE}/${NEW_LOWER_THEME_NAME_UNDERSCORE}/g"
+grep -r -l "${OLD_UPPER_THEME_NAME_UNDERSCORE}" . | xargs sed -i "" "s/${OLD_UPPER_THEME_NAME_UNDERSCORE}/${NEW_UPPER_THEME_NAME_UNDERSCORE}/g"
+
+grep -r -l "Theme Name: ${OLD_THEME_NAME}" . | xargs sed -i "" "s/Theme Name: ${OLD_THEME_NAME}/Theme Name: ${NEW_THEME_NAME}/g"
+
+for i in {1..3}
+do
+  find . -name \* -print | sed -e "p;s/${OLD_LOWER_THEME_NAME_UNDERSCORE}/${NEW_LOWER_THEME_NAME_UNDERSCORE}/" | xargs -n2 mv
+done
+
+mv * "../${NEW_LOWER_THEME_NAME_UNDERSCORE}-child"
+
 cd "../plugins/"
 mkdir "${NEW_LOWER_THEME_NAME_UNDERSCORE}_extensions"
 cd "./${OLD_LOWER_THEME_NAME_UNDERSCORE}_extensions"

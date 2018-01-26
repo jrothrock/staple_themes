@@ -4,3 +4,10 @@ There's a bug that is currently being patched with a boolean - see main.js comme
 
 Create a networked docker file, so phpmyadmin and the main app each have their own ip. This would enable writing to the hosts file for phpmyadmin,
 allowing it be accessed at phpmyadmin.site, instead of wordpress.site:8181
+
+Test the new and rename scripts. 
+
+Fix the start script
+    - docker compose won't download assets from shell script
+
+- add the internal server error emails

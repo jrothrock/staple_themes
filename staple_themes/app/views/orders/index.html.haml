@@ -37,9 +37,14 @@
                                     - else
                                         = (theme['multi_sale_price'] ? number_to_currency(theme['multi_sale_price']) : number_to_currency(theme['multi_price']) )
                                 .download
-                                    %button.btn.download-btn.capitalize.waves-effect.waves-light{data:{theme:theme['title_url']}} 
-                                        Download
-                                        %i{class:"fa fa-cloud-download", style:"font-size:1.1em"}
+                                    -if request.user_agent =~ /Mobile|webOS|Mobi/
+                                        %button.disabled.btn.download-btn.capitalize{data:{theme:theme['title_url']},style:"pointer-events:all"} 
+                                            Download
+                                            %i{class:"fa fa-cloud-download", style:"font-size:1.1em"}
+                                    -else
+                                        %button.btn.download-btn.capitalize.waves-effect.waves-light{data:{theme:theme['title_url']}} 
+                                            Download
+                                            %i{class:"fa fa-cloud-download", style:"font-size:1.1em"}
 
     - else
         %p You haven't placed any orders.

@@ -34,7 +34,7 @@ do
 done
 
 mkdir ./temp_hold
-cp -r ./wordpress/wp-content/themes/stencil ./wordpress/wp-content/plugins/stencil_extensions ./temp_hold
+cp -r ./wordpress/wp-content/themes/stencil ./wordpress/wp-content/themes/stencil-child  ./wordpress/wp-content/plugins/stencil_extensions ./temp_hold
 cd ./temp_hold
 
 
@@ -62,6 +62,7 @@ done
 
 
 mv $LOWER_THEME_NAME_UNDERSCORE ../wordpress/wp-content/themes/
+mv "${LOWER_THEME_NAME_UNDERSCORE}-child" ../wordpress/wp-content/themes/
 mv "${LOWER_THEME_NAME_UNDERSCORE}_extensions" ../wordpress/wp-content/plugins/
 
 cd ..

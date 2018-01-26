@@ -11,12 +11,16 @@
             = link_to "Logout", destroy_user_session_path, method: :delete, id:'logout-button'
 %nav
     .nav-wrapper
-        %a.button-collapse{"data-activates" => "mobile-demo", :href => "#"}
+        %a.button-collapse{"data-activates" => "mobile-menu", :href => "#"}
             %i.fa.fa-navicon{style:"font-size:1.6em"}
-        %ul.right.hide-on-med-and-up
-            %li
+        %ul.right.hide-on-large-only
+            %li#cart-mobile
                 %a
                     %i.fa.fa-shopping-cart
+                    -if @order && @order['themes'].length
+                        .cart-number-container
+                            %span.cart-number
+                                = @order['themes'].length
         %ul.left.hide-on-med-and-down
             %li
                 = link_to "Home", root_path
@@ -39,8 +43,30 @@
                     = link_to "Register", new_user_registration_path
                 %li
                     = link_to "Login", new_user_session_path
-        %ul.side-nav#mobile-demo
+        %div.center{style:"font-size:2em;font-family:lobster;letter-spacing:2px"}
+            = link_to "Staple Themes", root_path
+        %ul.side-nav#mobile-menu
             %li
                 = link_to "Home", root_path
             %li
                 = link_to "Themes", themes_path
+            %li
+                = link_to "Contact", contact_path
+            - if user_signed_in?
+                %li{style:"border-bottom:1px solid rgba(0,0,0,0.3)"}
+                %li
+                    = link_to "Profile", profile_path(current_user.username)
+                %li
+                    = link_to "Settings", edit_user_registration_path
+                %li
+                    = link_to "Purchases", purchases_path(current_user.username)
+                %li.divider
+                %li
+                    = link_to "Logout", destroy_user_session_path, method: :delete, id:'logout-button'
+            - else
+                %li{style:"border-bottom: 1px solid rgba(0,0,0,0.3)"}
+                %li
+                    = link_to "Register", new_user_registration_path
+                %li
+                    = link_to "Login", new_user_session_path
+            

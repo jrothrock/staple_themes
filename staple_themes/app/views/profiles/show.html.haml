@@ -2,7 +2,7 @@
     = @user.username
 
 .row
-    .col.m9.comments
+    .col.m9.s8.comments
         %h3 Comments
         -if @user.comments.order("created_at DESC").length != 0
             - @user.comments.order("created_at DESC").each do |comment|
@@ -24,7 +24,7 @@
             %p 
                 This user hasn't added any comments.
         
-    .col.m3.about
+    .col.m3.s4.about
         %p
             Age of Account:
             = time_ago_in_words(@user.created_at)

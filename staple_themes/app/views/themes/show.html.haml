@@ -10,21 +10,38 @@
             .col.m6.s12
                 .information
                     .rating
-                        %p Averate rating: 
-                        - 5.times do |x|
-                            -if @theme['average_rating'].to_f > (x+0.75)
-                                =image_tag('https://cdn.staplethemes.com/images/star-on.png')
-                            -elsif @theme['average_rating'].to_f > (x+0.3)
-                                =image_tag('https://cdn.staplethemes.com/images/star-half.png')
-                            -else
-                                =image_tag('https://cdn.staplethemes.com/images/star-off.png')
+                        %p 
+                            Averate rating: 
+                            %span.theme-stars{style:"position:relative;top: 2px;"}
+                                - 5.times do |x|
+                                    -if @theme['average_rating'].to_f > (x+0.75)
+                                        =image_tag('https://cdn.staplethemes.com/images/star-on.png')
+                                    -elsif @theme['average_rating'].to_f > (x+0.3)
+                                        =image_tag('https://cdn.staplethemes.com/images/star-half.png')
+                                    -else
+                                        =image_tag('https://cdn.staplethemes.com/images/star-off.png')
+                                
+                            %span{style:"padding-left:5px;white-space:nowrap"}
+                                (
+                                =@theme['average_rating']
+                                )
+                            
+                            %span{style:"padding-left:5px;color:grey;font-size:0.7em;white-space:nowrap"}
+                                =@theme['ratings_count']
+                                =@theme['ratings_count'] == 1 ? "Rating" : "Ratings" 
+                                Cast
                     .actions
                         .preview
                             %a.btn.waves-effect.waves-light{:href => @theme['url'], id:'preview-button', style:'margin-top:10px', target:"_blank"} Preview
                         -if (current_user && @theme['purchasers'].key?(current_user.uuid)) || (@theme['single_sale_price'] === 0.00 && @theme['multi_sale_price'] === 0.00) || (@theme['single_price'] === 0.00 && @theme['multi_price'] === 0.00)
-                            %button.btn.download-btn.capitalize.waves-effect.waves-light{data:{theme:@theme['title_url']}} 
-                                Download
-                                %i{class:"fa fa-cloud-download", style:"font-size:1.1em"}
+                            -if request.user_agent =~ /Mobile|webOS|Mobi/
+                                %button.disabled.btn.download-btn.capitalize{data:{theme:@theme['title_url']}, style:"pointer-events:all"} 
+                                    Download
+                                    %i{class:"fa fa-cloud-download", style:"font-size:1.1em"}
+                            -else
+                                %button.btn.download-btn.capitalize.waves-effect.waves-light{data:{theme:@theme['title_url']}} 
+                                    Download
+                                    %i{class:"fa fa-cloud-download", style:"font-size:1.1em"}
                         -else
                             .cart
                                 %select#license-select{style:"margin-top:10px", data:{theme:@theme['id']}}

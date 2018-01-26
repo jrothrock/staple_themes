@@ -67,11 +67,13 @@ var themeAppCheckout = {
     },
     watchCCButton(){
         $(`#credit-card-button`).on('click', function(){
-            $(this).addClass('disabled')
             $(`#credit-card-form`).css({'display':'block'});
             let key = location.host === "localhost:3000" ? "pk_test_V6S48hbNKZVYxW57qLsBTY8e" : "pk_live_PfBjJGWp1M62Bg20RAyBOGXs"
             Stripe.setPublishableKey(key);
-            $(`#order-submit`).on('click', (e)=>{e.preventDefault(); themeAppCheckout.proccessStripe()});
+            $(`#order-submit`).on('click', (e)=>{
+                $(`#order-submit`).addClass('disabled');
+                e.preventDefault(); themeAppCheckout.proccessStripe()
+            });
         });
     },
     proccessStripe(){
@@ -89,7 +91,7 @@ var themeAppCheckout = {
                
                 $('#name, #number, #expiry, #cvc').parent().addClass('error');
                 Materialize.toast('Failed To Process Card. Please Check Inputs And Try Again', 4200, 'failure-rounded')
-                $(this).prop('disabled', false);
+                $(`#order-submit`).removeClass('disabled');
             } else { // Token was created!
                 // Get the token ID:
                 console.log()
