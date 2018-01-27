@@ -27,7 +27,12 @@ var themeApp = {
                         tag.click();
                     },
                     error: (error)=> {
-                        console.log(error);
+                        console.log(error.status);
+                        if(error.status === 401){
+                            themeApp.watchLoginModal($(this));
+                            $(`#modal-sign-in`).modal('open')
+                            $('#modal-sign-in-tabs').find('.indicator').css({'right':`${$('#modal-sign-in-tabs').width() / 2}px`,'left':'0px' })
+                        }
                     }
                 });
             } else {
@@ -493,6 +498,15 @@ var themeApp = {
             });
         })
     },
+    watchPhotoSize(){
+        if(/Mobile|webOS|Mobi/.test(navigator.userAgent) && window.location.pathname === "/"){
+            if(window.innerWidth > 600){
+                $('.main-home-container .img-container, .main-home-container').css({'height':`${window.innerHeight - 64}px`});
+            } else {
+                $('.main-home-container .img-container, .main-home-container').css({'height':`${window.innerHeight - 56}px`});
+            }
+        }
+    },
     backToTop(){
         var showing = false;
 		$(window).scroll(()=>{
@@ -597,6 +611,7 @@ var themeApp = {
             themeApp.watchNewComments();
             themeApp.removeItemFromCart();
             themeApp.watchContact();
+            themeApp.watchPhotoSize();
             themeApp.checkContactType();
             themeApp.watchResetForm();
             themeApp.watchResetConfirmationForm();

@@ -19,7 +19,7 @@
                         .card-rating
                             %span{style:"white-space:nowrap"}
                                 Average Rating: 
-                            %span{style:"white-space:nowrap"}
+                            %span{style:"white-space:nowrap;display:inline-block"}
                                 - 5.times do |x|
                                     -if theme['average_rating'].to_f > (x+0.75)
                                         =image_tag('https://cdn.staplethemes.com/images/star-on.png')
@@ -35,7 +35,7 @@
                             = theme['excerpt']
                         .card-action
                             %a.waves-effect.waves-light.btn{:href => theme['url']} Preview
-                            -if (current_user && theme['purchasers'].key?(current_user.uuid)) || (theme['single_sale_price'] === 0.00 && theme['multi_sale_price'] === 0.00) || (theme['single_price'] === 0.00 && theme['multi_price'] === 0.00)
+                            -if (current_user && theme['purchasers'].key?(current_user.uuid)) || (theme['single_sale_price'] && theme['multi_sale_price'] && theme['single_sale_price'].to_f === 0.00 && theme['multi_sale_price'].to_f === 0.00) || (theme['single_price'].to_f === 0.00 && theme['multi_price'].to_f === 0.00)
                                 -if request.user_agent =~ /Mobile|webOS|Mobi/
                                     %button.disabled.btn.download-btn.capitalize{style:"float:right;margin:0px;pointer-events:all", data:{theme:theme['title_url']}} 
                                         Download

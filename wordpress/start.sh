@@ -32,7 +32,7 @@ if [[ $STATUS == 'Running' ]];
 then
   docker-compose up -d
 else
-  docker-compuse up -d --force-recreate
+  docker-compose up -d --force-recreate
 fi
 
 docker exec -it wordpress usermod -u 1000 www-data

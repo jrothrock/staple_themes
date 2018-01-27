@@ -8,12 +8,15 @@ class Theme < ApplicationRecord
   has_many :photos, as: :photoable, dependent: :delete_all
   accepts_nested_attributes_for :photos
 
-  before_create :validate_theme_url
   validates :title, :presence => true, :uniqueness => { :case_sensitive => false }
 
   def self.uploadPhoto(theme,s3)
     bucket = Rails.application.secrets.aws_bucket
-    photo_path = "#{Rails.root}/public#{theme.photos.first.photo.url}"
+    if Rails.env.production?
+      "#{Rails.root.to_s.split("releases")[0]}current/public#{theme.photos.first.photo.url}"
+    else
+      photo_path = "#{Rails.root}/public#{theme.photos.first.photo.url}"
+    end
     upload_url = "#{theme.photos.first.photo.url}"
     upload_url[0] = ""
     upload = s3.bucket(bucket).object(upload_url)

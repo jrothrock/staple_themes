@@ -32,6 +32,7 @@ var themeAppUpload = {
             autoUpload: false,
             replaceFileInput:false,
             add:  (e, data) => { 
+                $(`#submit-theme-button`).addClass('disabled');
                 $.ajax({
                     url: location.href + '/upload',
                     data:{'name': self.name},
@@ -61,6 +62,7 @@ var themeAppUpload = {
             },
             done: (e, data)=> {
                 $('.progress-text-container').text('100%');
+                $(`#submit-theme-button`).removeClass('disabled');
                 if(e) console.log(e);
             }
         });

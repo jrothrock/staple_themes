@@ -33,7 +33,7 @@
                     .actions
                         .preview
                             %a.btn.waves-effect.waves-light{:href => @theme['url'], id:'preview-button', style:'margin-top:10px', target:"_blank"} Preview
-                        -if (current_user && @theme['purchasers'].key?(current_user.uuid)) || (@theme['single_sale_price'] === 0.00 && @theme['multi_sale_price'] === 0.00) || (@theme['single_price'] === 0.00 && @theme['multi_price'] === 0.00)
+                        -if (current_user && @theme['purchasers'].key?(current_user.uuid)) || (@theme['single_sale_price'] && @theme['multi_sale_price'] && @theme['single_sale_price'].to_f === 0.00 && @theme['multi_sale_price'].to_f === 0.00) || (@theme['single_price'].to_f === 0.00 && @theme['multi_price'].to_f === 0.00)
                             -if request.user_agent =~ /Mobile|webOS|Mobi/
                                 %button.disabled.btn.download-btn.capitalize{data:{theme:@theme['title_url']}, style:"pointer-events:all"} 
                                     Download

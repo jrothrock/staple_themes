@@ -126,12 +126,10 @@ class ThemesController < ApplicationController
          @theme = JSON.parse(@theme)
       elsif action_name === 'download'
         @theme = Theme.where("title_url = ?", id.downcase).first
-      elsif action_name === 'upload'
-        @theme = current_user.themes.last
-      else
+      elsif action_name != 'upload'
         @theme = Theme.where("title_url = ?", id.downcase).includes(:comments).first
       end
-      unless @theme
+      unless @theme || action_name === 'upload'
         flash[:alert] = "There Is No Theme By That Name"
         redirect_to root_path
       end
