@@ -44,7 +44,7 @@ class ThemesController < ApplicationController
   end
 
   def upload
-    name = params[:name] ? params[:name].downcase.parameterize.underscore : 'temp-#{Time.now.to_s}'
+    name = params[:name] ? params[:name].downcase.gsub(/\w/,'_').underscore : 'temp-#{Time.now.to_s}'
     fields = Aws::S3::Resource.new(access_key_id: Rails.application.secrets.aws_access_key_id, secret_access_key: Rails.application.secrets.aws_secret_access_key, region: "us-west-2").bucket(Rails.application.secrets.aws_bucket).object("downloads/#{name}").presigned_post.fields
     puts fields
     @policy = fields["policy"]

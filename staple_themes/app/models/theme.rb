@@ -27,5 +27,4 @@ class Theme < ApplicationRecord
     theme.photo_urls = urls
     theme.save
   end
-
 end

@@ -10,12 +10,18 @@
                 .col.s12.m4{style:"white-space:nowrap;font-size:1.5em"}
                     Total: 
                     %span#total-cart-modal
-                        = number_to_currency(@order['total'])
+                        -if @order['discounted']
+                            = number_to_currency(@order['discounted_total'])
+                        -else
+                            = number_to_currency(@order['total'])
+                    %span#total-cart-modal-discounted{style:"color:#ff3636;font-size:0.75em;text-decoration:line-through"}
+                        -if @order['discounted']
+                            = number_to_currency(@order['total'])
                 .col.s12.m8
                     = link_to "Check Out", start_checkout_path, class:'btn waves-effect waves-light checkout-button'
             .cart-items{style:"border-top: 1px solid rgba(255,255,255,0.5);padding-top: 5px;"}
                 - @order['themes'].each_with_index do |theme, index|
-                    .cart-item.row{id:"cart-item-#{index}", data:{theme:"#{theme['id']}"}}
+                    .cart-item.row{id:"cart-item-#{theme['id']}", data:{theme:"#{theme['id']}"}}
                         .col.s12
                             .title
                                 %h4{style:"margin:0px"}

@@ -68,24 +68,24 @@
 	<?php if ( !is_single() ) : ?>
 	
 		<div class='post-read-more' style='width:100%;float:left;text-align:center;margin-bottom:20px;'>
-			<a href="<?php echo esc_url( get_permalink() ) ?>"><button class='btn waves-effect waves-light'>Read More</button></a>
+			<a class='btn waves-effect waves-light' href="<?php echo esc_url( get_permalink() ) ?>">Read More</a>
 		</div>
 
 	<?php endif; ?>
 
 	<div class='share-container'>
-		<ul class="share-icons">
+		<div class="share-icons">
 			<!-- twitter -->
-				<a href="https://twitter.com/share?text=<?php the_title() ?>&amp;url=<?php echo get_permalink() ?>" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;"><li><i class="fa fa-twitter waves-effect waves-light"></i></li></a>
+				<a href="https://twitter.com/share?text=<?php echo urlencode(get_the_title()) ?>&amp;url=<?php echo get_permalink() ?>" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;"><div><i class="fa fa-twitter waves-effect waves-light"></i></div></a>
 			<!-- facebook -->
-				<a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo get_permalink() ?>" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><li><i class="fa fa-facebook waves-effect waves-light"></i></li></a>
+				<a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo get_permalink() ?>" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><div><i class="fa fa-facebook waves-effect waves-light"></i></div></a>
 			<!-- google plus -->
-				<a href="https://plus.google.com/share?url=<?php echo get_permalink() ?>" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;"><li><i class="fa fa-google-plus waves-effect waves-light"></i></li></a>
+				<a href="https://plus.google.com/share?url=<?php echo get_permalink() ?>" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;"><div><i class="fa fa-google-plus waves-effect waves-light"></i></div></a>
 			<!-- pinterest -->
-				<a href="javascript:void((function()%7Bvar%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','https://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)%7D)());"><li><i class="fa fa-pinterest waves-effect waves-light"></i></li></a>
+				<a href="javascript:void((function()%7Bvar%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','https://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)%7D)());"><div><i class="fa fa-pinterest waves-effect waves-light"></i></div></a>
 			<!-- linkedin -->
-				<a href="https://www.linkedin.com/cws/share?url=<?php echo get_permalink() ?>%26source=<?php echo get_permalink() ?>" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;"><li><i class="fa fa-linkedin waves-effect waves-light"></i></li></a>
-		</ul>
+				<a href="https://www.linkedin.com/cws/share?url=<?php echo get_permalink() ?>%26source=<?php echo get_permalink() ?>" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;"><div><i class="fa fa-linkedin waves-effect waves-light"></i></div></a>
+		</div>
 	</div>
 
 </article><!-- #post-## -->

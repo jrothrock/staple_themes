@@ -2,11 +2,22 @@
     .row.col.s12{style:"white-space:nowrap;font-size:1.5em;text-align:center"}
         Total: 
         %span#total-checkout
-            = number_to_currency(@order['total'])
-    %div.hide-on-med-and-down{style:"position:absolute;height:80%;top:20%;width:1px;left:50vw;background-color:rgba(0,0,0,0.5)"}
+            -if @order['discounted']
+                = number_to_currency(@order['discounted_total'])
+            -else
+                = number_to_currency(@order['total'])
+        %span#total-checkout-discounted{style:'color:red;font-size:0.8em;text-decoration:line-through'}
+            -if @order['discounted']
+                = number_to_currency(@order['total'])
+    %div.hide-on-med-and-down{style:"position:absolute;height:80%;margin-top:6%;width:1px;left:50vw;background-color:rgba(0,0,0,0.5)"}
     .cart-items.col.m6.s12
         .row.hide-on-med-and-down{style:"white-space:nowrap;font-size:1.5em;text-align:center"}
-            Order
+            Order 
+            
+            %span{style:"font-size:0.85em;position:relative;top:-1px;font-weight:300"}
+                (
+                = @order['themes'].length
+                )
         - @order['themes'].each_with_index do |theme, index|
             .cart-item.row{id:"cart-item-#{index}", data:{theme:"#{theme['id']}"}}
                 .col.m12
@@ -31,7 +42,13 @@
                         - else
                             = (theme['multi_sale_price'] ? number_to_currency(theme['multi_sale_price']) : number_to_currency(theme['multi_price']) )
     .col.m6.s12
-        .row
+        .row 
+            .col.m12{style:"margin;auto;text-align:center"}
+                %h6{style:"font-size:1.25em;display:inline"} Discount Code:
+                %input{style:"display:inline;width:150px;height:2.4em;margin-left:5px", type:'text', class:"browser-default", id:'discount-code'}
+                %button.btn#discount-code-button.waves-effect.waves-light{style:"display:inline;margin-top:-5px"} 
+                    %i{class:"fa fa-refresh"}
+        .row{style:"padding-top:20px"}
             %h6.center{style:"font-size:1.25em"} How would you like to pay?
             .row.center
                 %button.btn{id:"credit-card-button"} Credit Card

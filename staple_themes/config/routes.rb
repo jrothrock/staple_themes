@@ -16,7 +16,8 @@ Rails.application.routes.draw do
 
 
   resources :orders
-
+  post "/orders/:id/discount", to:'orders#discount', as:"discount_order"
+  
   resources :themes do
     resources :comments
   end

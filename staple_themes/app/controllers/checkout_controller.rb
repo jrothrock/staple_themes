@@ -55,12 +55,12 @@ class CheckoutController < ApplicationController
                     puts Stripe::Charge.as_json
                     # Get the credit card details submitted by the form
                     token = params[:token]
-                    amount = (@order.total * 100).to_i
+                    amount = ((@order.discounted ? @order.discounted_total.to_f : @order.total.to_f ) * 100).to_i
 
                     # Create a charge: this will charge the user's card
                     begin
                         charge = Stripe::Charge.create(
-                            :amount => (@order.total.to_f*100.00).to_i, # Amount in cents
+                            :amount => ((@order.discounted ? @order.discounted_total.to_f : @order.total.to_f)*100.00).to_i, # Amount in cents
                             :currency => "usd",
                             :source => token,
                             :description => `Charge for order #{@order.uuid}`,
@@ -141,6 +141,17 @@ class CheckoutController < ApplicationController
                     items << item_hash
                 end
 
+                if order.discounted
+                    item_hash = {}
+                    item_hash["name"] = "Discount"
+                    item_hash["description"] = "Discount using the code: #{order.discount_code}"
+                    item_hash["price"] = order.discounted_total - order.total
+                    item_hash['currency'] = "USD"
+                    item_hash['tax'] = "0.00"
+                    item_hash['quantity'] = 1
+                    items << item_hash
+                end
+
                 mode = Rails.env.production? ? 'live' : 'sandbox'
                 PayPal::SDK::REST.set_config(
                     :mode => mode, # "sandbox" or "live"
@@ -176,11 +187,11 @@ class CheckoutController < ApplicationController
                         # ###Amount
                         # Let's you specify a payment amount.
                         :amount =>  {
-                            :total =>  order.total.to_s,
+                            :total =>  (order.discounted ? order.discounted_total.to_s : order.total.to_s),
                             :currency =>  "USD",
                             :details =>
                                 {
-                                    :subtotal => order.total.to_s,
+                                    :subtotal => (order.discounted ? order.discounted_total.to_s : order.total.to_s),
                                     :shipping => "0.00",
                                     :tax => "0.00",
                                 } 

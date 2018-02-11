@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180108213651) do
+ActiveRecord::Schema.define(version: 20180216050120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(version: 20180108213651) do
     t.integer "rating", default: 0
     t.index ["theme_id"], name: "index_comments_on_theme_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "discounts", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "code", default: "", null: false
+    t.decimal "amount", precision: 8, scale: 2
+    t.boolean "expired", default: true, null: false
+    t.integer "uses", default: 0, null: false
   end
 
   create_table "orders", id: :serial, force: :cascade do |t|
@@ -42,6 +50,11 @@ ActiveRecord::Schema.define(version: 20180108213651) do
     t.datetime "purchased_at"
     t.string "uuid", default: "", null: false
     t.text "licenses", default: [], null: false, array: true
+    t.boolean "discounted", default: false, null: false
+    t.decimal "discount", precision: 8, scale: 2
+    t.decimal "discount_total", precision: 8, scale: 2
+    t.decimal "discounted_total", precision: 8, scale: 2
+    t.string "discount_code"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 

@@ -521,8 +521,9 @@ textarea {
 i.search-submit input, i.comment-submit input{
   color:white;
 }
-
-
+.post-read-more a, .post-read-more a:hover, .post-read-more a:focus, .post-read-more a:active, .post-read-more a:visited, .post-read-more a:visited:hover, .post-read-more a:visited:focus{
+  color:white;
+}
 /*--------------------------------------------------------------
 # Formattings
 --------------------------------------------------------------*/
@@ -1061,7 +1062,7 @@ body {
   text-align: center;
   margin-right:5px;
 }
-.post .share-icons a li i {
+.post .share-icons a div i {
   width: 28px;
   height: 28px;
   line-height: 28px;
@@ -1069,7 +1070,7 @@ body {
   transition: all 0s;
   font-size: 12px;
 }
-.post .share-icons a:hover li i {
+.post .share-icons a:hover div i {
   color: #ffffff;
   background: #0091ea;
 }

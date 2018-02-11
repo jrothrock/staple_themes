@@ -76,6 +76,31 @@ var themeAppCheckout = {
             });
         });
     },
+    watchDiscount(){
+        $(`#discount-code-button`).on('click',function(){
+            let code = $(`#discount-code`).val()
+            let cart = localStorage.getItem('_staple_themes_cart');
+            $.ajax({
+                url: `${location.origin}/orders/${cart}/discount`,
+                data:{code:code},
+                type: 'POST',
+                success: (data) => {
+                    $('#total-checkout').text(data.order.discounted_total)
+                    $('#total-checkout-discounted').text(data.order.total)
+                },
+                error: (error)=> {
+                    console.log(error);
+                    if(error.status === 404){
+                        Materialize.toast('No Code Found By That Name', 4200, 'failure-rounded')
+                    } else if(error.status === 400 && error.responseJSON.expired){
+                        Materialize.toast('That Code Has Expired', 4200, 'failure-rounded')
+                    } else if(error.status === 400 && error.responseJSON.discounted){
+                        Materialize.toast('Only One Discount Can Be Applied At A Time', 4200, 'failure-rounded')
+                    }
+                }
+            });
+        })
+    },
     proccessStripe(){
         Stripe.card.createToken({
             number:$('#number').val().replace(/ /g,''),
@@ -128,6 +153,7 @@ var themeAppCheckout = {
             themeAppCheckout.createCCForm();
             themeAppCheckout.paypalButton();
             themeAppCheckout.watchCCButton();
+            themeAppCheckout.watchDiscount();
         },1)
     }
 }

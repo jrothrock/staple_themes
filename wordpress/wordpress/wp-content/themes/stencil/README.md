@@ -1,5 +1,8 @@
 # [Stencil By Staple Themes](https://https://staplethemes.com)
 
+## Download
+This theme can be downloaded here - [Materialize by Staple Themes](https://staplethemes.com/themes/materialize)
+
 ## About
 The Stencil Wordpress theme uses the amazing open source technologies: 
 

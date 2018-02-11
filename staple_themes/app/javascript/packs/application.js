@@ -67,13 +67,14 @@ var themeApp = {
         // watch open
         $('.modal-trigger').on('click', function(){
             $('#add-to-cart').unbind('click');
-            $('#modal-purchase').modal('open');
             let modal = $(this).data('target');
             let theme = $(this).data('theme');
             if($(`#${modal}`).length) $(`#${modal}`).data('theme', theme);
             $(`#license-modal`).text(`${$(this).data('title')} License Types`);
             $(`#single-modal`).text(`${$(this).data('single-text')}`);
             $(`#multi-modal`).text(`${$(this).data('multi-text')}`);
+            $(`#modal-license-select`).val(1)
+            $('#modal-purchase').modal('open');
             themeApp.addToCart();
         })
         // watch close
@@ -83,7 +84,7 @@ var themeApp = {
     },
     addToCartHtml(order,theme,index,license){
         let price, html = '';
-        if(license === "Single"){
+        if(license === "Single" || license === 1){
             license = "Single";
             price = theme.single_sale_price ? theme.single_sale_price : theme.single_price;
         } else {
@@ -108,7 +109,7 @@ var themeApp = {
                     `
         }
         html += `
-                    <div class="cart-item row" data-theme="${theme.id}" id="cart-item-${index}">
+                    <div class="cart-item row" data-theme="${theme.id}" id="cart-item-${theme.id}">
                         <div class="col m12">
                             <div class="title">
                                 <h4 style="margin:0px">
@@ -174,7 +175,12 @@ var themeApp = {
                             </div>
                         `)
                     }
-                    $('#total-cart-modal').text(data.order.total);
+                    if(data.order.discounted){
+                        $('#total-cart-modal').text(data.order.discounted_total);
+                        $('#total-cart-modal-discounted').text(data.order.total);
+                    } else {
+                        $('#total-cart-modal').text(data.order.total);
+                    }
                     if(!data.update){
                         if(data.index > 0) $('.cart-items').append(themeApp.addToCartHtml(data.order,data.theme,data.index,data.license));
                         else $(`.shopping-cart-modal`).find('.inner-container').append(themeApp.addToCartHtml(data.order,data.theme,data.index,data.license));
@@ -185,10 +191,13 @@ var themeApp = {
                         } else {
                             price = data.theme.multi_sale_price ? data.theme.multi_sale_price : data.theme.multi_price;
                         }
-                        $(`#cart-item-${data.index}`).find('.license').text(`License: ${data.license}`)
-                        $(`#cart-item-${data.index}`).find('.price').text(price)
+                        $(`#cart-item-${data.theme.id}`).find('.license').text(`License: ${data.license}`)
+                        $(`#cart-item-${data.theme.id}`).find('.price').text(price);
                     }
+                    localStorage.setItem('_staple_themes_cart', data.order.uuid);
                     $(".remove-cart-item").unbind('click');
+                    // need to clear the cache due to a bug occuring where if they go back, it'll show they never added it to the cart, when it has been truly added.
+                    Turbolinks.clearCache();
                     themeApp.removeItemFromCart();
                     if(modal) $('#modal-purchase.modal').modal('close');
                 },
@@ -488,9 +497,21 @@ var themeApp = {
                 success: (data) => {
                     $('.cart-number').text(data.order.themes.length);
                     $(container).remove();
-                    $('#total-cart-modal').text(data.order.total);
-                    if($('#total-checkout').length) $('#total-checkout').text(data.order.total);
-                    if($(`#cart-item-${index}`).length) $(`#cart-item-${index}`).remove();
+                    if(data.order.discounted){
+                        $('#total-cart-modal').text(data.order.discounted_total);
+                        $('#total-cart-modal-discounted').text(data.order.total);
+                    } else {
+                        $('#total-cart-modal').text(data.order.total);
+                    }
+                    if($('#total-checkout').length){
+                        if(data.order.discounted){
+                            $('#total-checkout').text(data.order.discounted_total);
+                            $('#total-checkout-discounted').text(data.order.total);
+                        } else {
+                            $('#total-checkout').text(data.order.total);
+                        }
+                    }
+                    if($(`#cart-item-${theme}`).length) $(`#cart-item-${theme}`).remove();
                 },
                 error: (error)=> {
                     console.log(error);

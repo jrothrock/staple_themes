@@ -71,9 +71,10 @@ var themeAppUpload = {
         var simplemde = new SimpleMDE({ element: jQuery("#markdown-editor")[0]});
     },
     watchSubmit(){
-        $(`#submit-theme-button`).on('click', function(){
+        $(`#submit-theme-button`).on('click', function(e){
+            e.preventDefault();
             $(this).addClass('disabled');
-            $('submit-theme-hidden').trigger('click');
+            $('#submit-theme-hidden').trigger('click');
         })
     },
     init(){

@@ -10,6 +10,8 @@
         %li
             = link_to "Logout", destroy_user_session_path, method: :delete, id:'logout-button'
 %nav
+    %div.center{style:"position:absolute;font-size:2em;width:100%;font-family:lobster;letter-spacing:2px"}
+        = link_to "Staple Themes", root_path
     .nav-wrapper
         %a.button-collapse{"data-activates" => "mobile-menu", :href => "#"}
             %i.fa.fa-navicon{style:"font-size:1.6em"}
@@ -43,8 +45,6 @@
                     = link_to "Register", new_user_registration_path
                 %li
                     = link_to "Login", new_user_session_path
-        %div.center{style:"font-size:2em;width:100%;font-family:lobster;letter-spacing:2px"}
-            = link_to "Staple Themes", root_path
         %ul.side-nav#mobile-menu
             %li
                 = link_to "Home", root_path

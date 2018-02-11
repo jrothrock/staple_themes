@@ -8,7 +8,14 @@
                     .col.s12.top-section
                         .total
                             Total:
-                            = number_to_currency(order['total'])
+                            %span
+                                -if order['discounted']
+                                    = number_to_currency(order['discounted_total'])
+                                -else
+                                    = number_to_currency(order['total'])
+                            %span{style:"color:#ff3636;font-size:0.75em;text-decoration:line-through"}
+                                -if order['discounted']
+                                    = number_to_currency(order['total'])
                         .created
                             Purchased:
                             = order['created_at'].strftime("%m-%d-%Y")

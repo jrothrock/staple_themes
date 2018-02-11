@@ -57,6 +57,7 @@ cp -r ./Licensing "./themes/${LOWER_THEME_NAME_UNDERSCORE}/"
 cd wordpress/wp-content/plugins/
 zip -r "${LOWER_THEME_NAME_UNDERSCORE}_extensions.zip" "./${LOWER_THEME_NAME_UNDERSCORE}_extensions"
 
+mkdir -p "../themes/${LOWER_THEME_NAME_UNDERSCORE}/lib/plugins/"
 mv "${LOWER_THEME_NAME_UNDERSCORE}_extensions.zip" "../themes/${LOWER_THEME_NAME_UNDERSCORE}/lib/plugins/"
 cd ../themes
 zip -r "${LOWER_THEME_NAME_UNDERSCORE}.zip"  "${LOWER_THEME_NAME_UNDERSCORE}/"
