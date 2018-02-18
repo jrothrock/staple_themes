@@ -146,7 +146,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 		 *
 		 * @var string
 		 */
-		public $parent_slug = 'themes.php';
+		public $parent_slug = 'stencil-welcome';
 
 		/**
 		 * Capability needed to view the plugin installation menu item.
@@ -636,7 +636,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 		 * @param array $args Menu item configuration.
 		 */
 		protected function add_admin_menu( array $args ) {
-			$this->page_hook = add_theme_page( $args['page_title'], $args['menu_title'], $args['capability'], $args['menu_slug'], $args['function'] );
+			$this->page_hook = add_submenu_page($args['parent_slug'], $args['page_title'], $args['menu_title'], $args['capability'], $args['menu_slug'], $args['function'] );
 		}
 
 		/**

@@ -13,4 +13,5 @@
 //= require jquery
 //= require rails-ujs
 //= require materialize-sprockets
+//= require ckeditor/init
 //= require_tree .

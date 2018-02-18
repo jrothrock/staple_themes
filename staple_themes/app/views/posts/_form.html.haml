@@ -1,0 +1,17 @@
+= simple_form_for @post do |f|
+  - if @post.errors.any?
+    #error_explanation
+      %h2
+        = "#{pluralize(@post.errors.count, "error")} prohibited this post from being saved:"
+      %ul
+        - @post.errors.full_messages.each do |msg|
+          %li
+            = msg
+  .form-group
+    = f.input :title, class: "form-control"
+  .form-group
+    = f.input :category, class: "form-control"
+  .form-group
+    = f.input :body, :as => :ckeditor, input_html: {:ckeditor => {:toolbar => 'FULL'}}, class: "form-control"
+  .form-group.center
+    = f.button :submit, style:"margin-top:40px;"

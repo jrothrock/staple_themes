@@ -63,10 +63,11 @@
     %h5 Comments:
     -if @theme['comments'].any?
         - @theme['comments'].each do |comment|
-            = render 'comments/comment', {comment: comment, theme:@theme}
+            = render 'comments/comment', {comment: comment, theme:@theme, type:"Theme"}
     - else
-        %p
+        %p#no-comments
             No Comments Have Been Added
+.comments-form-container
     -if user_signed_in?
-        = render 'comments/form'
+        = render 'comments/form', {type:'Theme'}
         

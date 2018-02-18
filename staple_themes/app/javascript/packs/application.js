@@ -397,6 +397,21 @@ var themeApp = {
             });
         $('a[href="#"]').click(function(e){e.preventDefault()});
     },
+    watchDeleteComment(){
+        $('.delete-comment').on('click',function(e){
+            e.preventDefault();
+            let id = $(this).data('id');
+            $.ajax({
+                    url: window.location.pathname + '/comments/' + id,
+                    type: 'DELETE',
+                    success: (data, status, xhr) => {
+                        $(`#comment-${id}`).remove();
+                    }
+            }).fail((e)=>{
+                Materialize.toast("Comment Couldn't Be Deleted. Please Try Again.", 3750, 'failure-rounded')
+            })
+        });
+    },
     watchNewComments(){
         if($('#new-comment-stars').has('img').length) $('#new-comment-stars').empty(); 
          $('#new-comment-stars').raty({
@@ -407,13 +422,39 @@ var themeApp = {
         $("#comment-submit").on('click', (e)=>{
             e.preventDefault();
             let rating = $('#new-comment-stars').find('input').val()
-            let content = $('#comment_content_Dentist').val();
-
+            let title = location.href.split('/')[4];
+            let content = $(`#comment_content_${title}`).val();
             if(rating && content){
                 $.ajax({
                     url: window.location.pathname + '/comments' ,
                     type: 'POST',
-                    data: { rating: rating, content:content }
+                    data: { rating: rating, content:content },
+                    success: (data, status, xhr) => {
+                        $(`#no-comments`).remove();
+                        let comment = `
+                        <div class='comment'>
+                            <div class='user-name'>
+                                <a href="/users/${data.user}">${data.user}</a>
+                            </div>
+                            <div class='comment-rating'>
+                                <img style="height:0.9em" src="https://cdn.staplethemes.com/images/star-${data.comment.rating >= 1 ? 'on' : 'off'}.png" alt="Star ${data.comment.rating >= 1 ? 'on' : 'off'}">
+                                <img style="height:0.9em" src="https://cdn.staplethemes.com/images/star-${data.comment.rating >= 2 ? 'on' : 'off'}.png" alt="Star ${data.comment.rating >= 2 ? 'on' : 'off'}">
+                                <img style="height:0.9em" src="https://cdn.staplethemes.com/images/star-${data.comment.rating >= 3 ? 'on' : 'off'}.png" alt="Star ${data.comment.rating >= 3 ? 'on' : 'off'}">
+                                <img style="height:0.9em" src="https://cdn.staplethemes.com/images/star-${data.comment.rating >= 4 ? 'on' : 'off'}.png" alt="Star ${data.comment.rating >= 4 ? 'on' : 'off'}">
+                                <img style="height:0.9em" src="https://cdn.staplethemes.com/images/star-${data.comment.rating >= 5 ? 'on' : 'off'}.png" alt="Star ${data.comment.rating >= 5 ? 'on' : 'off'}">
+                            </div>
+                            <div class='comment-content'>
+                            ${data.comment.content}
+                            </div>
+                            <div class='comment-actions'>
+                                
+                            </div>
+                        </div>
+                        `
+                        $('#new-comment-stars').raty('set', { score: 0 });
+                        $('.comments-container').append(comment);
+                        $('.comment_content').val('')
+                    }
                 }).fail((e)=>{
                     console.log(e);
                 })
@@ -609,6 +650,32 @@ var themeApp = {
             }
         }
     },
+    watchLikes(){
+        $(".post-like a").on('click', function(){
+            let id = $(this).data('id');
+            $.ajax({
+                url: `${location.origin}/blog/${id}/likes`,
+                type: 'POST',
+                success: (data) => {
+                    console.log(data);
+                    $(`#post-likes-count-${data.id}`).html(data.count)
+                    if(data.delete){
+                        $(`#post-likes-heart-${data.id}`).html('<i class="fa fa-heart-o"></i>')
+                    } else {
+                        $(`#post-likes-heart-${data.id}`).html('<i class="fa fa-heart"></i>')
+                    }
+                },
+                error: (error)=> {
+                    console.log(error);
+                    if(error.status === 401){
+                        themeApp.watchLoginModal($(this));
+                        $(`#modal-sign-in`).modal('open')
+                        $('#modal-sign-in-tabs').find('.indicator').css({'right':`${$('#modal-sign-in-tabs').width() / 2}px`,'left':'0px' })
+                    }
+                }
+            });
+        })
+    },
     unbind(){
         $('#back-to-top').unbind('click');
         $(window).unbind('scroll');
@@ -636,6 +703,9 @@ var themeApp = {
             themeApp.checkContactType();
             themeApp.watchResetForm();
             themeApp.watchResetConfirmationForm();
+            themeApp.watchLikes();
+            themeApp.watchDeleteComment();
+            $('.waves-ripple').remove();
             $('.modal').modal();
             $(".button-collapse").sideNav();
             Waves.displayEffect();

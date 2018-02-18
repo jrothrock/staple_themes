@@ -1,10 +1,10 @@
 .comment-form-container
     %h5 Add A Comment:
-    =form_for('comments', url:theme_comments_path(@theme['title'].downcase), remote: true) do |f|
-        #new-comment-stars
-        =f.text_field :content, placeholder: 'Add a comment...',
-                                        class: "comment_content",
-                                        id: "comment_content_#{@theme['title']}",
-                                        data: { theme: "#{@theme['title']}",
-                                        value: "#{@theme['comments'].length}" }
+    =form_for('comments', url:(type === 'Theme' ? theme_comments_path(@theme['title'].downcase) : post_comments_path(@post['title'].downcase)) , remote: true) do |f|
+        -if type === 'Theme'
+            #new-comment-stars
+        =f.text_field :content, placeholder: 'Add a comment...', class: "comment_content",
+                                        id: "comment_content_#{type === 'Theme' ? @theme['title_url'] : @post['title_url']}",
+                                        data: { id: "#{type === 'Theme' ? @theme['title'] : @post['title']}",
+                                        value: "#{type === 'Theme' ? @theme['comments'].length : @post['comments'].length}" }
         =f.submit 'New Comment', class: 'btn waves-effect waves-light', id: "comment-submit" # Hidden with CSS

@@ -6,7 +6,7 @@ services:
     ports:
       - "8081:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: ChangeMeIfYouWant
+      MYSQL_ROOT_PASSWORD: password
     volumes:
       - my-wpdata:/var/lib/mysql
   my-wp:
@@ -21,7 +21,7 @@ services:
     links:
       - my-wpdb:mysql
     environment:
-      WORDPRESS_DB_PASSWORD: ChangeMeIfYouWant
+      WORDPRESS_DB_PASSWORD: password
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -29,7 +29,7 @@ services:
       - my-wpdb:mysql
     environment:
       MYSQL_USERNAME: root
-      MYSQL_ROOT_PASSWORD: ChangeMeIfYouWant
+      MYSQL_ROOT_PASSWORD: password
       PMA_HOST: mysql
     restart: always
     ports:

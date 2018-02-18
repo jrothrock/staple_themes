@@ -230,16 +230,7 @@
                 'default'  => 1,
                 '1'       => 'SHOW',
                 '0'      => 'HIDE',
-            ),
-            array(
-                'id'       => 'preloader',
-                'type'     => 'switch',
-                'title'    => esc_html__( 'Preloader', 'dentist-extensions' ),
-                'subtitle' => esc_html__( 'You can enable or disable the preloader effect here.', 'dentist-extensions' ),
-                "on" => "SHOW",
-                "off" => "HIDE",
-                'default'  => 0
-            ),
+            )
 		)
      ));
 	// header settings END

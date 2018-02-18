@@ -1,7 +1,7 @@
 .main-home-container
     .img-container
         =image_tag('https://cdn.staplethemes.com/images/background-image-home.jpg')
-    .carousel-container{"data-turbolinks-permanent" => ""}
+    .carousel-container
         .carousel
             - @themes.each do |theme|
                 = link_to image_tag(theme['photo_urls'][0]), theme_path(theme['title_url']), class:"carousel-item"

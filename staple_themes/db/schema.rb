@@ -10,19 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180216050120) do
+ActiveRecord::Schema.define(version: 20180227035521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "ckeditor_assets", force: :cascade do |t|
+    t.string "data_file_name", null: false
+    t.string "data_content_type"
+    t.integer "data_file_size"
+    t.string "type", limit: 30
+    t.integer "width"
+    t.integer "height"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["type"], name: "index_ckeditor_assets_on_type"
+  end
+
   create_table "comments", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "theme_id"
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "rating", default: 0
-    t.index ["theme_id"], name: "index_comments_on_theme_id"
+    t.string "commentable_type"
+    t.integer "commentable_id"
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
@@ -67,6 +80,20 @@ ActiveRecord::Schema.define(version: 20180216050120) do
     t.datetime "updated_at", null: false
     t.integer "photoable_id"
     t.index ["photoable_type", "photoable_id"], name: "index_photos_on_photoable_type_and_photoable_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.string "title_url"
+    t.string "category"
+    t.integer "comment_count", default: 0, null: false
+    t.integer "likes_count", default: 0, null: false
+    t.integer "user_id"
+    t.text "likes", default: [], null: false, array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "themes", id: :serial, force: :cascade do |t|
@@ -161,7 +188,6 @@ ActiveRecord::Schema.define(version: 20180216050120) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "comments", "themes"
   add_foreign_key "comments", "users"
   add_foreign_key "orders", "users"
   add_foreign_key "themes", "users"

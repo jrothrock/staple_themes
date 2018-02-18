@@ -13,6 +13,7 @@ class User < ApplicationRecord
   # has_many :themes, :dependent => :destroy
   has_many :purchases
   has_many :orders
+  has_many :posts
   has_many :comments, :dependent => :destroy
 
   before_create do

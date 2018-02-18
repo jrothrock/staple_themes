@@ -1,10 +1,16 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   mount Sidekiq::Web => '/sidekiq'
   devise_for :users, :controllers => {sessions: 'sessions', registrations: 'registrations'}
 
   root to: "home#index"
+
+  resources :posts, path: 'blog' do
+    resources :comments
+  end
+  post '/blog/:id/likes', to:'posts#likes', as: 'like_post'
 
   get '/users/reset', to: 'reset#show', as:'reset_password'
   post '/users/reset', to: 'reset#create', as:'create_reset_password'

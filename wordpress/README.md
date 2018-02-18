@@ -18,6 +18,9 @@ This theme contains pretty much everything to get off the ground running. With t
 
 TGM will ask to install Contact Form 7, MailChimp for WordPress, ACF RGBA Color Picker, Favicon Generator, One Click Demo Import, iThemes Security, and the theme's extensions plugin (Redux).
 
+## Download Theme
+This theme can be downloaded here - [Materialize by Staple Themes](https://staplethemes.com/themes/materialize)
+
 ## How To Start
 *Requires Docker, Docker Compose, and MySQL.*
 
@@ -28,7 +31,7 @@ For quick development, run the `./start.sh` script. It will download the latest 
 
 **Windows:** an IP address will be echoed out at the end, showing the address for the site and phpmyadmin.
 
-**PHPMYADMIN:** To log into PHPMYADMIN, use the username `root`, and the password specified within the docker-compose.yml -- default: `ChangeMeIfYouWant`
+**PHPMYADMIN:** To log into PHPMYADMIN, use the username `root`, and the password specified within the docker-compose.yml -- default: `password`
 
 **PROBLEMS CONNECTING TO IP/DOCKER:**
     If problems arise after running `./start.sh`, run the `./stop.sh` and then open the docker client/gui and hit the restart button. Then go to "How To Start Docker.txt" and follow from 1.3 down. (This won't write to the hosts file)

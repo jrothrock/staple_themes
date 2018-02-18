@@ -1,0 +1,54 @@
+.row
+    -if @posts.length != 0
+        - @posts.each do |post|
+            .col.m4.s12.post-container
+                .text-center
+                    %h1
+                        = link_to post['title'], post_path(post['title_url'])
+                .post-information
+                    %h6.post-date 
+                        %i.fa.fa-calendar
+                        = post['created_at'].strftime('%b %d, %Y')
+                    %h6.post-category
+                        %i.fa.fa-folder
+                        = link_to post['category'], posts_path(category:post['category']), style:"text-transform:capitalize"
+                .post-information-bottom
+                    .post-like
+                        %a{style:"cursor:pointer", data:{id:post['title_url']}}
+                            %span{id:"post-likes-count-#{post['title_url']}"}
+                                = post['likes_count']
+                            %span{id:"post-likes-heart-#{post['title_url']}"}
+                                -if !post['liked']
+                                    %i.fa.fa-heart-o
+                                -else
+                                    %i.fa.fa-heart
+                    .post-comments
+                        = link_to "#{post['comment_count']} <i class='fa fa-comments'></i>".html_safe, "#{post_path(post['title_url'])}#comments", style:"cursor:pointer"
+
+                %div
+                    = raw(post['body']).truncate(358)
+                .text-center.post-read-more
+                    = link_to "READ MORE", post_path(post['title_url']), class:'btn waves-effect waves-light'
+                .share-container
+                    %ul.share-icons
+                        %a{:href => "https://twitter.com/share?text=#{post['title'].parameterize}&url=https://staplethemes.com/blog/#{post['title_url']}", :onclick => "window.open(this.href, 'twitter-share', 'width=550,height=235');return false;"}
+                            %li
+                                %i.fa.fa-twitter.waves-effect.waves-light
+                        %a{:href => "https://www.facebook.com/sharer/sharer.php?u=https://staplethemes.com/blog/#{post['title_url']}", :onclick => "window.open(this.href, 'facebook-share','width=580,height=296');return false;"}
+                            %li
+                                %i.fa.fa-facebook.waves-effect.waves-light
+                        %a{:href => "https://plus.google.com/share?url=https://staplethemes.com/blog/#{post['title_url']}", :onclick => "window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;"}
+                            %li
+                                %i.fa.fa-google-plus.waves-effect.waves-light
+                        %a{:href => "javascript:void((function()%7Bvar%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','https://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)%7D)());"}
+                            %li
+                                %i.fa.fa-pinterest.waves-effect.waves-light
+                        %a{:href => "https://www.linkedin.com/cws/share?url=https://staplethemes.com/blog/#{post['title_url']}%26source=https://staplethemes.com/blog/#{post['title_url']}", :onclick => "window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;"}
+                            %li
+                                %i.fa.fa-linkedin.waves-effect.waves-light
+    - elsif @category != false
+        .center
+            %h6 No Posts Were Found In This Category
+    - else
+        .center
+            %h5 No Posts Have Been Added

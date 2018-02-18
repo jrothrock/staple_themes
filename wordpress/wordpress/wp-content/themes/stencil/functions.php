@@ -7,8 +7,18 @@
  * @package stencil
  */
 
-require_once get_template_directory() .'/lib/tgm/template.php';
+require_once get_template_directory() . '/lib/tgm/template.php';
+require_once get_template_directory() . '/lib/libraries/epsilon-framework/class-epsilon-autoloader.php';
+require_once get_template_directory() . '/lib/libraries/class-stencil-helper.php' ;
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+$args = array(
+	'controls' => array( 'slider', 'toggle', 'upsell', 'text-editor' ), // array of controls to load
+	'sections' => array( 'recommended-actions' ), // array of sections to load
+	'path'     => '/lib/libraries', // path to your epsilon framework in your theme, e.g. theme-name*/inc/libraries*/epsilon-framework
+	'backup'   => false,
+);
+
+new Epsilon_Framework( $args );
 
 if ( ! function_exists( 'stencil_setup' ) ) :
 /**
@@ -73,12 +83,74 @@ function stencil_setup() {
 		'gallery',
 		'caption',
 	) );
+	
 
 }
 endif;
 add_action( 'after_setup_theme', 'stencil_setup' );
 
+function about_stencil(){
+			if ( is_admin() ) {
 
+			global $stencil_required_actions, $stencil_recommended_plugins;
+			require_once get_template_directory() . '/lib/libraries/class-stencil-notify-system.php';
+			require_once get_template_directory() . '/lib/libraries/welcome-screen/inc/class-epsilon-import-data.php';
+
+			$stencil_recommended_plugins = array(
+				'favicon-by-realfavicongenerator' => array(
+					'recommended' => true,
+				),
+				'contact-form-7' => array(
+					'recommended' => true,
+				),
+				'mailchimp-for-wp' => array(
+					'recommended' => true,
+				),
+				'acf-rgba-color-picker' => array(
+					'recommended' => true,
+				),
+				'one-click-demo-import' => array(
+					'recommended' => true,
+				),
+				'better-wp-security' => array(
+					'recommended' => true,
+				),
+			);
+
+			/*
+             * id - unique id; required
+             * title
+             * description
+             * check - check for plugins (if installed)
+             * plugin_slug - the plugin's slug (used for installing the plugin)
+             *
+             */
+			$stencil_required_actions  = array(
+				array(
+					'id'          => 'stencil-import-data',
+					'title'       => esc_html__( 'Easy 1-click theme setup', 'stencil' ),
+					'description' => esc_html__( 'Clicking the button below will add settings/widgets and recommended plugins to your WordPress installation. Click advanced to customize the import process.', 'stencil' ),
+					'help'        => array( Epsilon_Import_Data::get_instance(), 'generate_import_data_container' ),
+					'check'       => Stencil_Notify_System::check_installed_data(),
+				),
+				array(
+					'id'          => 'stencil-fix-homepage',
+					'title'       => esc_html__( 'Fix Homepage', 'stencil' ),
+					'description' => esc_html__( 'We have made some changes to how the Homepage works in stencil. Now you need to create a page and use the "Homepage Template" and set it as a static front page. You can also make this automatically by pushing the button below.', 'stencil' ),
+					'help'        => '<p><a id="stencil-fix-homepage" href="#" class="button button-primary" style="text-decoration: none;"> ' . esc_html__( 'Fix Homepage', 'epsilon-framework' ) . '</a><span class="spinner" style="float:none"></span></p>',
+					'check'       => Stencil_Notify_System::show_fix_action(),
+				),
+			);
+
+			if ( is_customize_preview() ) {
+				$url                                = 'themes.php?page=%1$s-welcome&tab=%2$s';
+				$stencil_required_actions[0]['help'] = '<a class="button button-primary" id="" href="' . esc_url( admin_url( sprintf( $url, 'stencil', 'recommended-actions' ) ) ) . '">' . __( 'Easy 1-click theme setup', 'stencil' ) . '</a>';
+			}
+
+			require get_template_directory() . '/lib/libraries/welcome-screen/class-stencil-welcome-screen.php';
+		}// End if().
+}
+add_action( 'after_setup_theme', 'about_stencil' );
 /**
 *
 * Move Comment Form Body Field To The Bottom

@@ -41,8 +41,7 @@ add_filter( 'body_class', function( $classes ) {
 		 ($stencil_options['sidebar-shop'] ? 'sidebar-shop' : 'no-sidebar-shop' ), 
 		 ($stencil_options['sidebar-archive'] ? 'sidebar-archive' : 'no-sidebar-archive' ),
 		 ($stencil_options['nav-menu'] ? 'nav-menu' : ''),
-		 ($stencil_options['stencil-footer-top'] ? 'footer-top' : ''),
-		 ($stencil_options['preloader'] ? 'preloader-body has-preloader-body' : '')
+		 ($stencil_options['stencil-footer-top'] ? 'footer-top' : '')
 	) );
 } );
 
@@ -58,21 +57,6 @@ add_filter( 'body_class', function( $classes ) {
 </head>
 
 <body <?php body_class(); ?>>
-	<?php if($stencil_options['preloader']): ?>
-		<div class='preloader-container'>
-			<div class="preloader-wrapper big active" style='position: absolute;'>
-				<div class="spinner-layer spinner-blue-only">
-				<div class="circle-clipper left">
-					<div class="circle"></div>
-				</div><div class="gap-patch">
-					<div class="circle"></div>
-				</div><div class="circle-clipper right">
-					<div class="circle"></div>
-				</div>
-				</div>
-			</div>
-		</div>
-	<?php endif; ?>
 	<div id="page" class="site">
 		<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'stencil' ); ?></a>
 			<?php if( $stencil_options['top-nav-menu']): ?>

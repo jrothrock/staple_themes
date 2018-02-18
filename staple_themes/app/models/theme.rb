@@ -4,7 +4,7 @@ class Theme < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
   belongs_to :user
-  has_many :comments, :dependent => :destroy
+  has_many :comments, as: :commentable, dependent: :delete_all
   has_many :photos, as: :photoable, dependent: :delete_all
   accepts_nested_attributes_for :photos
 

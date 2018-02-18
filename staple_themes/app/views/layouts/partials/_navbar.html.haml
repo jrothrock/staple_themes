@@ -10,7 +10,7 @@
         %li
             = link_to "Logout", destroy_user_session_path, method: :delete, id:'logout-button'
 %nav
-    %div.center{style:"position:absolute;font-size:2em;width:100%;font-family:lobster;letter-spacing:2px"}
+    %div.center{style:"position:absolute;z-index:1;font-size:2em;width:100%;height:0px;font-family:lobster;letter-spacing:2px"}
         = link_to "Staple Themes", root_path
     .nav-wrapper
         %a.button-collapse{"data-activates" => "mobile-menu", :href => "#"}
@@ -30,9 +30,13 @@
                 = link_to "Themes", themes_path
             %li 
                 = link_to "Contact", contact_path
+            %li
+                = link_to "Blog", posts_path
         %ul.right.hide-on-med-and-down
             - if user_signed_in?
                 - if current_user.try(:admin?)
+                    %li
+                        = link_to "Create Post", new_post_path
                     %li
                         = link_to "Create Theme", new_theme_path
                 %li.dropdown-button{"data-activates":"dropdown1", id:"profile-hover"}
@@ -52,6 +56,8 @@
                 = link_to "Themes", themes_path
             %li
                 = link_to "Contact", contact_path
+            %li
+                = link_to "Blog", posts_path
             - if user_signed_in?
                 %li{style:"border-bottom:1px solid rgba(0,0,0,0.3)"}
                 %li
