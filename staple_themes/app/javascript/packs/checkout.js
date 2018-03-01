@@ -149,12 +149,10 @@ var themeAppCheckout = {
                 });
     },
     init(){
-        setTimeout(()=>{
-            themeAppCheckout.createCCForm();
-            themeAppCheckout.paypalButton();
-            themeAppCheckout.watchCCButton();
-            themeAppCheckout.watchDiscount();
-        },1)
+        themeAppCheckout.createCCForm();
+        themeAppCheckout.paypalButton();
+        themeAppCheckout.watchCCButton();
+        themeAppCheckout.watchDiscount();
     }
 }
 

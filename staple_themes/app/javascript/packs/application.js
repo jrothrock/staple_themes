@@ -681,36 +681,34 @@ var themeApp = {
         $(window).unbind('scroll');
     },
     init(){
-        // idk why this needs a set timeout, maybe for elements to load?
-        setTimeout(()=>{
-            themeApp.watchLogOut();
-            themeApp.unbind();
-            themeApp.checkCart();
-            themeApp.watchAlert();
-            themeApp.watchThemeModal();
-            themeApp.watchCartModal();
-            themeApp.backToTop();
-            themeApp.userProfileHover();
-            themeApp.watchCarousel();
-            themeApp.watchDownload();
-            themeApp.watchSignInButtons();
-            themeApp.watchFormButtons();
-            themeApp.watchScrollTo();
-            themeApp.watchNewComments();
-            themeApp.removeItemFromCart();
-            themeApp.watchContact();
-            themeApp.watchPhotoSize();
-            themeApp.checkContactType();
-            themeApp.watchResetForm();
-            themeApp.watchResetConfirmationForm();
-            themeApp.watchLikes();
-            themeApp.watchDeleteComment();
-            $('.waves-ripple').remove();
-            $('.modal').modal();
-            $(".button-collapse").sideNav();
-            Waves.displayEffect();
-            if(location.href.split('/').length === 5 && location.href.split('/')[3] === 'themes') themeApp.addToCart();
-        },1)
+        console.log('init');
+        themeApp.watchLogOut();
+        themeApp.unbind();
+        themeApp.checkCart();
+        themeApp.watchAlert();
+        themeApp.watchThemeModal();
+        themeApp.watchCartModal();
+        themeApp.backToTop();
+        themeApp.userProfileHover();
+        themeApp.watchCarousel();
+        themeApp.watchDownload();
+        themeApp.watchSignInButtons();
+        themeApp.watchFormButtons();
+        themeApp.watchScrollTo();
+        themeApp.watchNewComments();
+        themeApp.removeItemFromCart();
+        themeApp.watchContact();
+        themeApp.watchPhotoSize();
+        themeApp.checkContactType();
+        themeApp.watchResetForm();
+        themeApp.watchResetConfirmationForm();
+        themeApp.watchLikes();
+        themeApp.watchDeleteComment();
+        $('.waves-ripple').remove();
+        $('.modal').modal();
+        $(".button-collapse").sideNav();
+        Waves.displayEffect();
+        if(location.href.split('/').length === 5 && location.href.split('/')[3] === 'themes') themeApp.addToCart();
     }
 }
 $(document).on('turbolinks:load', ()=>{themeApp.init()});

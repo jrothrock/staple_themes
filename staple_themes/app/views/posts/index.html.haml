@@ -46,9 +46,9 @@
                         %a{:href => "https://www.linkedin.com/cws/share?url=https://staplethemes.com/blog/#{post['title_url']}%26source=https://staplethemes.com/blog/#{post['title_url']}", :onclick => "window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;"}
                             %li
                                 %i.fa.fa-linkedin.waves-effect.waves-light
-    - elsif @category != false
+    - elsif !@category.nil?
         .center
             %h6 No Posts Were Found In This Category
     - else
         .center
-            %h5 No Posts Have Been Added
+            %h6 No Posts Have Been Added
