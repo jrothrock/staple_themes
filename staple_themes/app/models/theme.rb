@@ -13,7 +13,7 @@ class Theme < ApplicationRecord
   def self.uploadPhoto(theme,s3)
     bucket = Rails.application.secrets.aws_bucket
     if Rails.env.production?
-      "#{Rails.root.to_s.split("releases")[0]}current/public#{theme.photos.first.photo.url}"
+      photo_path = "#{Rails.root.to_s.split("releases")[0]}current/public#{theme.photos.first.photo.url}"
     else
       photo_path = "#{Rails.root}/public#{theme.photos.first.photo.url}"
     end

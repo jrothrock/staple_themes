@@ -33,8 +33,9 @@ do
     lc "$ch"
 done
 
-mkdir ./temp_hold
+mkdir -p ./temp_hold/Documentation
 cp -r ./wordpress/wp-content/themes/stencil ./wordpress/wp-content/themes/stencil-child  ./wordpress/wp-content/plugins/stencil_extensions ./temp_hold
+cp -r ./Documentation/stencil ./temp_hold/Documentation
 cd ./temp_hold
 
 
@@ -64,7 +65,7 @@ done
 mv $LOWER_THEME_NAME_UNDERSCORE ../wordpress/wp-content/themes/
 mv "${LOWER_THEME_NAME_UNDERSCORE}-child" ../wordpress/wp-content/themes/
 mv "${LOWER_THEME_NAME_UNDERSCORE}_extensions" ../wordpress/wp-content/plugins/
-
+mv "./Documentation/${LOWER_THEME_NAME_UNDERSCORE}" ../Documentation
 cd ..
 rm -rf temp_hold
 

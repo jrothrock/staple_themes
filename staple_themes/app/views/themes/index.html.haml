@@ -8,13 +8,13 @@
                 .card.medium
                     .card-image
                         = link_to image_tag(theme['photo_urls'][0]), theme_path(theme['title_url'])
-                        = link_to theme['title'], theme_path(theme['title_url']) , class:'card-title', style:"padding:0px;left:24px;bottom:24px"
                         %button.btn.theme-price
                             -if theme['single_price'] != 0.00 && theme['single_sale_price'] != 0.00
                                 = number_to_currency((theme['single_sale_price'] ? theme['single_sale_price'] : theme['single_price']))
                             -else
                                 FREE
                     .card-content
+                        = link_to theme['title'], theme_path(theme['title_url']) , class:'card-title', style:"padding:0px;left:24px;bottom:24px"
                         .card-rating
                             %span{style:"white-space:nowrap"}
                                 Average Rating: 
@@ -33,7 +33,7 @@
                         %p
                             = theme['excerpt']
                         .card-action
-                            %a.waves-effect.waves-light.btn{:href => theme['url']} Preview
+                            %a.waves-effect.waves-light.btn{:href => theme['url'], target: "_blank"} Preview
                             -if (current_user && theme['purchasers'].key?(current_user.uuid)) || (theme['single_sale_price'] && theme['multi_sale_price'] && theme['single_sale_price'].to_f === 0.00 && theme['multi_sale_price'].to_f === 0.00) || (theme['single_price'].to_f === 0.00 && theme['multi_price'].to_f === 0.00)
                                 -if request.user_agent =~ /Mobile|webOS|Mobi/
                                     %button.disabled.btn.download-btn.capitalize{style:"float:right;margin:0px;pointer-events:all", data:{theme:theme['title_url']}} 

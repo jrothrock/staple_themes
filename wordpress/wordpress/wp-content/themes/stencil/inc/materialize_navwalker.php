@@ -75,6 +75,7 @@ if( ! class_exists( 'Materialize_Walker_Desktop_Nav_Menu' ) ) :
             $attributes .= ! empty( $item->target )     ? ' target="' . esc_attr( $item->target     ) .'"' : '';
             $attributes .= ! empty( $item->xfn )        ? ' rel="'    . esc_attr( $item->xfn        ) .'"' : '';
             $attributes .= ! empty( $item->url )        ? ' href="'   . esc_attr( $item->url        ) .'"' : '';
+            $attributes .= ( $args->walker->has_children && 1 <= $depth) ? 'style="position:relative"' : '';
             $attributes .= ' class="menu-link ' . ( $depth > 0 ? 'sub-menu-link' : 'main-menu-link' ) . '"';
 
             if( in_array( 'menu-item-has-children', $item->classes ) ) 
@@ -82,9 +83,9 @@ if( ! class_exists( 'Materialize_Walker_Desktop_Nav_Menu' ) ) :
 
             $menu_right = (int)$stencil_options['layout-nav-menu'] % 2 === 1 ? true : false;
 
-			$left_icon = ( $args->walker->has_children && 1 <= $depth && $menu_right ) ? ' <span class="fa fa-angle-left"></span> ' : '';
+			$left_icon = ( $args->walker->has_children && 1 <= $depth && $menu_right ) ? ' <span class="fa fa-angle-left" style="position:absolute;left:5px;top:15.5px"></span> ' : '';
 			$right_icon = ( $args->walker->has_children && 0 === $depth ) ? ' <span class="fa fa-angle-down"></span></a>' : '</a>';
-            $right_icon = ( $args->walker->has_children && 1 <= $depth && !$menu_right ) ? ' <span class="fa fa-angle-right"></span></a>' : $right_icon;
+            $right_icon = ( $args->walker->has_children && 1 <= $depth && !$menu_right ) ? ' <span class="fa fa-angle-right" style="position:absolute;right:5px;top:15.5px"></span></a>' : $right_icon;
             // Build HTML output and pass through the proper filter.
             $item_output = sprintf( '%1$s<a%2$s>%3$s%4$s%5$s%6$s%7$s%8$s',
                 $args->before,

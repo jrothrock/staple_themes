@@ -681,7 +681,6 @@ var themeApp = {
         $(window).unbind('scroll');
     },
     init(){
-        console.log('init');
         themeApp.watchLogOut();
         themeApp.unbind();
         themeApp.checkCart();

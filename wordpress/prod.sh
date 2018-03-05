@@ -41,16 +41,8 @@ LOWER_THEME_NAME_UNDERSCORE=$(echo ${LOWER_THEME_NAME// /_})
 if [  -d "./themes/${LOWER_THEME_NAME_UNDERSCORE}" ]; then
     rm -rf "./themes/${LOWER_THEME_NAME_UNDERSCORE}"
 fi
-mkdir "./themes/${LOWER_THEME_NAME_UNDERSCORE}"
-
-cp -r ./Documentation "./themes/${LOWER_THEME_NAME_UNDERSCORE}"
-
-cd "./themes/${LOWER_THEME_NAME_UNDERSCORE}/Documentation"
-
-grep -r -l "stencil" . | xargs sed -i "" "s/stencil/${LOWER_THEME_NAME_UNDERSCORE}/g"
-grep -r -l "Stencil" . | xargs sed -i "" "s/Stencil/${UPPER_THEME_NAME_UNDERSCORE}/g"
-
-cd ../../..
+mkdir -p "./themes/${LOWER_THEME_NAME_UNDERSCORE}/Documentation"
+cp -r "./Documentation/${LOWER_THEME_NAME_UNDERSCORE}" "./themes/${LOWER_THEME_NAME_UNDERSCORE}/Documentation"
 
 cp -r ./Licensing "./themes/${LOWER_THEME_NAME_UNDERSCORE}/"
 

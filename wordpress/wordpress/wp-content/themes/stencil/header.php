@@ -80,7 +80,7 @@ add_filter( 'body_class', function( $classes ) {
 									<?php endif; ?>
 									<div class='nav-text <?php echo (!empty( $stencil_options['stencil-logo']['url'] ) ? 'img' : '') ?>'>
 										<?php if ( $stencil_options['logo-nav-menu'] ) : ?>
-											<?php echo get_bloginfo('name'); ?>
+											<?php echo $stencil_options['site-title']; ?>
 										<?php endif; ?>
 									</div>
 								</a>
