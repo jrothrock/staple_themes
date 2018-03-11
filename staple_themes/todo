@@ -12,3 +12,4 @@ Messages are pretty buggy. Should be worked on.
 
 Maybe move upload javascript to application, as a failed upload will not add the upload script with render :new
     - this is due to the location changing to /themes instead of /themes/new
+    

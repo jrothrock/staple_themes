@@ -117,17 +117,17 @@ class ThemesController < ApplicationController
     id = params[:theme] && params[:theme]['title'] ? params[:theme]['title'] : params[:id]
     if id || action_name === 'upload'
       if action_name === 'show'
-        @theme = $redis.get("theme_#{id.downcase}")
+        @theme = $redis.get("theme_#{id.downcase.parameterize}")
         if @theme.nil?
-          @theme = Theme.where("title_url = ?", id.downcase).first.to_json({:include => {:comments => {:include => :user}}})
-          $redis.set("theme_#{id.downcase}",@theme)
-          $redis.rpush("all_keys", "theme_#{id.downcase}")
+          @theme = Theme.where("title_url = ?", id.downcase.parameterize).first.to_json({:include => {:comments => {:include => :user}}})
+          $redis.set("theme_#{id.downcase.parameterize}",@theme)
+          $redis.rpush("all_keys", "theme_#{id.downcase.parameterize}")
         end
          @theme = JSON.parse(@theme)
       elsif action_name === 'download'
-        @theme = Theme.where("title_url = ?", id.downcase).first
+        @theme = Theme.where("title_url = ?", id.downcase.parameterize).first
       elsif action_name != 'upload'
-        @theme = Theme.where("title_url = ?", id.downcase).includes(:comments).first
+        @theme = Theme.where("title_url = ?", id.downcase.parameterize).includes(:comments).first
       end
       unless @theme || action_name === 'upload'
         flash[:alert] = "There Is No Theme By That Name"
@@ -139,7 +139,7 @@ class ThemesController < ApplicationController
   end
 
   def is_admin
-    unless current_user.admin
+    unless current_user.try(:admin?)
       flash[:alert] = "\"I'm sorry Dave, I'm afraid I can't let you do that\""
       redirect_to root_path
     end

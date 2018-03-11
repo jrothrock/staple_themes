@@ -16,6 +16,6 @@
                 = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
               .input-field
                 %i#sign-in-button{class:"btn waves-effect waves-light waves-input-wrapper"}
-                  %input{value:"Log In", class: 'waves-button-input', type:'submit'}
+                  %input{value:"Log In", class: 'waves-button-input', type:'submit', style:"color:white"}
                 = f.submit "Log In", id:'submit-input-hidden', class: 'waves-button-input', style: "display:none"
                 = link_to 'Reset Password', reset_password_path, style:"font-size: 0.95rem;margin-left: 10px;"

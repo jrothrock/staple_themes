@@ -249,7 +249,7 @@ function stencil_scripts() {
 
 	wp_enqueue_script( 'stencil-skip-link-focus-fix', get_template_directory_uri() . '/assets/js/skip-link-focus-fix.js', array(), '1.0.0', true );
 
-	wp_enqueue_script( 'materialize', get_template_directory_uri() . '/assets/js/materialize.min.js', array('jquery'), '1.0.0', true );
+	wp_enqueue_script( 'materialize', get_template_directory_uri() . '/assets/js/materialize.min.js', array('jquery'), '1.0.0' );
 
 	wp_enqueue_script( 'main-js', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), '1.0.0', true );
 

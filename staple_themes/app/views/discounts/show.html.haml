@@ -1,0 +1,8 @@
+- if @discounts && @discounts.length != 0
+    - @discounts.each do |discount|
+        = discount.title
+        = discount.code
+        = discount.amount.to_f
+        = discount.expired
+        = discount.uses
+        

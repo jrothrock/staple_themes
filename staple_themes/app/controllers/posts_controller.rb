@@ -105,7 +105,7 @@ class PostsController < ApplicationController
     end
 
     def is_admin
-        unless current_user.admin
+        unless current_user.try(:admin?)
             flash[:alert] = "\"I'm sorry Dave, I'm afraid I can't let you do that\""
             redirect_to root_path
         end

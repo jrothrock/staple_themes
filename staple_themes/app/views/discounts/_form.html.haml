@@ -1,0 +1,23 @@
+.posts-wrapper
+  .post
+    .post-body
+      .image-wrap.row
+        = simple_form_for @discount, html: { multipart: true } do |d|
+          .text-center
+            %h2{style:"margin:0px !important"} Discount:
+          .row
+            .col-10.text-center
+              = d.error_notification
+          .container-fluid.col.m6.offset-m3{style:"border: 1px solid rgba(0, 0, 0, 0.1);border-radius: 3px;padding-bottom:20px"}
+            .form-group.text-center.input-field
+              = d.input :name, label: 'Discount Title'
+            .form-group.text-center.input-field
+              = d.input :code, label: 'Discount Code'
+            .form-group.text-center.input-field
+              = d.input :amount, label: "Discount Amount", step: "any"
+            .form-group.text-center.input-field.select-form
+              = d.input :expired, :collection => [false,true], :selected => (@discount.name != "" ? @discount.expired : false)
+            .form-group.text-center
+              %i#submit-discount-button{class:"btn waves-effect waves-light waves-input-wrapper"}
+                %input{value:"Submit Discount", class: 'waves-button-input', type:'submit'}
+              = d.button :submit, class: 'btn-success btn-block', id:'submit-discount-hidden', style:'display:none'

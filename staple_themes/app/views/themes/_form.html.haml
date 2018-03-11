@@ -3,12 +3,12 @@
     .post-body
       .image-wrap.row
         = simple_form_for @theme, html: { multipart: true } do |f|
+          .text-center
+            %h2{style:"margin:0px !important"} Theme:
           .row
             .col-10.text-center
               = f.error_notification
-          .container-fluid.col.m10.offset-m1
-            .form-group.text-center
-              %h3 Theme:
+          .container-fluid.col.m10.offset-m1{style:"border: 1px solid rgba(0, 0, 0, 0.1);border-radius: 3px;padding-bottom:20px"}
             .form-group.text-center.input-field
               = f.input :title, label: 'Theme Title'
             .form-group.text-center.input-field

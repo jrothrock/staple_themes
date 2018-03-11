@@ -53,9 +53,9 @@
                                         = (@theme['multi_sale_price'] ? number_to_currency(@theme['multi_sale_price']) : number_to_currency(@theme['multi_price']))
                                 %button.btn.waves-effect.waves-light#add-to-cart{style:"margin-top:10px;background-color: #f44336;"} Add To Cart
     
-    - if current_user && current_user === @theme['user']
+    - if current_user && current_user.id === @theme['user_id']
         .edit-links
-            = link_to "Edit Theme", edit_theme_path(@theme['title'].downcase)
+            = link_to "Edit Theme", edit_theme_path(@theme['title_url'])
                 
     .description
         = render 'description', theme: @theme

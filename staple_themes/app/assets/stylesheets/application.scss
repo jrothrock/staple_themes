@@ -14,7 +14,7 @@
  *= require_self
  */
 
-@import "materialize/components/color";
+@import "materialize/components/color-variables";
 $primary-color: #8708bd !default;
 $secondary-color: color("blue", "darken-1") !default;
 @import "materialize";
@@ -297,7 +297,7 @@ i.btn.waves-effect input{
     top: 50%;
     transform: translateY(-50%);
 }
-.main-home-container{
+.main-home-container, .main-hosting-container{
     height: calc(100vh - 64px - 32px);
     background-color:black;
     width: 100vw;
@@ -305,6 +305,8 @@ i.btn.waves-effect input{
     position: relative;
     top: -50px;
     overflow:hidden;
+}
+.main-home-container{
     .img-container{
         height: calc(100vh - 64px - 32px);
         background: #7F00FF;  /* fallback for old browsers */  /* Chrome 10-25, Safari 5.1-6 */
@@ -341,6 +343,47 @@ i.btn.waves-effect input{
         .button-container{
             position: relative;
             top: calc((100vh - 64px - 32px) / 1.75);
+            text-align: center;
+            z-index:4;
+        }
+    }
+}
+.main-hosting-container{
+    .img-container{
+        height: calc(100vh - 64px - 32px);
+        background: #7F00FF;  /* fallback for old browsers */  /* Chrome 10-25, Safari 5.1-6 */
+        background: -webkit-linear-gradient(left, #3f00ff, #9d00ff);
+        background: -moz-linear-gradient(left, #3f00ff, #9d00ff);
+        background: -o-linear-gradient(left, #3f00ff, #9d00ff);
+        background: linear-gradient(to right, #3f00ff, #9d00ff);
+        width: 100vw;
+        opacity:0.45;
+        img{
+            opacity:0.45;
+            width:100%;
+        }
+    }
+    .info-container{
+        height: calc(100vh - 64px - 32px);
+        width: 100vw;
+        position: relative;
+        font-style: italic;
+        top: calc(0px - 100vh + 128px + 14vh);
+        .top-info-container{
+            color:white;
+            text-align:center;
+            font-size:1.18em;
+            margin-top:5.5%;
+            .moto{
+                font-size:2em;
+            }
+            .main{
+                font-size:3em;
+            }
+        }
+        .button-container{
+            position: relative;
+            top: calc((100vh - 64px - 32px) / 5);
             text-align: center;
             z-index:4;
         }
@@ -619,12 +662,30 @@ span.error{
         position: relative;
         top: 18px;
     }
-    .main-home-container .img-container img{
+    .main-home-container .img-container img, .main-hosting-container .img-container img{
         width:inherit;
         height:100%;
     }
-    .main-home-container, .main-home-container .img-container{
+    .main-home-container, .main-home-container .img-container, .main-hosting-container, .main-hosting-container .img-container{
         height: calc(100vh - 56px);
+    }
+    .main-hosting-container{
+        .info-container{
+            .top-info-container{
+                .moto{
+                    font-size:1.2em;
+                }
+                .main{
+                    font-size:1.5em;
+                }
+            }
+            .button-container{
+                .btn{
+                    display:inline;
+                    padding:8px;
+                }
+            }
+        }
     }
     .modal .modal-content{
         padding:5px;
@@ -736,4 +797,37 @@ span.error{
 }
 .card .card-content{
     padding:0px 24px;
+}
+.select-form{
+    margin-bottom:20px;
+    label{
+        position:initial !important;
+    }
+}
+nav .dropdown-content{
+    top:64px !important;
+}
+.hosting-section{
+    width:100vw;
+    position: relative;
+    transform: translateX(-50%);
+    left: 50%;
+    top: -73px;
+    padding-bottom:10px;
+}
+.btn{
+    padding:0 2rem;
+}
+.sidenav li > a > i, .sidenav li > a > [class^="mdi-"], .sidenav li > a li > a > [class*="mdi-"], .sidenav li > a > i.material-icons{
+    float:none;
+    margin:0px;
+}
+.sidenav .collapsible-header, .sidenav.fixed .collapsible-header{
+    padding: 0px 32px;
+}
+.sidenav .collapsible-body li a, .sidenav.fixed .collapsible-body li a{
+    padding: 0 23.5px 0 55px;
+}
+.description img{
+    max-width:90%;
 }

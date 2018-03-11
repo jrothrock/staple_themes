@@ -1,0 +1,29 @@
+- if @discounts && @discounts.length != 0
+    .row{style:'border-bottom:1px solid rgba(0,0,0,0.1);margin-bottom:20px;'}
+        .col.m2
+            Name
+        .col.m2
+            Code
+        .col.m2
+            Amount
+        .col.m2
+            Expired
+        .col.m2
+            Uses
+        .col.m2
+            Action
+    
+    - @discounts.each do |discount|
+        .row
+            .col.m2
+                = discount.name
+            .col.m2
+                = discount.code
+            .col.m2
+                = number_to_percentage(discount.amount.to_f * 100)
+            .col.m2
+                = discount.expired
+            .col.m2
+                = discount.uses
+            .col.m2
+                = link_to "Edit", edit_discount_path(discount.id)

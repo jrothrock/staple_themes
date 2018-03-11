@@ -51,11 +51,11 @@ if ( ! defined( 'WPINC' ) ) {
 		<div class="col">
 			<h3><i class="dashicons dashicons-analytics"></i><?php esc_html_e( 'Cheap WordPress hosting', 'stencil' ); ?></h3>
 			<p>
-				<i><?php esc_html_e( 'Staple Themes offers professional Wordpress hosting starting at $29.99 a site. Connect with us to ask about our hosting plans.', 'stencil' ); ?></i>
+				<i><?php esc_html_e( 'Staple Themes offers professional Wordpress hosting starting at $19.99 a site. Connect with us to ask about our hosting plans.', 'stencil' ); ?></i>
 			</p>
 			<p>
 				<a target="_blank"
-				   href="<?php echo esc_url( 'https://staplethemes.com/contact?type=hosting' ); ?>"><?php esc_html_e( 'Read more', 'stencil' ); ?></a>
+				   href="<?php echo esc_url( 'https://staplethemes.com/hosting' ); ?>"><?php esc_html_e( 'Read more', 'stencil' ); ?></a>
 			</p>
 		</div><!--/.col-->
 	</div>

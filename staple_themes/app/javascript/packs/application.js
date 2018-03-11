@@ -41,10 +41,10 @@ var themeApp = {
         });
     },
     userProfileHover(){
-        $("#profile-hover").dropdown({ hover: true, inDuration: 300, outDuration: 225, alignment: 'left', constrain_width: false, belowOrigin: true });
-        $("#profile-hover").on('click', (e)=>{
+        $("#profile-hover").dropdown({ hover: true, inDuration: 300, outDuration: 225, alignment: 'left', constrain_width: false });
+        $("#profile-hover").on('click', function(e){
             e.preventDefault();
-            $("#profile-hover").trigger('hover');
+            $(this).trigger('hover');
         })
     },
     // I actually don't know if this is necessary. However, I'll keep it here anyways.
@@ -336,6 +336,9 @@ var themeApp = {
             })
         })
     },
+    watchMenu(){
+        // $(".sidenav").sidenav('close').sidenav('destroy');
+    },
     watchCarousel(){
         if($(".carousel").length){
             if($(".carousel").hasClass("initialized")) $(".carousel").carousel('destroy');
@@ -380,7 +383,7 @@ var themeApp = {
                     event.preventDefault();
                     $('html, body').animate({
                     scrollTop: target.offset().top
-                    }, 700, 'easeInQuad', function() {
+                    }, 700, 'swing', function() {
                     // Callback after animation
                     // Must change focus!
                     var $target = $(target);
@@ -524,6 +527,19 @@ var themeApp = {
                     }
                 })
         });
+    },
+    watchMenuOpen(){
+        $('.sidenav-trigger').on('click tap', function(){
+            $('.sidenav').sidenav('open');
+        })
+    },
+    watchMenuRemains(){
+        if($('.sidenav-overlay').length){
+            $('body').css({'overflow':'initial'});
+            $(".drag-target").remove();
+            $('.sidenav-overlay').remove();
+            $('.sidenav').css({'transform':"translateX(-105%)"})
+        }
     },
     removeItemFromCart(){
         $(".remove-cart-item").on('click', function(){
@@ -703,9 +719,12 @@ var themeApp = {
         themeApp.watchResetConfirmationForm();
         themeApp.watchLikes();
         themeApp.watchDeleteComment();
+        themeApp.watchMenuOpen();
+        themeApp.watchMenuRemains();
         $('.waves-ripple').remove();
         $('.modal').modal();
-        $(".button-collapse").sideNav();
+        $(".sidenav").sidenav();
+        $('.collapsible').collapsible();
         Waves.displayEffect();
         if(location.href.split('/').length === 5 && location.href.split('/')[3] === 'themes') themeApp.addToCart();
     }

@@ -33,6 +33,8 @@
       j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
       })(window,document,'script','dataLayer','GTM-KBLL4C3');
+    - if current_user.try(:admin?)
+      = javascript_pack_tag 'admin', 'data-turbolinks-track': 'reload', defer: true
     = javascript_pack_tag 'application', 'data-turbolinks-track': true
     = csrf_meta_tags
 %body
