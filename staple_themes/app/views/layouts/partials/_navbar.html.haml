@@ -9,6 +9,13 @@
         %li.divider
         %li
             = link_to "Logout", destroy_user_session_path, method: :delete, id:'logout-button'
+
+- if user_signed_in? && @domains.length
+    %ul#domains-dropdown.dropdown-content
+        - @domains.each do |domain|
+            %li
+                = link_to (domain.website != "" ? domain.website : "Set Up This Plan"), hosting_path((domain.website ? domain.website : domain.uuid))
+        
 - if current_user.try(:admin?)
     %ul#admin-menu.dropdown-content
         %li
@@ -41,7 +48,7 @@
             %li
                 = link_to "Themes", themes_path
             %li
-                = link_to "Hosting", hosting_path
+                = link_to "Hosting", hosting_index_path
         %ul.right.hide-on-med-and-down
             - if user_signed_in?
                 - if current_user.try(:admin?)
@@ -52,6 +59,11 @@
                     %li.dropdown-button{"data-target":"admin-create-menu", id:"admin-create-hover"}
                         %a.profile-dropdown{href:"", style:"border-left: 1px solid rgba(255,255,255,0.5)"}
                             Create
+                            %i.fa.fa-angle-down{style:'margin-left:2px'}
+                - if @domains.length != 0
+                    %li.dropdown-button{"data-target":"domains-dropdown", id:"domains-dropdown-hover"}
+                        %a.profile-dropdown{href:"", style:"border-left: 1px solid rgba(255,255,255,0.5)"}
+                            Domains
                             %i.fa.fa-angle-down{style:'margin-left:2px'}
                 %li.dropdown-button{"data-target":"dropdown1", id:"profile-hover"}
                     %a.profile-dropdown{href:"", style:"border-left: 1px solid rgba(255,255,255,0.5)"}
@@ -70,7 +82,7 @@
     %li
         = link_to "Themes", themes_path
     %li
-        = link_to "Hosting", hosting_path
+        = link_to "Hosting", hosting_index_path
     - if user_signed_in?
         %li.divider
         %li

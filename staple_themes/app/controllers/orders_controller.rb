@@ -16,7 +16,7 @@ class OrdersController < ApplicationController
   end
 
   def create
-    if params[:license] && params[:theme]
+    if params[:license] && (params[:theme] || params[:host])
       theme = Theme.where("id = ?", params[:theme]).first.as_json({:include => :photos})
       if theme
         @order = current_user.orders.new

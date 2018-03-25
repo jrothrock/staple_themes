@@ -831,3 +831,9 @@ nav .dropdown-content{
 .description img{
     max-width:90%;
 }
+#comment-submit{
+    color:white;
+}
+.tabs .tab a:focus, .tabs .tab a:focus.active{
+    background-color:transparent;
+}

@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get '/users/:profile', to: 'profiles#show', as: :profile
   get '/users/:profile/purchases', to: 'orders#index', as: :purchases
 
-  get '/hosting', to: 'hosting#show', as:'hosting'
+  resources :hosting
 
   resources :discounts
 

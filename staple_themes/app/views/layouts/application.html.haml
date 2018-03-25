@@ -35,6 +35,8 @@
       })(window,document,'script','dataLayer','GTM-KBLL4C3');
     - if current_user.try(:admin?)
       = javascript_pack_tag 'admin', 'data-turbolinks-track': 'reload', defer: true
+    - if ((controller_name.eql? "hosting") && (action_name.eql? "new"))
+      = javascript_pack_tag 'hosting', 'data-turbolinks-track': 'reload', defer: true
     = javascript_pack_tag 'application', 'data-turbolinks-track': true
     = csrf_meta_tags
 %body
@@ -50,6 +52,8 @@
 = render 'layouts/partials/footer'
 - if !((controller_name.eql? "themes") && (action_name.eql? "show"))
   = render 'layouts/partials/modal'
+- if ((controller_name.eql? "hosting") && (action_name.eql? "index"))
+  = render 'layouts/partials/modal_hosting'
 = render 'layouts/partials/login_modal'
 
 %noscript

@@ -30,21 +30,76 @@ var themeApp = {
                         console.log(error.status);
                         if(error.status === 401){
                             themeApp.watchLoginModal($(this));
+                            $('.modal').modal()
                             $(`#modal-sign-in`).modal('open')
                             $('#modal-sign-in-tabs').find('.indicator').css({'right':`${$('#modal-sign-in-tabs').width() / 2}px`,'left':'0px' })
                         }
                     }
                 });
             } else {
-                Materialize.toast('Downloads Disabled For Mobile Devices', 4000, 'failure-rounded')
+                M.toast({html: 'Downloads Disabled For Mobile Devices', displayLength: 4000, classes: 'failure-rounded'})
             }
         });
     },
     userProfileHover(){
-        $("#profile-hover").dropdown({ hover: true, inDuration: 300, outDuration: 225, alignment: 'left', constrain_width: false });
-        $("#profile-hover").on('click', function(e){
+        $("#profile-hover, #domains-dropdown-hover").dropdown({ hover: true, inDuration: 300, outDuration: 225, alignment: 'left', constrain_width: false });
+        $("#profile-hover, #domains-dropdown-hover").on('click', function(e){
             e.preventDefault();
             $(this).trigger('hover');
+        })
+    },
+    watchHostingModal(){
+        $('.modal-hosting-trigger').on('click', function(){
+            let plan = $(this).data('plan');
+            $('#modal-plan-select').val(plan);
+            $('#modal-hosting').modal('open');
+            themeApp.watchHostingContact();
+        })
+
+        $('#close-hosting-modal').on('click', function(){
+            $('#modal-hosting').modal('close');
+        })
+    },
+    watchHostingContact(){
+        $("#contact-hosting").unbind('click');
+        $("#contact-hosting").on('click', function(){
+            $('#contact-hosting').addClass('disabled');
+            let name = $('#name_hosting').val();
+            let plan = $('#modal-plan-select').val()
+            let email = $('#email_hosting').val()
+            let domain = $('#domain_hosting').val()
+            if(!name){
+                $('#name_hosting').addClass('invalid');
+            }
+            if(!plan){
+                $('#modal-plan-select').addClass('invalid');
+            }
+            if(!email){
+                $('#email_hosting').addClass('invalid');
+            }
+            if(!domain){
+                $('#domain_hosting').addClass('invalid');
+            }
+            if(!name || !email || !plan || !domain){
+                $('#contact-hosting').removeClass('disabled');
+                return;
+            }
+            $.ajax({
+                url: `${location.origin}/hosting`,
+                data:{name:name, email:email, domain:domain,plan:plan},
+                type: 'POST',
+                success: (data) => {
+                    M.toast({html: "Hosting Contact Successfully Sent. We'll Reach Out Shortly.", displayLength: 5500, classes: 'success-rounded'})
+                    $('#name_hosting,#email_hosting,#domain_hosting').val("").blur();
+                    $('#modal-license-select').val('1');
+                    $('#contact-hosting').removeClass('disabled');
+                    $('#modal-hosting').modal('close');
+                },
+                error: (error)=> {
+                    $('#contact-hosting').removeClass('disabled');
+                    M.toast({html: 'Contact Failed To Send. Please Try Again', displayLength: 3000, classes: 'failure-rounded'});
+                }
+            });
         })
     },
     // I actually don't know if this is necessary. However, I'll keep it here anyways.
@@ -206,12 +261,13 @@ var themeApp = {
                     $('#modal-purchase.modal').modal('open');
                     if(error.status === 401){
                         themeApp.watchLoginModal($(this));
+                        $('.modal').modal()
                         $(`#modal-sign-in`).modal('open')
                         $('#modal-sign-in-tabs').find('.indicator').css({'right':`${$('#modal-sign-in-tabs').width() / 2}px`,'left':'0px' })
                     } else if(error.status === 404) {
                         $(this).trigger('click');
                     } else {
-                        Materialize.toast('Failed To Add To Cart. Please Try Again', 3000, 'failure-rounded')
+                        M.toast({html:'Failed To Add To Cart. Please Try Again', displayLength: 3000, classes: 'failure-rounded'})
                     }
                 }
             });
@@ -288,7 +344,7 @@ var themeApp = {
                         $(`#username_log_in`).parent().addClass("error");
                         $(`#password_log_in`).parent().addClass("error");
                     } else if(error.status === 500){
-                        Materialize.toast('Internal Server Error Please Try Again', 3000, 'failure-rounded');
+                        M.toast({html:'Internal Server Error Please Try Again', displayLength: 3000, classes: 'failure-rounded'});
                     }
                 }
             })
@@ -335,9 +391,6 @@ var themeApp = {
                 }
             })
         })
-    },
-    watchMenu(){
-        // $(".sidenav").sidenav('close').sidenav('destroy');
     },
     watchCarousel(){
         if($(".carousel").length){
@@ -411,7 +464,7 @@ var themeApp = {
                         $(`#comment-${id}`).remove();
                     }
             }).fail((e)=>{
-                Materialize.toast("Comment Couldn't Be Deleted. Please Try Again.", 3750, 'failure-rounded')
+                M.toast({html: "Comment Couldn't Be Deleted. Please Try Again.", displayLength: 3750, classes:'failure-rounded'})
             })
         });
     },
@@ -462,11 +515,11 @@ var themeApp = {
                     console.log(e);
                 })
             } else if(content) {
-                 Materialize.toast('Rating Is Required', 3000, 'failure-rounded')
+                 M.toast({html: 'Rating Is Required', displayLength: 3000, classes: 'failure-rounded'})
             } else if(rating){
-                Materialize.toast('Comment Body Is Required', 3000, 'failure-rounded')
+                M.toast({html: 'Comment Body Is Required', displayLength: 3000, classes: 'failure-rounded'})
             } else {
-                Materialize.toast('Both Rating and Comment Body Are Required', 4000, 'failure-rounded')
+                M.toast({html: 'Both Rating and Comment Body Are Required', displayLength: 4000, classes: 'failure-rounded'})
             }
         })
     },
@@ -487,7 +540,7 @@ var themeApp = {
                     },
                     error:(data) =>{
                         $(this).removeClass('disabled')
-                        Materialize.toast('User Not Found', 4000, 'failure-rounded')
+                        M.toast({html: 'User Not Found', displayLength: 4000, classes: 'failure-rounded'})
                         $(`#username_reset`).val('').blur()
                     }
                 })
@@ -510,7 +563,7 @@ var themeApp = {
             if(password != confirm_password){
                 $(`#password_reset`).parent().addClass('error');
                 $(`#password_confirmation_reset`).parent().addClass('error');
-                Materialize.toast('Passwords Must Match', 4000, 'failure-rounded')
+                M.toast({html: 'Passwords Must Match', displayLength: 4000, classes: 'failure-rounded'})
                 return;
             }
              $.ajax({
@@ -522,24 +575,11 @@ var themeApp = {
                     },
                     error:(data) =>{
                         $(this).removeClass('disabled')
-                        Materialize.toast('User Not Found', 4000, 'failure-rounded')
+                        M.toast({html: 'User Not Found', displayLength: 4000, classes: 'failure-rounded'})
                         $(`#username_reset`).val('').blur()
                     }
                 })
         });
-    },
-    watchMenuOpen(){
-        $('.sidenav-trigger').on('click tap', function(){
-            $('.sidenav').sidenav('open');
-        })
-    },
-    watchMenuRemains(){
-        if($('.sidenav-overlay').length){
-            $('body').css({'overflow':'initial'});
-            $(".drag-target").remove();
-            $('.sidenav-overlay').remove();
-            $('.sidenav').css({'transform':"translateX(-105%)"})
-        }
     },
     removeItemFromCart(){
         $(".remove-cart-item").on('click', function(){
@@ -634,20 +674,23 @@ var themeApp = {
             if(!body){
                 $('#contact-form-body').addClass('invalid');
             }
-            if(!name || !email || !type || !body) return;
+            if(!name || !email || !type || !body){
+                $('#submit-contact-form').removeClass('disabled');
+                return;
+            }
             $.ajax({
                 url: `${location.origin}/contact`,
                 data:{name:name, email:email, type:type,body:body},
                 type: 'POST',
                 success: (data) => {
-                    Materialize.toast('Contact Successfully Sent', 3500, 'success-rounded')
+                    M.toast({html: 'Contact Successfully Sent', displayLength: 3500, classes: 'success-rounded'})
                     $('#contact-form-name,#contact-form-email,#contact-form-body').val("").blur();
                     $('#contact-form-type').val('General').blur();
                     $('#submit-contact-form').removeClass('disabled');
                 },
                 error: (error)=> {
                     $('#submit-contact-form').removeClass('disabled')
-                    Materialize.toast('Contact Failed To Send. Please Try Again', 3000, 'failure-rounded')
+                    M.toast({html: 'Contact Failed To Send. Please Try Again', displayLength: 3000, classes: 'failure-rounded'})
                 }
             });
         })
@@ -685,6 +728,7 @@ var themeApp = {
                     console.log(error);
                     if(error.status === 401){
                         themeApp.watchLoginModal($(this));
+                        $('.modal').modal()
                         $(`#modal-sign-in`).modal('open')
                         $('#modal-sign-in-tabs').find('.indicator').css({'right':`${$('#modal-sign-in-tabs').width() / 2}px`,'left':'0px' })
                     }
@@ -719,12 +763,12 @@ var themeApp = {
         themeApp.watchResetConfirmationForm();
         themeApp.watchLikes();
         themeApp.watchDeleteComment();
-        themeApp.watchMenuOpen();
-        themeApp.watchMenuRemains();
+        themeApp.watchHostingModal();
         $('.waves-ripple').remove();
         $('.modal').modal();
         $(".sidenav").sidenav();
         $('.collapsible').collapsible();
+        $('.tabs').tabs();
         Waves.displayEffect();
         if(location.href.split('/').length === 5 && location.href.split('/')[3] === 'themes') themeApp.addToCart();
     }

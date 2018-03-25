@@ -91,11 +91,11 @@ var themeAppCheckout = {
                 error: (error)=> {
                     console.log(error);
                     if(error.status === 404){
-                        Materialize.toast('No Code Found By That Name', 4200, 'failure-rounded')
+                        M.toast({html: 'No Code Found By That Name', displayLength: 4200, classes: 'failure-rounded'})
                     } else if(error.status === 400 && error.responseJSON.expired){
-                        Materialize.toast('That Code Has Expired', 4200, 'failure-rounded')
+                        M.toast({html: 'That Code Has Expired', displayLength: 4200, classes: 'failure-rounded'})
                     } else if(error.status === 400 && error.responseJSON.discounted){
-                        Materialize.toast('Only One Discount Can Be Applied At A Time', 4200, 'failure-rounded')
+                        M.toast({html: 'Only One Discount Can Be Applied At A Time', displayLength: 4200, classes: 'failure-rounded'})
                     }
                 }
             });
@@ -115,7 +115,7 @@ var themeAppCheckout = {
                 console.log(response)
                
                 $('#name, #number, #expiry, #cvc').parent().addClass('error');
-                Materialize.toast('Failed To Process Card. Please Check Inputs And Try Again', 4200, 'failure-rounded')
+                M.toast({html: 'Failed To Process Card. Please Check Inputs And Try Again', displayLength: 4200, classes: 'failure-rounded'})
                 $(`#order-submit`).removeClass('disabled');
             } else { // Token was created!
                 // Get the token ID:

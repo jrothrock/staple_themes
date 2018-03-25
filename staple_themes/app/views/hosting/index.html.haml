@@ -18,7 +18,7 @@
     %h4{style:"padding-top: 20px;text-align: center;font-size: 2.2em !important;"} Why Staple Themes
     .row
         .col.s12.m4
-            .card.blue-grey.darken-1{style:"padding-bottom:10px"}
+            .card.blue-grey.darken-1{style:"padding-bottom:10px;min-height:116px;"}
                 .card-content.white-font
                     %span.card-title
                         %i.fa.fa-cloud
@@ -26,7 +26,7 @@
                     %p
                         With all of our servers being their own dedicated VPS, you get blazing speeds not found within shared enviornments.
         .col.s12.m4
-            .card.blue-grey.darken-1{style:"padding-bottom:10px"}
+            .card.blue-grey.darken-1{style:"padding-bottom:10px;min-height:116px;"}
                 .card-content
                     %span.card-title
                         %i.fa.fa-shield
@@ -36,7 +36,7 @@
                         delivers secure servers while maintaining simplicity for the end user.
 
         .col.s12.m4
-            .card.blue-grey.darken-1{style:"padding-bottom:10px"}
+            .card.blue-grey.darken-1{style:"padding-bottom:10px;min-height:116px;"}
                 .card-content
                     %span.card-title
                         %i.fa.fa-chain
@@ -45,7 +45,7 @@
                         When using our platform, you will have access to free SSL certificates, ensuring secure transmission of your data.
     .row
         .col.s12.m4
-            .card.blue-grey.darken-1{style:"padding-bottom:10px"}
+            .card.blue-grey.darken-1{style:"padding-bottom:10px;min-height:116px;"}
                 .card-content
                     %span.card-title
                         %i.fa.fa-rocket
@@ -53,7 +53,7 @@
                     %p
                         We do the heavy lifting for you. We get the server up to speed in order for you to instally get moving with WordPress.
         .col.s12.m4
-            .card.blue-grey.darken-1{style:"padding-bottom:10px"}
+            .card.blue-grey.darken-1{style:"padding-bottom:10px;min-height:116px;"}
                 .card-content
                     %span.card-title
                         %i.fa.fa-refresh
@@ -61,14 +61,13 @@
                     %p
                         We take a snapshot/backup of your current configuration which you can later reinstate if need be.
         .col.s12.m4
-            .card.blue-grey.darken-1{style:"padding-bottom:10px"}
+            .card.blue-grey.darken-1{style:"padding-bottom:10px;height:height: 116px;"}
                 .card-content
                     %span.card-title
                         %i.fa.fa-volume-control-phone
                         Fast and Easy Support
                     %p
-                        From firewalls, to ghosting, to continuous updates, Staple Themes
-                        delivers secure servers while maintaining simplicity for the end user.
+                        Staple Themes implements a more personal relationship with our clients unseen in some of the bigger brands. We're here for you.
 
 #plans.hosting-section{style:"padding-bottom:0px"}
     %h4{style:"padding-top: 20px;text-align: center;font-size: 2.2em !important;"} Plans
@@ -102,7 +101,8 @@
                         %h5
                             $19.99/mo
                 .card-action
-                    = link_to 'Get Started', root_path , class:'btn', style:'display:block;margin:auto;background:#ff5200'
+                    %button.modal-hosting-trigger.btn.waves-effect.waves-light{style:"background:#ff5200;width:100%;", data:{plan:"1"}}
+                        Get Started
         .col.s12.m4
             .card.medium
                 .card-content
@@ -132,7 +132,8 @@
                         %h5
                             $39.99/mo
                 .card-action
-                    = link_to 'Get Started', root_path , class:'btn', style:'display:block;margin:auto;background:#ff5200'
+                    %button.modal-hosting-trigger.btn.waves-effect.waves-light{style:"background:#ff5200;width:100%;", data:{plan:"2"}}
+                        Get Started
         .col.s12.m4
             .card.medium
                 .card-content
@@ -160,6 +161,7 @@
                             Easy Wordpress Install
                     .price
                         %h5
-                            $59.99/mo
+                            $59.99/mo 
                 .card-action
-                    = link_to 'Get Started', root_path , class:'btn', style:'display:block;margin:auto;background:#ff5200'
+                    %button.modal-hosting-trigger.btn.waves-effect.waves-light{style:"background:#ff5200;width:100%;", data:{plan:"3"}}
+                        Get Started

@@ -20,6 +20,26 @@
                 .col.s12.m8
                     = link_to "Check Out", start_checkout_path, class:'btn waves-effect waves-light checkout-button'
             .cart-items{style:"border-top: 1px solid rgba(255,255,255,0.5);padding-top: 5px;"}
+                - @order['plans'].each_with_index do |plan, index|
+                    .cart-item.row{id:"cart-item-hosting-#{plan['id']}", data:{plan:"#{plan['id']}"}}
+                        .col.s12
+                            .title
+                                %h4{style:"margin:0px"}
+                                    = link_to hosting_index_path, plan_name(plan['plan'])
+                        .col.s6
+                            .img
+                                = link_to image_tag(plan['photo_urls'][0]), hosting_index_path, class: "cart-modal-image"
+                        .col.s6{style:"text-align:right"}
+                            .remove
+                                %i{id:"remove-hosting-#{index}", class:"fa fa-times remove-cart-item", style:'color:red;font-size:1.5em;margin-top:-25px;cursor:pointer', data:{index:index}}
+                            .license
+                                License:
+                                - if plan['payment_type'] === 1
+                                    Monthly
+                                - else
+                                    Annual
+                            .price
+                                = hosting_price(plan['payment_type'], plan['plan'])
                 - @order['themes'].each_with_index do |theme, index|
                     .cart-item.row{id:"cart-item-#{theme['id']}", data:{theme:"#{theme['id']}"}}
                         .col.s12
@@ -28,7 +48,7 @@
                                     = link_to theme['title'], theme_path(theme['title'].downcase)
                         .col.s6
                             .img
-                                = link_to image_tag(theme['photos'].first['photo'].url), theme_path(theme['title'].downcase), class: "cart-modal-image"
+                                = link_to image_tag(theme['photo_urls'][0]), theme_path(theme['title'].downcase), class: "cart-modal-image"
                         .col.s6{style:"text-align:right"}
                             .remove
                                 %i{id:"remove-#{index}", class:"fa fa-times remove-cart-item", style:'color:red;font-size:1.5em;margin-top:-25px;cursor:pointer', data:{index:index}}

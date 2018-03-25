@@ -124,6 +124,8 @@ do
 done
 
 mv * "../${NEW_LOWER_THEME_NAME_UNDERSCORE}-child"
+cd ..
+rm -rf "./${OLD_LOWER_THEME_NAME_UNDERSCORE}-child"
 
 cd "../plugins/"
 mkdir "${NEW_LOWER_THEME_NAME_UNDERSCORE}_extensions"

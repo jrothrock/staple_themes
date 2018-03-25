@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180227035521) do
+ActiveRecord::Schema.define(version: 20180326034040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,18 @@ ActiveRecord::Schema.define(version: 20180227035521) do
     t.integer "uses", default: 0, null: false
   end
 
+  create_table "hostings", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "plan"
+    t.string "website"
+    t.integer "status"
+    t.integer "payment_type"
+    t.string "stripe_sub"
+    t.string "uuid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "orders", id: :serial, force: :cascade do |t|
     t.integer "status", default: 1, null: false
     t.integer "user_id"
@@ -68,6 +80,8 @@ ActiveRecord::Schema.define(version: 20180227035521) do
     t.decimal "discount_total", precision: 8, scale: 2
     t.decimal "discounted_total", precision: 8, scale: 2
     t.string "discount_code"
+    t.text "plans", default: [], array: true
+    t.text "photo_urls", default: [], array: true
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 

@@ -1,0 +1,26 @@
+#modal-hosting.modal
+    .modal-content.row
+        %h5.center Web Hosting
+        .col.m12
+            .select-field{style:"padding-bottom:10px"}
+                %span{style:"color:#9e9e9e;font-size:0.8em;"}
+                    Plan
+                %select#modal-plan-select
+                    %option#single-modal{value: 1, :selected => 'selected'}
+                        Standard: $19.99/Mo
+                    %option#multi-modal{value: 2}
+                        Growth: $39.99/Mo
+                    %option#multi-modal{value: 3}
+                        Scaling: $59.99/Mo
+            .input-field
+                = text_field_tag :name_hosting, '' , {required: true, input_html: { class: 'input-lg' }} 
+                = label_tag :name_hosting, 'First and Last Name', {class:"active"}
+            .input-field
+                = label_tag :email_hosting, 'Email', {class:"active"}
+                = text_field_tag :email_hosting, '' , {required: true, input_html: { class: 'input-lg' }}
+            .input-field
+                = label_tag :domain_hosting, 'Domain', {class:"active"}
+                = text_field_tag :domain_hosting, '' , {required: true, input_html: { class: 'input-lg' }}
+        .row.col.m12.center.modal-actions
+            %button.btn#close-hosting-modal Cancel
+            %button.btn#contact-hosting Submit

@@ -1,17 +1,17 @@
 #modal-sign-in.modal.modal-fixed-footer
     %ul.tabs.row#modal-sign-in-tabs{:materialize => "tabs"}
-        %li.tab.col.s6.active
+        %li.tab.col.s6
             %a#sign-in-link{:href => "#signin"} Sign In
         %li.tab.col.s6
             %a{:href => "#signup"} Sign Up
     #signin.row
         .col.m8.offset-m2{style:"margin-top:10px"}
             .input-field
-                = label_tag :username_log_in, 'Username or Email'
-                = text_field_tag :username_log_in, '' , {required: true, autofocus: true, label: false, label: 'Username or Email', input_html: { class: 'input-lg' }}
+                = label_tag :username_log_in, 'Username or Email', {class:"active"}
+                = text_field_tag :username_log_in, '' , {required: true, autofocus:true, label: false, input_html: { class: 'input-lg' }}
             .input-field
-                = label_tag :password_log_in, 'Password'
                 = text_field_tag :password_log_in, '' , {type:'password', required: true, label: false, label: 'Password', input_html: { class: 'input-lg' }}
+                = label_tag :password_log_in, 'Password', {class:"active"}
             .input-field.center
                 %i#log-in-button-modal{class:"btn waves-effect waves-light waves-input-wrapper"}
                     .waves-button-input{style:"font-style:initial"} Log In
@@ -19,16 +19,16 @@
     #signup.row
         .col.m8.offset-m2{style:"margin-top:10px"}
             .input-field
-                = label_tag :username_sign_up, 'Username'
-                = text_field_tag :username_sign_up, '', {required: true, autofocus: true, label: false, label: 'Username', input_html: { class: 'input-lg' }}
+                = text_field_tag :username_sign_up, '', {required: true, autofocus:true, label: false, label: 'Username', input_html: { class: 'input-lg' }}
+                = label_tag :username_sign_up, 'Username', {class:"active"}
             .input-field
-                = label_tag :email_sign_up, 'Email'
+                = label_tag :email_sign_up, 'Email', {class:"active"}
                 = text_field_tag :email_sign_up, '', {required: true, label: false, label: 'Email', input_html: { class: 'input-lg' }}
             .input-field
-                = label_tag :password_sign_up, 'Password'
+                = label_tag :password_sign_up, 'Password', {class:"active"}
                 = text_field_tag :password_sign_up, '', {type:'password',required: true, label: false, label: 'Password', input_html: { class: 'input-lg' }}
             .input-field
-                = label_tag :password_confirmation_sign_up, 'Password Confirmation'
+                = label_tag :password_confirmation_sign_up, 'Password Confirmation', {class:"active"}
                 = text_field_tag :password_confirmation_sign_up, '', {type:'password',required: true, label: false, label: 'Confirm Password', input_html: { class: 'input-lg' }}
             .input-field.center
                 %i#sign-up-button-modal{class:"btn waves-effect waves-light waves-input-wrapper"}
