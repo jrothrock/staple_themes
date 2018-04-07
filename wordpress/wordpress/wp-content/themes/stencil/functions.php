@@ -47,6 +47,8 @@ function stencil_setup() {
 	 * provide it for us.
 	 */
 
+	add_theme_support( 'title-tag' );
+	
 	/*
 	 * Enable support for Post Thumbnails on posts and pages.
 	 *
@@ -137,7 +139,7 @@ function about_stencil(){
 					'id'          => 'stencil-fix-homepage',
 					'title'       => esc_html__( 'Fix Homepage', 'stencil' ),
 					'description' => esc_html__( 'We have made some changes to how the Homepage works in stencil. Now you need to create a page and use the "Homepage Template" and set it as a static front page. You can also make this automatically by pushing the button below.', 'stencil' ),
-					'help'        => '<p><a id="stencil-fix-homepage" href="#" class="button button-primary" style="text-decoration: none;"> ' . esc_html__( 'Fix Homepage', 'epsilon-framework' ) . '</a><span class="spinner" style="float:none"></span></p>',
+					'help'        => '<p><a id="stencil-fix-homepage" href="#" class="button button-primary" style="text-decoration: none;"> ' . esc_html__( 'Fix Homepage', 'stencil' ) . '</a><span class="spinner" style="float:none"></span></p>',
 					'check'       => Stencil_Notify_System::show_fix_action(),
 				),
 			);
@@ -289,3 +291,8 @@ require get_template_directory() . '/inc/customizer.php';
  */
 require get_template_directory() . '/inc/jetpack.php';
 
+/**
+* Load Custom Password Form
+*/
+
+require get_template_directory() . '/inc/custom-password-form.php';

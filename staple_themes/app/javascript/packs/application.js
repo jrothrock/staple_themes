@@ -30,9 +30,6 @@ var themeApp = {
                         console.log(error.status);
                         if(error.status === 401){
                             themeApp.watchLoginModal($(this));
-                            $('.modal').modal()
-                            $(`#modal-sign-in`).modal('open')
-                            $('#modal-sign-in-tabs').find('.indicator').css({'right':`${$('#modal-sign-in-tabs').width() / 2}px`,'left':'0px' })
                         }
                     }
                 });
@@ -261,9 +258,6 @@ var themeApp = {
                     $('#modal-purchase.modal').modal('open');
                     if(error.status === 401){
                         themeApp.watchLoginModal($(this));
-                        $('.modal').modal()
-                        $(`#modal-sign-in`).modal('open')
-                        $('#modal-sign-in-tabs').find('.indicator').css({'right':`${$('#modal-sign-in-tabs').width() / 2}px`,'left':'0px' })
                     } else if(error.status === 404) {
                         $(this).trigger('click');
                     } else {
@@ -289,7 +283,7 @@ var themeApp = {
                     </li>`
         }
         html += `
-        <li class="dropdown-button" data-activates="dropdown1" id="profile-hover">
+        <li class="dropdown-button" data-target="dropdown1" id="profile-hover">
             <a class="profile-dropdown" href="" style="border-left: 1px solid rgba(255,255,255,0.5)">
                 <i class="fa fa-user-circle"></i>
                 <i class="fa fa-angle-down" style="margin-left:2px"></i>
@@ -316,7 +310,13 @@ var themeApp = {
     },
     watchLoginModal(button){
         $(`#log-in-button-modal, #sign-up-button-modal`).unbind('click');
-
+        $('.modal').modal({onCloseStart:function(){$("body").css({'overflow':'initial'})}})
+        $(`#modal-sign-in`).modal('open')
+        $('#modal-sign-in-tabs').find('.indicator').css({'right':`${$('#modal-sign-in-tabs').width() / 2}px`,'left':'0px' })
+        $('#sign-in-link, #signin').addClass("active")
+        $("#sign-up-link, #signup").removeClass("active");
+        $("#signup").css({'display':'none'});
+        $("#signin").css({'display':'block'});
         //watch login
         $(`#log-in-button-modal`).on('click', (e)=>{
             $(`#log-in-button-modal`).addClass('disabled');
@@ -331,6 +331,8 @@ var themeApp = {
                     $(`.right.hide-on-med-and-down`).empty();
                     $(`.right.hide-on-med-and-down`).html(themeApp.loginHTML(data.username, data.admin))
                     $(`#modal-sign-in`).modal('close');
+                    // most likely has to be done due to issues with Materialize beta.
+                    $("body").css({'overflow':'initial'})
                     themeApp.userProfileHover();
                     $('#modal-purchase.modal').modal('close');
                     button.click();
@@ -366,7 +368,9 @@ var themeApp = {
                     $(`.right.hide-on-med-and-down`).empty();
                     $(`.right.hide-on-med-and-down`).html(themeApp.loginHTML(data.username, data.admin))
                     $(`#modal-sign-in`).modal('close');
-                    themeApp.userProfileHover();
+                    // themeApp.userProfileHover();
+                    // most likely has to be done due to issues with Materialize beta.
+                    $("body").css({'overflow':'initial'})
                     $('#modal-purchase.modal').modal('close');
                     button.click();
                 },
@@ -607,6 +611,7 @@ var themeApp = {
                         } else {
                             $('#total-checkout').text(data.order.total);
                         }
+                        $('#checkout-cart-count').text(`( ${data.order.themes.length} )`)
                     }
                     if($(`#cart-item-${theme}`).length) $(`#cart-item-${theme}`).remove();
                 },
@@ -728,9 +733,6 @@ var themeApp = {
                     console.log(error);
                     if(error.status === 401){
                         themeApp.watchLoginModal($(this));
-                        $('.modal').modal()
-                        $(`#modal-sign-in`).modal('open')
-                        $('#modal-sign-in-tabs').find('.indicator').css({'right':`${$('#modal-sign-in-tabs').width() / 2}px`,'left':'0px' })
                     }
                 }
             });
@@ -765,7 +767,7 @@ var themeApp = {
         themeApp.watchDeleteComment();
         themeApp.watchHostingModal();
         $('.waves-ripple').remove();
-        $('.modal').modal();
+        $('.modal').modal({onCloseStart:function(){$("body").css({'overflow':'initial'})}});
         $(".sidenav").sidenav();
         $('.collapsible').collapsible();
         $('.tabs').tabs();

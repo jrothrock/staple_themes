@@ -79,7 +79,7 @@ class Epsilon_Repeater_Templates {
 								<input class="epsilon-color-picker" data-attr-mode={{ field.mode }} data-field={{ field.id }} type="text" maxlength="7" placeholder="{{ field.default }}"  value="{{ field.value }}" />
 								<span class="customize-control-title epsilon-color-picker-title">
 									{{{ field.label }}}
-									<a href="#" data-default="{{ field.defaultVal }}" class="epsilon-color-picker-default"><?php echo esc_html__( '(clear)', 'epsilon-framework' ); ?></a>
+									<a href="#" data-default="{{ field.defaultVal }}" class="epsilon-color-picker-default"><?php echo esc_html__( '(clear)', 'stencil' ); ?></a>
 									<# if( field.description ){ #>
 										<span class="epsilon-color-picker-description">{{{ field.description }}}</span>
 									<# } #>
@@ -198,19 +198,19 @@ class Epsilon_Repeater_Templates {
 								</div>
 								<# } else { #>
 								<div class="placeholder">
-									<?php echo esc_html__( 'Upload image', 'epsilon-framework' ); ?>
+									<?php echo esc_html__( 'Upload image', 'stencil' ); ?>
 									<# if ( ! _.isUndefined( field.sizeArray[field.size] ) ) { #>
-										<span class="recommended-size"><?php echo esc_html__('Recommended resolution:', 'epsilon-framework'); ?> {{{ field.sizeArray[field.size].width }}} x {{{ field.sizeArray[field.size].height }}}</span>
+										<span class="recommended-size"><?php echo esc_html__('Recommended resolution:', 'stencil'); ?> {{{ field.sizeArray[field.size].width }}} x {{{ field.sizeArray[field.size].height }}}</span>
 									<# } #>
 								</div>
 								<# } #>
 								<div class="actions">
 									<button class="button image-upload-remove-button" <# if( '' === field.default ) { #> style="display:none;" <# } #>>
-										<?php esc_attr_e( 'Remove', 'epsilon-framework' ); ?>
+										<?php esc_attr_e( 'Remove', 'stencil' ); ?>
 									</button>
 
 									<button type="button" class="button-primary image-upload-button">
-										<?php echo esc_html__( 'Select File', 'epsilon-framework' ); ?>
+										<?php echo esc_html__( 'Select File', 'stencil' ); ?>
 									</button>
 								</div>
 							</div>
@@ -255,8 +255,8 @@ class Epsilon_Repeater_Templates {
 						</div>
 					<# } ); #>
 					<div class="repeater-row-footer">
-						<button type="button" class="button-link repeater-row-remove"><?php esc_attr_e( 'Remove', 'epsilon-framework' ); ?></button> |
-						<button type="button" class="button-link repeater-row-minimize"><?php esc_attr_e( 'Close', 'epsilon-framework' ); ?></button>
+						<button type="button" class="button-link repeater-row-remove"><?php esc_attr_e( 'Remove', 'stencil' ); ?></button> |
+						<button type="button" class="button-link repeater-row-minimize"><?php esc_attr_e( 'Close', 'stencil' ); ?></button>
 					</div>
 				</div>
 			</li>

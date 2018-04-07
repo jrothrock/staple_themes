@@ -3,8 +3,8 @@ class OrdersController < ApplicationController
   # include PayPal::SDK::REST
   # include PayPal::SDK::Core::Logging
   before_action :authenticate_user!
-  # before_action :set_user
-  # before_action :owned_profile
+  before_action :set_user, only: [:index]
+  before_action :owned_profile, only: [:index]
 
   def index
     @orders = current_user.orders.where("status = 2").order('created_at DESC').as_json

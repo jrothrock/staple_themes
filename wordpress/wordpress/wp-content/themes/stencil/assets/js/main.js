@@ -173,7 +173,7 @@
                 },20);
             }
         })
-    }
+    };
     watchScroll();
     watchButtonClicks();
     watchMobileMenu();

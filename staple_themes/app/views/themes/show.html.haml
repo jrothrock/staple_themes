@@ -6,7 +6,8 @@
         .row
             .col.m6.s12
                 .img-container
-                    = image_tag(@theme['photo_urls'][0])
+                    -if @theme['photo_urls'][0]
+                        = image_tag(@theme['photo_urls'][0])
             .col.m6.s12
                 .information
                     .rating

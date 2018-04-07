@@ -9,12 +9,12 @@
         %span#total-checkout-discounted{style:'color:red;font-size:0.8em;text-decoration:line-through'}
             -if @order['discounted']
                 = number_to_currency(@order['total'])
-    %div.hide-on-med-and-down{style:"position:absolute;height:80%;margin-top:6%;width:1px;left:50vw;background-color:rgba(0,0,0,0.5)"}
+    %div.hide-on-med-and-down{style:"position:absolute;height:80%;margin-top:6%;width:1px;left:50%;background-color:rgba(0,0,0,0.5);transform:translatex(-50%)"}
     .cart-items.col.m6.s12
         .row.hide-on-med-and-down{style:"white-space:nowrap;font-size:1.5em;text-align:center"}
             Order 
             
-            %span{style:"font-size:0.85em;position:relative;top:-1px;font-weight:300"}
+            %span#checkout-cart-count{style:"font-size:0.85em;position:relative;top:-1px;font-weight:300"}
                 (
                 = @order['themes'].length
                 )
@@ -54,7 +54,7 @@
                 %button.btn{id:"credit-card-button"} Credit Card
                 %div#paypal-button
             
-        .row.hidden.credit-card-form#credit-card-form
+        .hidden.credit-card-form#credit-card-form
             .credit-card-form-js
             =form_tag({url:new_purchase_path, remote: true}, {:class => 'order-submit-form'}) do
                 .row

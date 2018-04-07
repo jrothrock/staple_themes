@@ -201,10 +201,10 @@ class Epsilon_Framework {
 		) );
 
 		wp_localize_script( 'epsilon-object', 'EpsilonTranslations', array(
-			'remove'     => esc_html__( 'Remove', 'epsilon-framework' ),
-			'add'        => esc_html__( 'Add', 'epsilon-framework' ),
-			'selectFile' => esc_html__( 'Upload image', 'epsilon-framework' ),
-			'row'        => esc_html__( 'Row', 'epsilon-framework' ),
+			'remove'     => esc_html__( 'Remove', 'stencil' ),
+			'add'        => esc_html__( 'Add', 'stencil' ),
+			'selectFile' => esc_html__( 'Upload image', 'stencil' ),
+			'row'        => esc_html__( 'Row', 'stencil' ),
 		) );
 
 		wp_enqueue_style( 'font-awesome', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/vendors/fontawesome/font-awesome.css' );
@@ -247,7 +247,7 @@ class Epsilon_Framework {
 				wp_json_encode(
 					array(
 						'status' => false,
-						'error'  => esc_html__( 'Not allowed', 'epsilon-framework' ),
+						'error'  => esc_html__( 'Not allowed', 'stencil' ),
 					)
 				)
 			);
@@ -260,7 +260,7 @@ class Epsilon_Framework {
 				wp_json_encode(
 					array(
 						'status' => false,
-						'error'  => esc_html__( 'Not allowed', 'epsilon-framework' ),
+						'error'  => esc_html__( 'Not allowed', 'stencil' ),
 					)
 				)
 			);
@@ -271,7 +271,7 @@ class Epsilon_Framework {
 				wp_json_encode(
 					array(
 						'status' => false,
-						'error'  => esc_html__( 'Class does not exist', 'epsilon-framework' ),
+						'error'  => esc_html__( 'Class does not exist', 'stencil' ),
 					)
 				)
 			);

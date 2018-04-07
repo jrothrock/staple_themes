@@ -28,7 +28,7 @@ get_header(); ?>
 							if ( isset( $jetpack_options['page-title'] ) && '' != $jetpack_options['page-title'] )
 								echo esc_html( $jetpack_options['page-title'] );
 							else
-								esc_html_e( 'Testimonials', 'components' );
+								esc_html_e( 'Testimonials', 'stencil' );
 						?>
 					</h1><!-- .entry-title -->
 				</header><!-- .entry-header -->

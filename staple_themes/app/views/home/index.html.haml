@@ -4,7 +4,8 @@
     .carousel-container
         .carousel
             - @themes.each do |theme|
-                = link_to image_tag(theme['photo_urls'][0]), theme_path(theme['title_url']), class:"carousel-item"
+                -if theme['photo_urls'][0]
+                    = link_to image_tag(theme['photo_urls'][0]), theme_path(theme['title_url']), class:"carousel-item"
     .info-container
         .top-info-container
             Stunning Artison Themes For Every Industry and Field
@@ -19,7 +20,8 @@
             .col.s12.m4
                 .card.medium
                     .card-image
-                        = link_to image_tag(theme['photo_urls'][0]), theme_path(theme['title_url'])
+                        -if theme['photo_urls'][0]
+                            = link_to image_tag(theme['photo_urls'][0]), theme_path(theme['title_url'])
                         %button.btn.theme-price
                             -if theme['single_price'] != 0.00 && theme['single_sale_price'] != 0.00
                                 = number_to_currency((theme['single_sale_price'] ? theme['single_sale_price'] : theme['single_price']))

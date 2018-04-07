@@ -45,6 +45,10 @@ add_filter( 'body_class', function( $classes ) {
 	) );
 } );
 
+add_filter('wp_title', function($og_title){
+	return "${title} | ${description}";
+});
+
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -52,7 +56,6 @@ add_filter( 'body_class', function( $classes ) {
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
 <link rel="profile" href="http://gmpg.org/xfn/11">
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
-<title><?php echo "${title} | ${description}" ?></title>
 <?php wp_head(); ?>
 </head>
 

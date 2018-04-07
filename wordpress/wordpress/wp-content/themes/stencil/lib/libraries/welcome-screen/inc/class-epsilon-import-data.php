@@ -93,8 +93,8 @@ class Epsilon_Import_Data {
 	 * Build the HTML Container
 	 */
 	public function generate_import_data_container() {
-		$html = '<p><a class="button button-primary epsilon-ajax-button" id="add_default_sections" href="#">' . __( 'Click me to start the set-up process!', 'epsilon-framework' ) . '</a>';
-		$html .= '<a class="button epsilon-hidden-content-toggler" href="#" data-toggle="welcome-hidden-content">' . __( 'Advanced', 'epsilon-framework' ) . '</a></p>';
+		$html = '<p><a class="button button-primary epsilon-ajax-button" id="add_default_sections" href="#">' . __( 'Click me to start the set-up process!', 'stencil' ) . '</a>';
+		$html .= '<a class="button epsilon-hidden-content-toggler" href="#" data-toggle="welcome-hidden-content">' . __( 'Advanced', 'stencil' ) . '</a></p>';
 		$html .= '<div class="import-content-container" id="welcome-hidden-content">';
 
 		$plugins_html = '';
@@ -106,7 +106,7 @@ class Epsilon_Import_Data {
 
 		if ( '' != $plugins_html ) {
 			$html .= '<div class="checkbox-group">';
-			$html .= '<h4>' . __( 'Plugins', 'epsilon-framework' ) . '</h4>';
+			$html .= '<h4>' . __( 'Plugins', 'stencil' ) . '</h4>';
 			$html .= $plugins_html;
 			$html .= '</div>';
 		}
@@ -150,7 +150,7 @@ class Epsilon_Import_Data {
 		if ( null === $home ) {
 			$id = wp_insert_post(
 				array(
-					'post_title'  => __( 'Homepage', 'epsilon-framework' ),
+					'post_title'  => __( 'Homepage', 'stencil' ),
 					'post_type'   => 'page',
 					'post_status' => 'publish',
 				)
@@ -168,7 +168,7 @@ class Epsilon_Import_Data {
 		if ( null === $blog ) {
 			$id = wp_insert_post(
 				array(
-					'post_title'  => __( 'Blog', 'epsilon-framework' ),
+					'post_title'  => __( 'Blog', 'stencil' ),
 					'post_type'   => 'page',
 					'post_status' => 'publish',
 				)
@@ -460,8 +460,8 @@ class Epsilon_Import_Data {
 		$footer_1 = array(
 			array(
 				'id'     => 'text',
-				'title'  => esc_html__( 'About Regina Lite', 'regina-lite' ),
-				'text'   => esc_html__( 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.', 'regina-lite' ),
+				'title'  => esc_html__( 'About Regina Lite', 'stencil' ),
+				'text'   => esc_html__( 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.', 'stencil' ),
 				'filter' => 1,
 				'visual' => 1,
 			),
@@ -475,7 +475,7 @@ class Epsilon_Import_Data {
 		$footer_3 = array(
 			array(
 				'id'     => 'text',
-				'title'  => esc_html__( 'Contact', 'regina-lite' ),
+				'title'  => esc_html__( 'Contact', 'stencil' ),
 				'text'   => wp_kses_post( '<p><span class="nc-icon-glyph tech_mobile-button white"></span>&nbsp;&nbsp; (650) 652-8500</p><p><span class="nc-icon-glyph ui-1_email-83 white"></span>&nbsp;&nbsp; <a href="mailto: contact@mediplus.com" title="contact@mediplus.com">contact@mediplus.com</a></p><ul class="social-link-list"><li><a href="#" title="Facebook" target="_blank"><span class="nc-icon-glyph socials-1_logo-facebook"></span></a></li><li><a href="#" title="Twitter" target="_blank"><span class="nc-icon-glyph socials-1_logo-twitter"></span></a></li><li><a href="#" title="LinkedIn" target="_blank"><span class="nc-icon-glyph socials-1_logo-linkedin"></span></a></li><li><a href="#" title="YouTube" target="_blank"><span class="nc-icon-glyph socials-1_logo-youtube"></span></a></li><li><a href="#" title="Instagram" target="_blank"><span class="nc-icon-glyph socials-1_logo-instagram"></span></a></li></ul>' ),
 				'filter' => 1,
 				'visual' => 1,
@@ -484,7 +484,7 @@ class Epsilon_Import_Data {
 		$footer_4 = array(
 			array(
 				'id'     => 'text',
-				'title'  => esc_html__( 'Address', 'regina-lite' ),
+				'title'  => esc_html__( 'Address', 'stencil' ),
 				'text'   => wp_kses_post( '<span class="nc-icon-glyph location_pin white" style="float:left;"></span><p style="float:left; margin:-7px 0 0 10px;">Medplus<br>33 Farlane Street<br>Keilor East<br>VIC 3033, New York</p>' ),
 				'filter' => 1,
 				'visual' => 1,

@@ -30,7 +30,8 @@
                                         = link_to theme['title'], theme_path(theme['title_url'])
                             .col.m6
                                 .img
-                                    = link_to image_tag(theme['photos'].first['photo'].url), theme_path(theme['title_url']), class: "orders-page-image"
+                                    -if theme['photo_urls'][0]
+                                        = link_to image_tag(theme['photo_urls'][0]), theme_path(theme['title_url']), class: "orders-page-image"
                             .col.m6{style:"text-align:right"}
                                 .license
                                     License:

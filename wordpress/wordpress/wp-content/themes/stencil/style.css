@@ -9,14 +9,6 @@ License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: stencil
 
-This theme, like WordPress, is licensed under the GPL.
-Use it to make something cool, have fun, and share what you've learned with others.
-
-Stencil is a remix of the amazing theme components: http://components.underscores.me/, (C) 2015-2016 Automattic, Inc.
-Stencil, and Components, are distributed under the terms of the GNU GPL v2 or later.
-
-Normalizing styles have been helped along thanks to the fine work of
-Nicolas Gallagher and Jonathan Neal http://necolas.github.com/normalize.css/
 */
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
@@ -576,6 +568,8 @@ hr {
 }
 .single article .entry-header{
   text-align:center;
+  -ms-word-wrap: break-word;
+  word-wrap: break-word;
 }
 
 /*--------------------------------------------------------------
@@ -703,6 +697,9 @@ table {
 .comment-navigation .nav-next a, .comment-navigation .nav-previous a {
   max-width:90%;
   display:block;
+  margin: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .comment-navigation .nav-next,
 .post-navigation .nav-next,
@@ -936,6 +933,7 @@ body {
       position: relative;
       height: 100%;
       min-height: calc(100vh - 245px);
+      display: flex;
     }
     .nav-menu .site-content{
       min-height: calc(100vh - 245px - 64px);
@@ -949,11 +947,9 @@ body {
 
     .site-content .widget-area {
       float: right;
-      overflow: hidden;
       width: 25%;
       padding: 0px 5px;
       height:100%;
-      position:absolute;
       right:0;
       border-left:1px solid rgba(0,0,0,0.1)
     }

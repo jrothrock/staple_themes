@@ -89,19 +89,8 @@ class CheckoutController < ApplicationController
                 end
                 session[:order_id] = nil
                 App.purge_cache
-                UserMailer.order_email(current_user, @order, themes).deliver
                 render json:{order:@order.as_json, username:current_user.username}, status: :ok
-                # NotifysellerWorker.perform_in(15.seconds)
-                # if user.is_a? String
-                #     user = OpenStruct.new({username: order.firstname, email:order.email})
-                # end
-                # ApplicationRecord::Order.sendEmails(order,user)
-                # puts clear_cache_ids
-                # if clear_cache_ids.length
-                #     clear_cache_ids.keys.each do |key|
-                #         PurgecacheWorker.perform_async(clear_cache_ids[key],key,clear_cache_ids[key])
-                #     end
-                # end
+                UserMailer.order_email(current_user, @order, themes).deliver
             rescue => e
                 # render json:{}, status: :internal_server_error
                 puts e

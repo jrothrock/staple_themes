@@ -192,7 +192,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 				 * Epsilon Upsell
 				 */
 				if ( 'epsilon-upsell' === $v['type'] ) {
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['label']              = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['label'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['label'] : __( 'See what\'s in the PRO version', 'epsilon-framework' );
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['label']              = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['label'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['label'] : __( 'See what\'s in the PRO version', 'stencil' );
 					$this->repeatable_sections[ $key ]['fields'][ $k ]['separator']          = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['separator'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['separator'] : '';
 					$this->repeatable_sections[ $key ]['fields'][ $k ]['button_text']        = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['button_text'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['button_text'] : '';
 					$this->repeatable_sections[ $key ]['fields'][ $k ]['button_url']         = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['button_url'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['button_url'] : '';
@@ -236,25 +236,25 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 		<ul class="repeater-sections"></ul>
 		<# if(!_.isUndefined(data.choices.limit)){ #>
 		<?php /* Translators: Section limit */ ?>
-		<p class="limit"><?php echo esc_html__( 'Limit: ', 'epsilon-framework' ); ?>
-			{{{ data.choices.limit }}} <?php echo esc_html__( 'sections', 'epsilon-framework' ); ?></p>
+		<p class="limit"><?php echo esc_html__( 'Limit: ', 'stencil' ); ?>
+			{{{ data.choices.limit }}} <?php echo esc_html__( 'sections', 'stencil' ); ?></p>
 		<# } #>
 		<div class="epsilon-add-section-buttons">
 			<input type="hidden" value="" {{{ data.link }}}/>
 			<button type="button" class="button epsilon-add-new-section" aria-expanded="false" aria-controls="available-sections">
-				<?php esc_html_e( 'Add a Section', 'epsilon-framework' ); ?>
+				<?php esc_html_e( 'Add a Section', 'stencil' ); ?>
 			</button>
 		</div>
 		<div id="sections-left-{{ data.id }}">
 			<div class="available-sections">
 				<div class="available-sections-filter">
-					<label class="screen-reader-text" for="sections-search-{{ data.id }}"><?php esc_html_e( 'Search sections', 'epsilon-framework' ); ?></label>
-					<input type="text" class="sections-search-input" id="sections-search-{{ data.id }}" placeholder="<?php esc_attr_e( 'Search sections &hellip;', 'epsilon-framework' ) ?>" aria-describedby="sections-search-desc"/>
+					<label class="screen-reader-text" for="sections-search-{{ data.id }}"><?php esc_html_e( 'Search sections', 'stencil' ); ?></label>
+					<input type="text" class="sections-search-input" id="sections-search-{{ data.id }}" placeholder="<?php esc_attr_e( 'Search sections &hellip;', 'stencil' ) ?>" aria-describedby="sections-search-desc"/>
 					<div class="search-icon" aria-hidden="true"></div>
 					<button type="button" class="clear-results">
-						<span class="screen-reader-text"><?php esc_html_e( 'Clear Results', 'epsilon-framework' ); ?></span>
+						<span class="screen-reader-text"><?php esc_html_e( 'Clear Results', 'stencil' ); ?></span>
 					</button>
-					<p class="screen-reader-text" id="sections-search-desc-{{ data.id }}"><?php esc_html_e( 'The search results will be updated as you type.', 'epsilon-framework' ); ?></p>
+					<p class="screen-reader-text" id="sections-search-desc-{{ data.id }}"><?php esc_html_e( 'The search results will be updated as you type.', 'stencil' ); ?></p>
 				</div>
 				<div class="available-sections-list">
 					<# for (section in data.sections) { #>

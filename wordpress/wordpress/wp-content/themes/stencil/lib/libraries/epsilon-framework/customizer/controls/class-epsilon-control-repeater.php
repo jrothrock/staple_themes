@@ -92,7 +92,7 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 		$json['choices']     = $this->choices;
 		$json['fields']      = $this->get_fields();
 		$json['rowLabel']    = $this->get_row_label();
-		$json['buttonLabel'] = ( isset( $this->button_label ) ) ? $this->button_label : __( 'Add', 'epsilon-framework' );
+		$json['buttonLabel'] = ( isset( $this->button_label ) ) ? $this->button_label : __( 'Add', 'stencil' );
 		$json['default']     = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
 
 		return $json;
@@ -208,7 +208,7 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	public function get_row_label() {
 		$default = array(
 			'type'  => 'text',
-			'value' => esc_html__( 'Row', 'epsilon-framework' ),
+			'value' => esc_html__( 'Row', 'stencil' ),
 			'field' => false,
 		);
 
@@ -256,7 +256,7 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 		<ul class="repeater-fields"></ul>
 		<# if(!_.isUndefined(data.choices.limit)){ #>
 		<?php /* Translators: Section limit */ ?>
-		<p class="limit"><?php echo esc_html__( 'Limit: ','epsilon-framework' ); ?> {{{ data.choices.limit }}} <?php echo esc_html__( 'sections', 'epsilon-framework' ); ?></p>
+		<p class="limit"><?php echo esc_html__( 'Limit: ','stencil' ); ?> {{{ data.choices.limit }}} <?php echo esc_html__( 'sections', 'stencil' ); ?></p>
 		<# } #>
 		<div class="button-holder">
 			<input type="hidden" value="" {{{ data.link }}} />
