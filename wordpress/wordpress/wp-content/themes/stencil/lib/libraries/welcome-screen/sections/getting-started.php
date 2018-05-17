@@ -37,7 +37,7 @@ $count          = $this->count_actions();
 
 	<div class="col">
 		<h3><?php esc_html_e( 'Step 3 - Customize everything', 'stencil' ); ?></h3>
-		<p><?php esc_html_e( "Using the Theme's Customizer, you can easily customize every aspect of the theme.", 'stencil' ); ?></p>
+		<p><?php esc_html_e( "Using the Theme's Customizer, you can easily customize many aspects of the theme.", 'stencil' ); ?></p>
 		<p><a target="_blank" href="<?php echo esc_url( $customize_url ); ?>"
 			  class="button button-primary"><?php esc_html_e( 'Go to Theme Options', 'stencil' ); ?></a>
 		</p>

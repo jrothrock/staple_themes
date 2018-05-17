@@ -36,6 +36,11 @@
 		<div class='post-category'>
 			<i class='fa fa-folder'></i> <a href="<?php $category = get_the_category(); echo get_category_link($category[0]->cat_ID) ?>"><?php $category = get_the_category(); $firstCategory = $category[0]->cat_name; echo $firstCategory; ?></a>
 		</div>
+		<?php if( is_sticky()): ?>
+			<div class='post-sticky'>
+				<i class='fa fa-thumb-tack'></i> Sticky
+			</div>
+		<?php endif; ?>
 	</div>
 
 	<?php if ( '' != get_the_post_thumbnail() && is_single() ) : ?>
@@ -67,7 +72,7 @@
 
 	<?php if ( !is_single() ) : ?>
 	
-		<div class='post-read-more' style='width:100%;float:left;text-align:center;margin-bottom:20px;'>
+		<div class='post-read-more'>
 			<a class='btn waves-effect waves-light' href="<?php echo esc_url( get_permalink() ) ?>">Read More</a>
 		</div>
 

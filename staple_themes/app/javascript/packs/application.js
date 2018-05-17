@@ -317,6 +317,13 @@ var themeApp = {
         $("#sign-up-link, #signup").removeClass("active");
         $("#signup").css({'display':'none'});
         $("#signin").css({'display':'block'});
+        $("#user-terms-consent-modal").on('click', function(){
+            if($(this).is(':checked')) $("#sign-up-button-modal").removeClass('disabled');
+            else $("#sign-up-button-modal").addClass('disabled');
+        })
+        $("#user-email-consent-modal").on('click', function(){
+            $("#email_agreement").val($(this).is(':checked'));
+        })
         //watch login
         $(`#log-in-button-modal`).on('click', function(e){
             $(`#log-in-button-modal`).addClass('disabled');
@@ -366,10 +373,14 @@ var themeApp = {
             let email = $(`#email_sign_up`).val();
             let password = $(`#password_sign_up`).val();
             let password_confirmation = $(`#password_confirmation_sign_up`).val();
+            let email_agreement = $(`#email_agreement`).val();
+            let email_agreement_date = $(`#email_agreement_date`).val();
+            let compliance_agreement = $(`#compliance_agreement`).val();
+            let compliance_agreement_date = $(`#compliance_agreement_date`).val();
             $.ajax({
                 url: window.location.origin + '/users.json',
                 type: 'POST',
-                data: { user:{username: username, email:email, password:password,password_confirmation:password_confirmation }},
+                data: { user:{username: username, email:email, password:password,password_confirmation:password_confirmation, compliance_agreement: compliance_agreement, compliance_agreement_date: compliance_agreement_date, email_agreement: email_agreement, email_agreement_date: email_agreement_date }},
                 success: (data, status, xhr) => {
                     $("meta[name='csrf-token']").attr("content", xhr.getResponseHeader('X-CSRF-TOKEN'))
                     $(`.right.hide-on-med-and-down`).empty();
@@ -598,12 +609,21 @@ var themeApp = {
                     error:(data) =>{
                         $(this).removeClass('disabled')
                         if(resetConfirmationTimeout) clearTimeout(resetConfirmationTimeout)
-                        else $(`#${$(this).data('type')}-spinner`).css({"display":"inline-block",'visibility':'hidden', 'opacity':'0'});
+                        $(`#${$(this).data('type')}-spinner`).css({"display":"inline-block",'visibility':'hidden', 'opacity':'0'});
                         M.toast({html: 'User Not Found', displayLength: 4000, classes: 'failure-rounded'})
                         $(`#username_reset`).val('').blur()
                     }
                 })
         });
+    },
+    watchRegistrationField(){
+        $("#user-terms-consent").on('click',function(){
+            if($(this).is(':checked')) $("#sign-up-button").removeClass('disabled');
+            else $("#sign-up-button").addClass('disabled');
+        })
+        $("#user-email-consent").on('click', function(){
+            $("#user_email_agreement").val($(this).is(':checked'));
+        })
     },
     removeItemFromCart(){
         $(".remove-cart-item").on('click', function(){
@@ -786,6 +806,7 @@ var themeApp = {
         themeApp.watchLikes();
         themeApp.watchDeleteComment();
         themeApp.watchHostingModal();
+        themeApp.watchRegistrationField();
         $('.waves-ripple').remove();
         $('.modal').modal({onCloseStart:function(){$("body").css({'overflow':'initial'})}});
         $(".sidenav").sidenav();

@@ -152,6 +152,7 @@ var themeAppCheckout = {
                         $(`#order-submit`).removeClass('disabled');
                         if(themeAppCheckout.purchaseSpinnerTimeout) clearTimeout(themeAppCheckout.purchaseSpinnerTimeout)
                         else $(`#purchase-spinner`).css({"display":"inline-block",'visibility':'hidden', 'opacity':'0'});
+                        M.toast({html: 'Something failed on our end. You\'ve not been charged. Please try again.', displayLength: 5200, classes: 'failure-rounded'})
                         console.log(error);
                     }
                 });

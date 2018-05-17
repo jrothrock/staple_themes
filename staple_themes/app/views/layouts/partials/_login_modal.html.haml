@@ -7,11 +7,11 @@
     #signin.row
         .col.m8.offset-m2{style:"margin-top:10px"}
             .input-field
-                = label_tag :username_log_in, 'Username or Email', {class:"active"}
+                = label_tag :username_log_in, '<abbr title="required">*</abbr> Username or Email'.html_safe, {class:"active"}
                 = text_field_tag :username_log_in, '' , {required: true, autofocus:true, label: false, input_html: { class: 'input-lg' }}
             .input-field
                 = text_field_tag :password_log_in, '' , {type:'password', required: true, label: false, label: 'Password', input_html: { class: 'input-lg' }}
-                = label_tag :password_log_in, 'Password', {class:"active"}
+                = label_tag :password_log_in, '<abbr title="required">*</abbr> Password'.html_safe, {class:"active"}
             .input-field.center
                 %i#log-in-button-modal{class:"btn waves-effect waves-light waves-input-wrapper",data:{type:'log-in-modal'}}
                     .waves-button-input{style:"font-style:initial"} Log In
@@ -23,18 +23,39 @@
         .col.m8.offset-m2{style:"margin-top:10px"}
             .input-field
                 = text_field_tag :username_sign_up, '', {required: true, autofocus:true, label: false, label: 'Username', input_html: { class: 'input-lg' }}
-                = label_tag :username_sign_up, 'Username', {class:"active"}
+                = label_tag :username_sign_up, '<abbr title="required">*</abbr> Username'.html_safe, {class:"active"}
             .input-field
-                = label_tag :email_sign_up, 'Email', {class:"active"}
+                = label_tag :email_sign_up, '<abbr title="required">*</abbr> Email'.html_safe, {class:"active"}
                 = text_field_tag :email_sign_up, '', {required: true, label: false, label: 'Email', input_html: { class: 'input-lg' }}
             .input-field
-                = label_tag :password_sign_up, 'Password', {class:"active"}
+                = label_tag :password_sign_up, '<abbr title="required">*</abbr> Password'.html_safe, {class:"active"}
                 = text_field_tag :password_sign_up, '', {type:'password',required: true, label: false, label: 'Password', input_html: { class: 'input-lg' }}
             .input-field
-                = label_tag :password_confirmation_sign_up, 'Password Confirmation', {class:"active"}
+                = label_tag :password_confirmation_sign_up, '<abbr title="required">*</abbr> Password Confirmation'.html_safe, {class:"active"}
                 = text_field_tag :password_confirmation_sign_up, '', {type:'password',required: true, label: false, label: 'Confirm Password', input_html: { class: 'input-lg' }}
+            .input-field
+                = hidden_field_tag :email_agreement, false
+                = hidden_field_tag :email_agreement_date, Time.now
+                = hidden_field_tag :compliance_agreement, true
+                = hidden_field_tag :compliance_agreement_date, Time.now
+                %p
+                    %label
+                        %input{:type => "checkbox", id:'user-email-consent-modal'}/
+                        %span{style:'font-size: 1.1em;white-space: nowrap;'}
+                            I would like to subscribe to email updates from Staple Themes
+                %p
+                    %label
+                        %input{:type => "checkbox", id:'user-terms-consent-modal'}/
+                        %span{style:'font-size: 1.1em;white-space: nowrap;'}
+                            %abbr{title:"required"}*
+                            I Agree To The
+                            = link_to "Terms and Conditions", terms_path, target:'_blank'
+                            ,
+                            = link_to "Privacy Policy", privacy_path, target:'_blank'
+                            , and
+                            = link_to "Cookie Policy", cookies_path, target:'_blank'
             .input-field.center
-                %i#sign-up-button-modal{class:"btn waves-effect waves-light waves-input-wrapper", data:{type:'sign-up-modal'}}
+                %i#sign-up-button-modal{class:"btn waves-effect waves-light waves-input-wrapper disabled", data:{type:'sign-up-modal'}}
                     .waves-button-input{style:"font-style:initial"} Sign Up
                 %svg#sign-up-modal-spinner.spinner-circle{:viewbox => "0 0 50 50"}
                     %circle.path{:cx => "25", :cy => "25", :fill => "none", :r => "20", "stroke-width" => "5"}

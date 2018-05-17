@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180326034040) do
+ActiveRecord::Schema.define(version: 20180519024834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,9 +181,6 @@ ActiveRecord::Schema.define(version: 20180326034040) do
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
-    t.string "firstname", default: "", null: false
-    t.string "lastname", default: "", null: false
-    t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -198,7 +195,14 @@ ActiveRecord::Schema.define(version: 20180326034040) do
     t.boolean "admin"
     t.string "username"
     t.string "uuid", default: "", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.string "encrypted_email"
+    t.string "encrypted_email_iv"
+    t.string "encrypted_email_bidx"
+    t.boolean "compliance_agreement", default: false
+    t.datetime "compliance_agreement_date"
+    t.boolean "email_agreement", default: false
+    t.datetime "email_agreement_date"
+    t.index ["encrypted_email_bidx"], name: "index_users_on_encrypted_email_bidx", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

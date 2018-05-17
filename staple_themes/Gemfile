@@ -61,6 +61,8 @@ gem 'pandoc-ruby'
 gem 'ckeditor'
 gem 'droplet_kit'
 gem 'dnsruby'
+gem 'attr_encrypted'
+gem 'blind_index'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

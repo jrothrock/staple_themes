@@ -3,7 +3,7 @@ class ResetController < ApplicationController
     end
 
     def create
-        user = User.where(["lower(username) = :value OR lower(email) = :value", { :value => params[:login].downcase }]).first
+        user = User.where("lower(username) = ?", params[:login].downcase).or(User.where(email: params[:login].downcase)).first
         if user
             User.resetPassword(user)
             flash[:success] = "Reset Confirmation Has Been Sent"

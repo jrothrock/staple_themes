@@ -9,15 +9,38 @@
             = f.error_notification
             .panel-body
               .input-field
-                = f.input :username, required: true, autofocus: true, label: false, label: 'Username', input_html: { class: 'input-lg' }
+                = f.input :username, required: true, autofocus: true, label: 'Username', input_html: { class: 'input-lg' }
               .input-field
-                = f.input :email, required: true, label: false, label: 'Email', input_html: { class: 'input-lg' }
+                = f.input :email, required: true, label: 'Email', input_html: { class: 'input-lg' }
               .input-field
-                = f.input :password, required: true, label: false, label: 'Password', input_html: { class: 'input-lg' }
+                = f.input :password, required: true, label: 'Password', input_html: { class: 'input-lg' }
               .input-field
-                = f.input :password_confirmation, required: true, label: false, label: 'Confirm Password', input_html: { class: 'input-lg' }
+                = f.input :password_confirmation, required: true, label: 'Confirm Password', input_html: { class: 'input-lg' }
               .input-field
-                %i#sign-up-button{class:"btn waves-effect waves-light waves-input-wrapper", data:{type:'sign-up'}}
+                = f.hidden_field :email_agreement, value: false
+                = f.hidden_field :email_agreement_date, value: Time.now
+                = f.hidden_field :compliance_agreement, value: true
+                = f.hidden_field :compliance_agreement_date, value: Time.now
+                %p
+                  %label
+                    %input{:type => "checkbox", id:'user-email-consent'}/
+                    %span{style:'font-size: 1.1em;'}
+                      I would like to subscribe to email updates from Staple Themes
+
+                %p
+                  %label
+                    %input{:type => "checkbox", id:'user-terms-consent'}/
+                    %span{style:'font-size: 1.1em;'}
+                      %abbr{title:"required"}*
+                      I Agree To The
+                      = link_to "Terms and Conditions", terms_path, target:'_blank'
+                      ,
+                      = link_to "Privacy Policy", privacy_path, target:'_blank'
+                      , and
+                      = link_to "Cookie Policy", cookies_path, target:'_blank'
+
+              .input-field
+                %i#sign-up-button{class:"btn waves-effect waves-light waves-input-wrapper disabled", data:{type:'sign-up'}}
                   %input{value:"Sign Up", class: 'waves-button-input', type:'submit', style:"color:white"}
                 = f.submit "Sign up", id:'submit-input-hidden', class: 'waves-button-input', style:'display:none'
                 %svg#sign-up-spinner.spinner-circle{:viewbox => "0 0 50 50"}
