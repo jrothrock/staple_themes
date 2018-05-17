@@ -3,8 +3,10 @@
         Reset Password
     .col.m6.offset-m3{style:"margin-top:10px"}
         .input-field
-            = label_tag :username_reset, 'Username or Email'
             = text_field_tag :username_reset, '' , {required: true, autofocus: true, label: false, label: 'Username or Email', input_html: { class: 'input-lg' }}
+            = label_tag :username_reset, 'Username or Email', class:'active'
         .input-field.center
-            %i#reset-password-button-modal{class:"btn waves-effect waves-light waves-input-wrapper"}
+            %i#reset-password-button-modal{class:"btn waves-effect waves-light waves-input-wrapper", data:{type:'reset-password'}}
                 .waves-button-input{style:"font-style:initial"} Reset Password
+            %svg#reset-password-spinner.spinner-circle{:viewbox => "0 0 50 50"}
+                %circle.path{:cx => "25", :cy => "25", :fill => "none", :r => "20", "stroke-width" => "5"}

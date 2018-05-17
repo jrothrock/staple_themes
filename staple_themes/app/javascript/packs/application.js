@@ -286,8 +286,8 @@ var themeApp = {
         <li class="dropdown-button" data-target="dropdown1" id="profile-hover">
             <a class="profile-dropdown" href="" style="border-left: 1px solid rgba(255,255,255,0.5)">
                 <i class="fa fa-user-circle"></i>
+                ${user}
                 <i class="fa fa-angle-down" style="margin-left:2px"></i>
-                    ${user}
             </a>
         </li>
         <ul class="dropdown-content" id="dropdown1">
@@ -318,8 +318,11 @@ var themeApp = {
         $("#signup").css({'display':'none'});
         $("#signin").css({'display':'block'});
         //watch login
-        $(`#log-in-button-modal`).on('click', (e)=>{
+        $(`#log-in-button-modal`).on('click', function(e){
             $(`#log-in-button-modal`).addClass('disabled');
+            let loginSpinnerTimeout = setTimeout(()=>{
+                $(`#${$(this).data('type')}-spinner`).css({"display":"inline-block",'visibility':'visible', 'opacity':'1'});
+            },750);
             let username = $(`#username_log_in`).val();
             let password = $(`#password_log_in`).val();
             $.ajax({
@@ -338,8 +341,7 @@ var themeApp = {
                     button.click();
                 },
                 error: (error, status, xhr)=> {
-                    console.log(status);
-                    console.log(error);
+                    $("meta[name='csrf-token']").attr("content", error.getResponseHeader('X-CSRF-TOKEN'))
                     $(`#log-in-button-modal`).removeClass('disabled');
                     if(error.status === 401){
                         if(!$(`#modal-login-error-text`).length) $(`#username_log_in`).parent().parent().prepend(`<span style='text-transform:capitalize;text-align:center;display:block;color:red;position:relative;top:-10px' id='modal-login-error-text'>${error.responseJSON.error}</span>`)
@@ -348,13 +350,18 @@ var themeApp = {
                     } else if(error.status === 500){
                         M.toast({html:'Internal Server Error Please Try Again', displayLength: 3000, classes: 'failure-rounded'});
                     }
+                    if(loginSpinnerTimeout) clearTimeout(loginSpinnerTimeout)
+                    else $(`#${$(this).data('type')}-spinner`).css({"display":"inline-block",'visibility':'hidden', 'opacity':'0'});
                 }
             })
         })
 
         //watch signup
-        $(`#sign-up-button-modal`).on('click', (e)=>{
+        $(`#sign-up-button-modal`).on('click', function(e){
             $(`#sign-up-button-modal`).addClass('disabled');
+            let signUpSpinnerTimeout = setTimeout(()=>{
+                $(`#${$(this).data('type')}-spinner`).css({"display":"inline-block",'visibility':'visible', 'opacity':'1'});
+            },750);
             let username = $(`#username_sign_up`).val();
             let email = $(`#email_sign_up`).val();
             let password = $(`#password_sign_up`).val();
@@ -368,15 +375,15 @@ var themeApp = {
                     $(`.right.hide-on-med-and-down`).empty();
                     $(`.right.hide-on-med-and-down`).html(themeApp.loginHTML(data.username, data.admin))
                     $(`#modal-sign-in`).modal('close');
-                    // themeApp.userProfileHover();
                     // most likely has to be done due to issues with Materialize beta.
                     $("body").css({'overflow':'initial'})
+                    themeApp.userProfileHover();
                     $('#modal-purchase.modal').modal('close');
                     button.click();
                 },
-                error: (error)=> {
+                error: (error, status, xhr)=> {
+                    $("meta[name='csrf-token']").attr("content", error.getResponseHeader('X-CSRF-TOKEN'))
                     $(`#sign-up-button-modal`).removeClass('disabled')
-                    console.log(error);
                     if(error.responseJSON.errors.email){
                         $('#email_sign_up').parent().addClass('error');
                         $("#email_sign_up").parent().append(`<span style='text-transform:capitalize;color:red;position:relative;top:-10px'>Email ${error.responseJSON.errors.email[0]}</span>`);
@@ -392,6 +399,8 @@ var themeApp = {
                             $("#password_sign_up").parent().append(`<span style='text-transform:capitalize;color:red;position:relative;top:-10px'>Password ${error.responseJSON.errors.password[0]}</span>`);
                         } 
                     }
+                    if(signUpSpinnerTimeout) clearTimeout(signUpSpinnerTimeout)
+                    else $(`#${$(this).data('type')}-spinner`).css({"display":"inline-block",'visibility':'hidden', 'opacity':'0'});
                 }
             })
         })
@@ -404,6 +413,9 @@ var themeApp = {
     },
     watchSignInButtons(){
         $("#sign-in-button, #sign-up-button, #update-registration-button").on("click", function(e){
+            setTimeout(()=>{
+                $(`#${$(this).data('type')}-spinner`).css({"display":"inline-block",'visibility':'visible', 'opacity':'1'});
+            },750);
             if(event.target.nodeName === 'INPUT') e.preventDefault();
             $(this).parents('.input-field').find('#submit-input-hidden').trigger('click');
             $(this).addClass('disabled');
@@ -530,6 +542,9 @@ var themeApp = {
     watchResetForm(){
         $(`#reset-password-button-modal`).on('click', function(){
             $(this).addClass('disabled');
+            setTimeout(()=>{
+                $(`#${$(this).data('type')}-spinner`).css({"display":"inline-block",'visibility':'visible', 'opacity':'1'});
+            },750);
             let login = $(`#username_reset`).val()
             if(!login){
                 $(`#username_reset`).parent().addClass('error');
@@ -553,6 +568,9 @@ var themeApp = {
     watchResetConfirmationForm(){
         $(`#reset-password-confirm-button-modal`).on('click', function(){
             $(this).addClass('disabled');
+            let resetConfirmationTimeout = setTimeout(()=>{
+                $(`#${$(this).data('type')}-spinner`).css({"display":"inline-block",'visibility':'visible', 'opacity':'1'});
+            },750);
             let password = $(`#password_reset`).val()
             let confirm_password = $(`#password_confirmation_reset`).val();
             let user_uuid = $(`#user_uuid`).val()
@@ -579,6 +597,8 @@ var themeApp = {
                     },
                     error:(data) =>{
                         $(this).removeClass('disabled')
+                        if(resetConfirmationTimeout) clearTimeout(resetConfirmationTimeout)
+                        else $(`#${$(this).data('type')}-spinner`).css({"display":"inline-block",'visibility':'hidden', 'opacity':'0'});
                         M.toast({html: 'User Not Found', displayLength: 4000, classes: 'failure-rounded'})
                         $(`#username_reset`).val('').blur()
                     }

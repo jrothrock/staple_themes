@@ -5,6 +5,7 @@ require 'carrierwave/orm/activerecord'
 Rails.application.initialize!
 
 
+# sendgrid password and username is loaded from the more_secrets.yml, not from the enviornment itself.
 ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.smtp_settings = {
   :user_name => ENV["SENDGRID_USERNAME"],

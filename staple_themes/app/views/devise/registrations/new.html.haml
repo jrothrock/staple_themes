@@ -17,6 +17,8 @@
               .input-field
                 = f.input :password_confirmation, required: true, label: false, label: 'Confirm Password', input_html: { class: 'input-lg' }
               .input-field
-                %i#sign-up-button{class:"btn waves-effect waves-light waves-input-wrapper"}
+                %i#sign-up-button{class:"btn waves-effect waves-light waves-input-wrapper", data:{type:'sign-up'}}
                   %input{value:"Sign Up", class: 'waves-button-input', type:'submit', style:"color:white"}
                 = f.submit "Sign up", id:'submit-input-hidden', class: 'waves-button-input', style:'display:none'
+                %svg#sign-up-spinner.spinner-circle{:viewbox => "0 0 50 50"}
+                  %circle.path{:cx => "25", :cy => "25", :fill => "none", :r => "20", "stroke-width" => "5"}

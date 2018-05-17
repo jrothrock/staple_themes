@@ -13,9 +13,12 @@
                 = text_field_tag :password_log_in, '' , {type:'password', required: true, label: false, label: 'Password', input_html: { class: 'input-lg' }}
                 = label_tag :password_log_in, 'Password', {class:"active"}
             .input-field.center
-                %i#log-in-button-modal{class:"btn waves-effect waves-light waves-input-wrapper"}
+                %i#log-in-button-modal{class:"btn waves-effect waves-light waves-input-wrapper",data:{type:'log-in-modal'}}
                     .waves-button-input{style:"font-style:initial"} Log In
-                = link_to 'Reset Password', reset_password_path, style:"font-size: 0.95rem;margin-left: 10px;"
+                %svg#log-in-modal-spinner.spinner-circle{:viewbox => "0 0 50 50"}
+                    %circle.path{:cx => "25", :cy => "25", :fill => "none", :r => "20", "stroke-width" => "5"}
+                = link_to 'Reset Password', reset_password_path, style:"font-size: 0.95rem;position:relative;left:50px"
+
     #signup.row
         .col.m8.offset-m2{style:"margin-top:10px"}
             .input-field
@@ -31,5 +34,7 @@
                 = label_tag :password_confirmation_sign_up, 'Password Confirmation', {class:"active"}
                 = text_field_tag :password_confirmation_sign_up, '', {type:'password',required: true, label: false, label: 'Confirm Password', input_html: { class: 'input-lg' }}
             .input-field.center
-                %i#sign-up-button-modal{class:"btn waves-effect waves-light waves-input-wrapper"}
+                %i#sign-up-button-modal{class:"btn waves-effect waves-light waves-input-wrapper", data:{type:'sign-up-modal'}}
                     .waves-button-input{style:"font-style:initial"} Sign Up
+                %svg#sign-up-modal-spinner.spinner-circle{:viewbox => "0 0 50 50"}
+                    %circle.path{:cx => "25", :cy => "25", :fill => "none", :r => "20", "stroke-width" => "5"}

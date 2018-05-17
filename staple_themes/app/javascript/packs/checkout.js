@@ -2,6 +2,7 @@ import "card/dist/jquery.card.js";
 import "card/dist/card.css";
 var themeAppCheckout = {
     paypalLoaded:false,
+    purchaseSpinnerTimeout:null,
     paypalButton(){
         if(!this.paypalLoaded){
             this.paypalLoaded = true;
@@ -72,6 +73,9 @@ var themeAppCheckout = {
             Stripe.setPublishableKey(key);
             $(`#order-submit`).on('click', (e)=>{
                 $(`#order-submit`).addClass('disabled');
+                themeAppCheckout.purchaseSpinnerTimeout = setTimeout(()=>{
+                    $(`#purchase-spinner`).css({"display":"inline-block",'visibility':'visible', 'opacity':'1'});
+                },750);
                 e.preventDefault(); themeAppCheckout.proccessStripe()
             });
         });
@@ -117,6 +121,8 @@ var themeAppCheckout = {
                 $('#name, #number, #expiry, #cvc').parent().addClass('error');
                 M.toast({html: 'Failed To Process Card. Please Check Inputs And Try Again', displayLength: 4200, classes: 'failure-rounded'})
                 $(`#order-submit`).removeClass('disabled');
+                if(themeAppCheckout.purchaseSpinnerTimeout) clearTimeout(themeAppCheckout.purchaseSpinnerTimeout)
+                else $(`#purchase-spinner`).css({"display":"inline-block",'visibility':'hidden', 'opacity':'0'});
             } else { // Token was created!
                 // Get the token ID:
                 console.log()
@@ -143,7 +149,9 @@ var themeAppCheckout = {
                       Turbolinks.visit(`/users/${data.username}/purchases/`, { action: "replace" })
                     },
                     error: (error)=> {
-                        $(this).prop('disabled', false);
+                        $(`#order-submit`).removeClass('disabled');
+                        if(themeAppCheckout.purchaseSpinnerTimeout) clearTimeout(themeAppCheckout.purchaseSpinnerTimeout)
+                        else $(`#purchase-spinner`).css({"display":"inline-block",'visibility':'hidden', 'opacity':'0'});
                         console.log(error);
                     }
                 });
