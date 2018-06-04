@@ -26,7 +26,7 @@ class ThemesController < ApplicationController
     @theme.url = (/^http(s)?:\/\// =~ @theme.url) === 0 ? @theme.url : "https://#{@theme.url}"
     @theme.title_url = @theme.title.downcase.parameterize
     @theme.download_name = @theme.download_name ? @theme.download_name.gsub(".zip","") : ''
-    @theme.download_url = "downloads/#{@theme.download_name.downcase.parameterize.underscore}"
+    @theme.download_url = "downloads/#{@theme.download_name.underscore}"
     @theme.save
     if @theme.save
       if post_params[:photos]
@@ -44,7 +44,7 @@ class ThemesController < ApplicationController
   end
 
   def upload
-    name = params[:name] ? params[:name].downcase.gsub(/\w/,'_').underscore : 'temp-#{Time.now.to_s}'
+    name = params[:name] ? params[:name].downcase.underscore : 'temp-#{Time.now.to_s}'
     fields = Aws::S3::Resource.new(access_key_id: Rails.application.secrets.aws_access_key_id, secret_access_key: Rails.application.secrets.aws_secret_access_key, region: "us-west-2").bucket(Rails.application.secrets.aws_bucket).object("downloads/#{name}").presigned_post.fields
     puts fields
     @policy = fields["policy"]
@@ -60,9 +60,17 @@ class ThemesController < ApplicationController
   end
 
   def update
-    @theme.assign_attributes(post_params)
+    @theme.assign_attributes(post_params.except(:photos))
+    @theme.url = (/^http(s)?:\/\// =~ @theme.url) === 0 ? @theme.url : "https://#{@theme.url}"
     @theme.title_url = @theme.title.downcase.parameterize
+    @theme.download_name = @theme.download_name ? @theme.download_name.gsub(".zip","") : ''
+    @theme.download_url = "downloads/#{@theme.download_name.underscore}"
     if @theme.save  
+      if post_params[:photos]
+        post_params[:photos].each do |photo|
+          @theme.photos.create(photo:photo)
+        end
+      end
       flash[:success] = "Theme updated."
       redirect_to theme_path(@theme.title)
       PhotoWorker.perform_async(@theme.id)

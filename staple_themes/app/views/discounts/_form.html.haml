@@ -19,5 +19,5 @@
               = d.input :expired, :collection => [false,true], :selected => (@discount.name != "" ? @discount.expired : false)
             .form-group.text-center
               %i#submit-discount-button{class:"btn waves-effect waves-light waves-input-wrapper"}
-                %input{value:"Submit Discount", class: 'waves-button-input', type:'submit'}
+                %input{value:"Submit Discount", class: 'waves-button-input', type:'submit', style:'color:white'}
               = d.button :submit, class: 'btn-success btn-block', id:'submit-discount-hidden', style:'display:none'

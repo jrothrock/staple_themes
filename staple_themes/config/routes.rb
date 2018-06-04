@@ -33,6 +33,7 @@ Rails.application.routes.draw do
 
   get '/themes/:id/download', to:'themes#download', as:"download_theme"
   post '/themes/new/upload', to:'themes#upload', as: :upload
+  post '/themes/:id/edit/upload', to: 'themes#upload', as:"edit_upload"
 
   get '/contact', to: 'contact#new', as:'contact'
   post '/contact', to: 'contact#create', as:"create_contact"

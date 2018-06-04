@@ -417,7 +417,7 @@ var themeApp = {
         })
     },
     watchCarousel(){
-        if($(".carousel").length){
+        if($(".carousel-item").length){
             if($(".carousel").hasClass("initialized")) $(".carousel").carousel('destroy');
             $(".carousel").carousel();
         }

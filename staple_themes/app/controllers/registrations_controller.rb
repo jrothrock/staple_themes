@@ -11,7 +11,7 @@ class RegistrationsController < Devise::RegistrationsController
         #     theme_ids = orders.map(&:themes).flatten.uniq
         #     themes = Theme.where("id in (?)", theme_ids)
         #     themes.each do |theme|
-        #         theme.purchasers = theme.purchasers.tap { |purchasers| purchasers.delete("d5f1c80a0") }
+        #         theme.purchasers = theme.purchasers.tap { |purchasers| purchasers.delete(current_user.uuid) }
         #         theme.save! 
         #     end
         # end
