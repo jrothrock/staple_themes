@@ -34,7 +34,7 @@ do
 done
 
 mkdir -p ./temp_hold/Documentation
-cp -r ./wordpress/wp-content/themes/stencil ./wordpress/wp-content/themes/stencil-child  ./wordpress/wp-content/plugins/stencil_extensions ./temp_hold
+cp -r ./wordpress/wp-content/themes/stencil ./wordpress/wp-content/themes/stencil-child  ./wordpress/wp-content/plugins/stencil-extensions ./temp_hold
 cp -r ./Documentation/stencil ./temp_hold/Documentation
 cd ./temp_hold
 
@@ -46,9 +46,9 @@ grep -r -l "stencil" . | xargs sed -i "" "s/stencil/${LOWER_THEME_NAME_UNDERSCOR
 grep -r -l "Stencil" . | xargs sed -i "" "s/Stencil/${UPPER_THEME_NAME_UNDERSCORE}/g"
 
 grep -r -l "Theme Name: ${UPPER_THEME_NAME_UNDERSCORE}" ./stencil | xargs sed -i "" "s/Theme Name: ${UPPER_THEME_NAME_UNDERSCORE}/Theme Name: ${UPPER_THEME_NAME}/g"
-grep -r -l "Plugin Name: ${UPPER_THEME_NAME_UNDERSCORE} Extensions" ./stencil_extensions | xargs sed -i "" "s/Plugin Name: ${UPPER_THEME_NAME_UNDERSCORE} Extensions/Plugin Name: ${UPPER_THEME_NAME} Extensions/g"
+grep -r -l "Plugin Name: ${UPPER_THEME_NAME_UNDERSCORE} Extensions" ./stencil-extensions | xargs sed -i "" "s/Plugin Name: ${UPPER_THEME_NAME_UNDERSCORE} Extensions/Plugin Name: ${UPPER_THEME_NAME} Extensions/g"
 
-grep -r -l "Description: This plugin is developed to enhance the capabilities of the ${UPPER_THEME_NAME_UNDERSCORE} WordPress Theme." ./stencil_extensions | xargs sed -i "" "s/Description: This plugin is developed to enhance the capabilities of the ${UPPER_THEME_NAME_UNDERSCORE} WordPress Theme./Description: This plugin is developed to enhance the capabilities of the ${UPPER_THEME_NAME} WordPress Theme./g"
+grep -r -l "Description: This plugin is developed to enhance the capabilities of the ${UPPER_THEME_NAME_UNDERSCORE} WordPress Theme." ./stencil-extensions | xargs sed -i "" "s/Description: This plugin is developed to enhance the capabilities of the ${UPPER_THEME_NAME_UNDERSCORE} WordPress Theme./Description: This plugin is developed to enhance the capabilities of the ${UPPER_THEME_NAME} WordPress Theme./g"
 
 if ! [ -z "$DESCRIPTION" ]; then
     grep -r -l "Description: The Stencil Theme Was Created With The Purpose Of Rapid Theme Development." ./stencil | xargs sed -i "" "s/Description: The Stencil Theme Was Created With The Purpose Of Rapid Theme Development./Description: ${DESCRIPTION}/g"
@@ -64,7 +64,7 @@ done
 
 mv $LOWER_THEME_NAME_UNDERSCORE ../wordpress/wp-content/themes/
 mv "${LOWER_THEME_NAME_UNDERSCORE}-child" ../wordpress/wp-content/themes/
-mv "${LOWER_THEME_NAME_UNDERSCORE}_extensions" ../wordpress/wp-content/plugins/
+mv "${LOWER_THEME_NAME_UNDERSCORE}-extensions" ../wordpress/wp-content/plugins/
 mv "./Documentation/${LOWER_THEME_NAME_UNDERSCORE}" ../Documentation
 cd ..
 rm -rf temp_hold

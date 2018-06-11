@@ -128,8 +128,8 @@ cd ..
 rm -rf "./${OLD_LOWER_THEME_NAME_UNDERSCORE}-child"
 
 cd "../plugins/"
-mkdir "${NEW_LOWER_THEME_NAME_UNDERSCORE}_extensions"
-cd "./${OLD_LOWER_THEME_NAME_UNDERSCORE}_extensions"
+mkdir "${NEW_LOWER_THEME_NAME_UNDERSCORE}-extensions"
+cd "./${OLD_LOWER_THEME_NAME_UNDERSCORE}-extensions"
 
 grep -r -l "${OLD_LOWER_THEME_NAME_UNDERSCORE}" . | xargs sed -i "" "s/${OLD_LOWER_THEME_NAME_UNDERSCORE}/${NEW_LOWER_THEME_NAME_UNDERSCORE}/g"
 grep -r -l "${OLD_UPPER_THEME_NAME_UNDERSCORE}" . | xargs sed -i "" "s/${OLD_UPPER_THEME_NAME_UNDERSCORE}/${NEW_UPPER_THEME_NAME_UNDERSCORE}/g"
@@ -144,9 +144,9 @@ do
   find . -name \* -print | sed -e "p;s/stencil/${LOWER_THEME_NAME_UNDERSCORE}/" | xargs -n2 mv
 done
 
-mv * "../${NEW_LOWER_THEME_NAME_UNDERSCORE}_extensions"
+mv * "../${NEW_LOWER_THEME_NAME_UNDERSCORE}-extensions"
 cd ..
-rm -rf "./${OLD_LOWER_THEME_NAME_UNDERSCORE}_extensions"
+rm -rf "./${OLD_LOWER_THEME_NAME_UNDERSCORE}-extensions"
 
 echo ""
 echo ""

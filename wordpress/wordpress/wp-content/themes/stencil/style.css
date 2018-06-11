@@ -5,7 +5,7 @@ Author: Staple Themes
 Author URI: https://staplethemes.com
 Description: The Stencil Theme Was Created With The Purpose Of Rapid Theme Development.
 Version: 1.0.0
-License:  GNU General Public License v2 or later
+License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: Stencil
 Tags: two-columns, right-sidebar, custom-colors, footer-widgets, sticky-post, theme-options, threaded-comments, translation-ready
@@ -30,6 +30,7 @@ Subject tags: blog, e-commerce, education, news, photography, portfolio
 # Layout
   ## Posts
   ## Pages
+  ## 404 Page
 # Comments
 # Widgets
 # Infinite scroll
@@ -691,6 +692,7 @@ table {
   overflow: hidden;
   width:80%;
   margin:auto;
+  margin: auto auto 10px;
 }
 .comment-navigation .nav-previous,
 .post-navigation .nav-previous,
@@ -957,7 +959,6 @@ body {
       float: right;
       width: 25%;
       padding: 0px 5px;
-      height:100%;
       right:0;
       border-left:1px solid rgba(0,0,0,0.1)
     }
@@ -976,7 +977,11 @@ body {
       width: 100%;
     }
 }
-
+@media screen and (max-width: 37.5em) {
+  .site-content .widget-area{
+    border-top:1px solid rgba(0,0,0,0.1);
+  }
+}
 /*--------------------------------------------------------------
 ## Single Column / No Active Sidebar
 --------------------------------------------------------------*/
@@ -1099,6 +1104,57 @@ body {
   margin: 0 0 1.5em;
 }
 
+/*--------------------------------------------------------------
+## 404 Page
+--------------------------------------------------------------*/
+.not-found-posts-container{
+  text-align: center;
+  margin-bottom:100px;
+}
+.error-404.not-found{
+  padding:1em;
+}
+.not-found-search input.search-field{
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-indent: 5px;
+}
+.not-found-other-header{
+  margin-top:1.7em;
+  font-size: 1.45em !important;
+}
+.not-found-recent-posts{
+  padding:1px;
+}
+.not-found-recent-posts h4{
+  padding: 0px;
+  margin: 10px;
+}
+.not-found-entry-title{
+  font-size:1.3em !important;
+}
+.not-found-other-content-container{
+  margin-top:20px;
+}
+.not-found-recent-archives{
+  font-size:1.3em;
+  margin:0px;
+}
+.not-found-recent-archives{
+  line-height: 110%;
+  margin: .5rem 0 .4rem 0;
+}
+@media screen and (min-width: 37.5em) {
+  .not-found-posts-container{
+    width:33%;
+    float:left;
+    padding:0px 15px 0px 0px;
+    margin-bottom:0px
+  }
+  .not-found-search{
+    width:50%;
+  }
+}
 /*--------------------------------------------------------------
 # Comments
 --------------------------------------------------------------*/

@@ -25,8 +25,8 @@ function stencil_register_required_plugins() {
 
 		array(
 			'name'               => esc_html__( 'Stencil Theme Extensions', 'stencil' ), 
-			'slug'               => 'stencil_extensions', 
-			'source'             =>  get_template_directory() . '/lib/plugins/stencil_extensions.zip', 
+			'slug'               => 'stencil-extensions', 
+			'source'             =>  get_template_directory() . '/lib/plugins/stencil-extensions.zip', 
 			'force_activation'	 => true,
 			'force_deactivation' => false,
 			'required'           => true, 

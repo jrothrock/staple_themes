@@ -420,6 +420,16 @@
                 '1'       => 'SHOW',
                 '0'      => 'HIDE',
             ),
+            array(
+                'id'       => 'sidebar-404',
+                'type'     => 'switch',
+                'required' => array( 'sidebar-layout', '!=', 'no_sidebar' ),
+                'title'    => esc_html__( 'Show or Hide Sidebar For 404 page', 'stencil-extensions' ),
+                'subtitle' => esc_html__( 'Enable or Disable the sidebar for the 404 page here.', 'stencil-extensions' ),
+                'default'  => '1',
+                '1'       => 'SHOW',
+                '0'      => 'HIDE',
+            ),
 		)
      ));
 
@@ -728,6 +738,7 @@
                 'type'     => 'text',
                 'title'    => esc_html__( 'Site Analytics', 'stencil-extensions' ),
                 'subtitle' => esc_html__( "Enter your site's Google Analytics UA-XXXXX-X identifier here.", 'stencil-extensions' ),
+                'default'  => ''
             )
         )
     ) );

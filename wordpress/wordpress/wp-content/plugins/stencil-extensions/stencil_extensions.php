@@ -7,7 +7,7 @@ Description: This plugin is developed to enhance the capabilities of the Stencil
 Author: Staple Themes
 Version: 1.0.0
 Author URI: https://staplethemes.com
-License: Themeforest Standard Licenses
+License: GPL v2 and later
 License URI: http://themeforest.net/licenses/standard
 */
 

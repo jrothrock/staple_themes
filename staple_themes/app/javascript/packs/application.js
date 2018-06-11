@@ -165,13 +165,13 @@ var themeApp = {
                         <div class="col m12">
                             <div class="title">
                                 <h4 style="margin:0px">
-                                    <a href="/themes/${encodeURI(theme.url.toLowerCase())}">${theme.title.charAt(0).toUpperCase()}${theme.title.slice(1)}</a>
+                                    <a href="/themes/${encodeURI(theme.title_url.toLowerCase())}">${theme.title.charAt(0).toUpperCase()}${theme.title.slice(1)}</a>
                                 </h4>
                             </div>
                         </div>
                         <div class="col m6">
                             <div class="img">
-                                <a class="cart-modal-image" href="/themes/${encodeURI(theme.url.toLowerCase())}"><img src="${theme.photos[0].photo.url}" alt="${theme.title} Picture"></a>
+                                <a class="cart-modal-image" href="/themes/${encodeURI(theme.title_url.toLowerCase())}"><img src="${theme.photos[0].photo.url}" alt="${theme.title} Picture"></a>
                             </div>
                         </div>
                         <div class="col m6" style="text-align:right">

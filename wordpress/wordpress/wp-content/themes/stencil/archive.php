@@ -8,18 +8,16 @@
  */
 
 global $stencil_options;
-
-$home_layout = $stencil_options['homepage-layout'];
+$home_layout = $stencil_options['sidebar-layout'];
 $class = '';
 if($home_layout == 'sidebar_left' && $stencil_options['sidebar-archive']){
 	$class = 'right';
 } elseif($home_layout == 'no_sidebar' || !$stencil_options['sidebar-archive']){
 	$class = 'full';
 }
-
 get_header(); ?>
 
-	<div id="primary" class="content-area <?php echo $class?>">
+	<div id="primary" class="content-area  <?php echo $class?>">
 		<main id="main" class="site-main" role="main">
 
 		<?php

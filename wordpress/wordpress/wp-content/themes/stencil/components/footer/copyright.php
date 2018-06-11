@@ -5,7 +5,7 @@
 	if( !empty( $stencil_options['stencil-copyright'] ) ){
 		$copyright_msg .= $stencil_options['stencil-copyright'];
 	} else {
-		$copyright .= get_bloginfo('name');
+		$copyright .= $stencil_options['site-title'] ? $stencil_options['site-title'] : get_bloginfo('name');
 		$copyright .= ' ';
 		$copyright .= date('Y');
 		$copyright .= esc_html__( '. All rights reserved.', 'stencil' );

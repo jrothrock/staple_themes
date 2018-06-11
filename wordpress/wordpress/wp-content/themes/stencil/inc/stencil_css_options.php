@@ -40,7 +40,7 @@
     $stencil_options_css .= 'a:visited:hover{color:' . hex2rgba($stencil_link_visited_color, '0.65') . ';} ';
     $stencil_options_css .= 'nav,.page-footer,.back-to-top:hover, .post .share-icons a:hover li i{background-color:' . $stencil_theme_color . ';}';
     $stencil_options_css .= '.back-to-top{background-color:' . hex2rgba($stencil_theme_color,'0.8') . ';}';
-    $stencil_options_css .= 'nav > div > a, nav > div > div > ul > li > a, nav > div > div > ul > li > a:focus, nav > div > div > ul > li > a:active, nav > div > div > ul > li > a:visited, nav > div > div > ul > li > a:visited:hover, nav > div > div > ul > li > a:hover, .footer-social-icons > a, .footer-social-icons > a:visited:hover, .footer-copyright > div > a, nav .brand-logo, nav .brand-logo:hover, nav .brand-logo:visited:hover, nav .brand-logo:visited {color:' . $stencil_nav_footer_link_color . ';} ';
+    $stencil_options_css .= 'nav > div > a, nav > div > div > ul > li > a, nav > div > div > ul > li > a:focus, nav > div > div > ul > li > a:active, nav > div > div > ul > li > a:visited, nav > div > div > ul > li > a:visited:hover, nav > div > div > ul > li > a:hover, .footer-social-icons > a, .footer-social-icons > a:visited:hover, .footer-copyright > div > a, nav .brand-logo, nav .brand-logo:hover, nav .brand-logo:visited:hover, nav .brand-logo:visited, .not-found-recent-posts {color:' . $stencil_nav_footer_link_color . ';} ';
     $stencil_options_css .= '.btn, .btn:focus{background-color:' . $stencil_button_color . ';} ';
     $stencil_options_css .= '.btn:hover{background-color:' . hex2rgba($stencil_button_color,'0.82') . ';} ';
     $stencil_options_css .= '.dropdown-content li>a, .dropdown-content li>span{color:' . $stencil_menu_link_color . ';} ';
@@ -49,10 +49,7 @@
     $stencil_options_css .= '.dropdown-content li:hover, .dropdown-content li.active, .dropdown-content li.selected{background-color:' . $stencil_menu_drop_hover_color . ';} ';
     $stencil_options_css .= 'blockquote{border-left:5px solid ' . $stencil_button_color .';}';
 	$stencil_options_css .= 'input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]), input[type=url]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]), input[type=date]:not(.browser-default):focus:not([readonly]), input[type=datetime]:not(.browser-default):focus:not([readonly]), input[type=datetime-local]:not(.browser-default):focus:not([readonly]), input[type=tel]:not(.browser-default):focus:not([readonly]), input[type=number]:not(.browser-default):focus:not([readonly]), input[type=search]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {border-bottom: 1px solid ' . $stencil_button_color . ';-webkit-box-shadow: 0 1px 0 0 ' . $stencil_button_color . ';box-shadow: 0 1px 0 0 ' . $stencil_button_color . ';} '; 
-    
-    if($stencil_options['preloader']){
-        $stencil_options_css .= ".preloader-container{text-align: center;position: relative;top: 50%;transform: translateY(-50%);} .has-preloader-body .site{opacity:1; transition: opacity .3s ease-in-out;} .preloader-body .site{ opacity:0; overflow:hidden; } .preloader-body{ height:100vh; overflow:hidden; }";
-    }
+    $stencil_options_css .= '.not-found-recent-posts{background-color:' . $stencil_theme_color . ';}';
 
 
 	

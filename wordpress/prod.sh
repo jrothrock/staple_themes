@@ -47,14 +47,14 @@ cp -r "./Documentation/${LOWER_THEME_NAME_UNDERSCORE}" "./themes/${LOWER_THEME_N
 cp -r ./Licensing "./themes/${LOWER_THEME_NAME_UNDERSCORE}/"
 
 cd wordpress/wp-content/plugins/
-zip -r "${LOWER_THEME_NAME_UNDERSCORE}_extensions.zip" "./${LOWER_THEME_NAME_UNDERSCORE}_extensions"
+zip -r "${LOWER_THEME_NAME_UNDERSCORE}-extensions.zip" "./${LOWER_THEME_NAME_UNDERSCORE}-extensions"
 
 mkdir -p "../themes/${LOWER_THEME_NAME_UNDERSCORE}/lib/plugins/"
-mv "${LOWER_THEME_NAME_UNDERSCORE}_extensions.zip" "../themes/${LOWER_THEME_NAME_UNDERSCORE}/lib/plugins/"
+mv "${LOWER_THEME_NAME_UNDERSCORE}-extensions.zip" "../themes/${LOWER_THEME_NAME_UNDERSCORE}/lib/plugins/"
 cd ../themes
 zip -r "${LOWER_THEME_NAME_UNDERSCORE}.zip"  "${LOWER_THEME_NAME_UNDERSCORE}/"
 
-rm "${LOWER_THEME_NAME_UNDERSCORE}/lib/plugins/${LOWER_THEME_NAME_UNDERSCORE}_extensions.zip"
+rm "${LOWER_THEME_NAME_UNDERSCORE}/lib/plugins/${LOWER_THEME_NAME_UNDERSCORE}-extensions.zip"
 
 mv "${LOWER_THEME_NAME_UNDERSCORE}.zip" "../../../themes/${LOWER_THEME_NAME_UNDERSCORE}/"
 

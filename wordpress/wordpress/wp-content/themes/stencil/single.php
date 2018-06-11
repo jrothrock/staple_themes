@@ -8,7 +8,7 @@
  */
 global $stencil_options;
 
-$home_layout = $stencil_options['homepage-layout'];
+$home_layout = $stencil_options['sidebar-layout'];
 $class = '';
 if($home_layout == 'sidebar_left' && $stencil_options['sidebar-posts']){
 	$class = 'right';

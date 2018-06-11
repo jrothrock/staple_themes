@@ -258,7 +258,7 @@ function stencil_scripts() {
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
-	if ( is_plugin_active( 'stencil_extensions/stencil_extensions.php' ) ) {
+	if ( is_plugin_active( 'stencil-extensions/stencil_extensions.php' ) ) {
 		require_once get_template_directory() . '/inc/stencil_css_options.php';
 		require_once get_template_directory() . '/inc/stencil_javascript_options.php';
 	}

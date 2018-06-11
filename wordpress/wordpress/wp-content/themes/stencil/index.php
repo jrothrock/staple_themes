@@ -14,7 +14,7 @@
 
 global $stencil_options;
 
-$home_layout = $stencil_options['homepage-layout'];
+$home_layout = $stencil_options['sidebar-layout'];
 $class = '';
 if($home_layout == 'sidebar_left' && $stencil_options['sidebar-pages']){
 	$class = 'right';
@@ -22,8 +22,9 @@ if($home_layout == 'sidebar_left' && $stencil_options['sidebar-pages']){
 	$class = 'full';
 }
 
+
 get_header(); ?>
-	<div id="primary" class="content-area <?php echo $class?>">
+	<div id="primary" class="content-area <?php echo $class ?>">
 		<main id="main" class="site-main" role="main">
 
 		<?php

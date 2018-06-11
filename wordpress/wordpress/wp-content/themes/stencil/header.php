@@ -40,7 +40,6 @@ add_filter( 'body_class', function( $classes ) {
 		 ($stencil_options['sidebar-posts'] ? 'sidebar-posts' : 'no-sidebar-posts' ), 
 		 ($stencil_options['sidebar-shop'] ? 'sidebar-shop' : 'no-sidebar-shop' ), 
 		 ($stencil_options['sidebar-archive'] ? 'sidebar-archive' : 'no-sidebar-archive' ),
-		 ($stencil_options['nav-menu'] ? 'nav-menu' : ''),
 		 ($stencil_options['stencil-footer-top'] ? 'footer-top' : '')
 	) );
 } );
