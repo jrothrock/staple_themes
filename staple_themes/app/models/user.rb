@@ -17,7 +17,7 @@ class User < ApplicationRecord
   has_many :comments, :dependent => :destroy
 
   attr_encrypted :email, key: ENV["EMAIL_ENCRYPTION_KEY"]
-  blind_index :email, key: ENV["EMAIL_BLIND_INDEX_KEY"]
+  blind_index :email, key: [ENV["EMAIL_BLIND_INDEX_KEY"]].pack("H*")
 
   def self.find_for_database_authentication(warden_conditions)
       conditions = warden_conditions.dup
